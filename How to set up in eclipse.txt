@@ -1,0 +1,19 @@
+1. open eclipse
+2. Clone Git 
+3. Create a new project
+4. Right click project
+5. Go to "Build path > Configure build path"
+6. Delete the default "src" folder
+7. Click "Add Folder"
+8. Click "Create New Folder"
+9. Folder name: "src/main/java"
+10. Click "Create New Folder" again while the src folder is highlighted
+11. Folder name: "main/resources"
+12. Click "OK"
+13. Add the Minecraft project to the build path
+14. Click "OK"
+15. Navigate to the git repo in file explorer
+16. In that, go into main > java.
+17. Drag the "net" folders into eclipse onto src/main/java
+18. Check "Link to files and folders"
+19. Do the same for main > resources > assets, this time draging it to src/main/resources
