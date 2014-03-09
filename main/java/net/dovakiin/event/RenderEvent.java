@@ -38,7 +38,7 @@ public class RenderEvent {
 			if (p.worldObj.isRemote) {
 				if(!hasSeen) {
 					try {
-						if(!UpdateChecker.isOnline()){
+						if(!UpdateChecker.isOnline() && !BannedEvent.isBanned(p)){
 							
 							if (p.getDisplayName().equals("The_SlayerMC")) {
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.DARK_PURPLE, "Oh hey! Look! A Developer!"));
@@ -51,7 +51,7 @@ public class RenderEvent {
 						}
 						if (UpdateChecker.isUpdateAvailable() && UpdateChecker.isOnline()) {
 
-							if (p.getDisplayName().equals("The_SlayerMC")) {
+							if (p.getDisplayName().equals("The_SlayerMC") && !BannedEvent.isBanned(p)) {
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.DARK_PURPLE, "Oh hey! A Developer!"));
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.YELLOW, "Wow, you don't even have the newest version of your own mod... Nice.."));
 							} else {
@@ -63,7 +63,7 @@ public class RenderEvent {
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.YELLOW, "[New Version: " + curVersion + "]")); 
 							}
 						}
-						if ((!UpdateChecker.isUpdateAvailable()) && UpdateChecker.isOnline()) {
+						if ((!UpdateChecker.isUpdateAvailable()) && UpdateChecker.isOnline() && !BannedEvent.isBanned(p)) {
 
 							if (p.getDisplayName().equals("The_SlayerMC")) {
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.DARK_PURPLE, "Oh hey! A Developer!"));
@@ -72,6 +72,9 @@ public class RenderEvent {
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.AQUA, "[Version: " + Utils.MOD_VERSION + "]"));
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.GREEN, "Dovakiin is up to date."));
 							}
+						}
+						if(BannedEvent.isBanned(p)){
+							;
 						}
 					} catch (MalformedURLException e1) {
 						e1.printStackTrace();
