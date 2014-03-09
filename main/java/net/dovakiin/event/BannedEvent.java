@@ -15,8 +15,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class BannedEvent {
 
-	private GuiBanned banned = new GuiBanned();
-
 	@SubscribeEvent
 	public void banned(RenderGameOverlayEvent e) throws MalformedURLException, IOException{
 		if(isBanned(Minecraft.getMinecraft().thePlayer)){
@@ -27,15 +25,11 @@ public class BannedEvent {
 	public static boolean isBanned(EntityPlayer player) throws MalformedURLException, IOException{
 		/*BufferedReader file = new BufferedReader(new InputStreamReader(new URL("https://raw.github.com/TheSlayerMC/Dovakiin/master/BannedPlayers.txt").openStream()));
 		String name = file.readLine();
-		file.close();*/
+		String line = null;
+		//while ((line = file.readLine()) != null)
+		file.close();
 
-		return true;
-	}
-		/*if(name.equals(player.getDisplayName())){
-			return true;
-		} else {
-			return false;
-		}
-	}*/
+		return !name.equals(player.getDisplayName());*/
+		return false;
+	} 
 }
-
