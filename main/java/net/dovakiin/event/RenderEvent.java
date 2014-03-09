@@ -24,6 +24,7 @@ public class RenderEvent {
 	private final GUIOverlay gui = new GUIOverlay();
 
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public void onRenderOverlay(RenderGameOverlayEvent event){
 		if(event.isCancelable() || event.type != ElementType.EXPERIENCE) return;
 		gui.draw();
@@ -32,7 +33,6 @@ public class RenderEvent {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onPlayerLogin(EntityJoinWorldEvent e) {
-
 		if (e.entity instanceof EntityPlayer) {
 			EntityPlayer p = (EntityPlayer) e.entity;
 			if (p.worldObj.isRemote) {
@@ -41,7 +41,7 @@ public class RenderEvent {
 						if(!UpdateChecker.isOnline() && !BannedEvent.isBanned(p)){
 							
 							if (p.getDisplayName().equals("The_SlayerMC")) {
-								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.DARK_PURPLE, "Oh hey! Look! A Developer!"));
+								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.DARK_PURPLE, "Oh hey! Look! A developer!"));
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.LIGHT_PURPLE, "Your internet crashed from how awesome you are."));
 							} else {
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.AQUA, "Thank you " + p.getDisplayName() + ", for downloading and playing" + DovakiinAPI.GREEN + " Dovakiin!"));
@@ -66,7 +66,7 @@ public class RenderEvent {
 						if ((!UpdateChecker.isUpdateAvailable()) && UpdateChecker.isOnline() && !BannedEvent.isBanned(p)) {
 
 							if (p.getDisplayName().equals("The_SlayerMC")) {
-								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.DARK_PURPLE, "Oh hey! A Developer!"));
+								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.DARK_PURPLE, "Oh hey! Look! A developer!"));
 							} else {
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.AQUA, "Thank you "  + p.getDisplayName() + ", for downloading and playing" + DovakiinAPI.GREEN + " Dovakiin!"));
 								p.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.AQUA, "[Version: " + Utils.MOD_VERSION + "]"));
@@ -87,5 +87,4 @@ public class RenderEvent {
 			}
 		}
 	} 
-
 }

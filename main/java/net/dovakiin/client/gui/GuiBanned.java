@@ -28,11 +28,11 @@ public class GuiBanned extends GuiScreen{
 	public void drawScreen(int i, int j, float k){
 		this.drawDefaultBackground();
 		int offset = Math.max(85 - 2 * 50, 80);
-		this.drawCenteredString(this.fontRendererObj, DovakiinAPI.RED + "Dear, " + Minecraft.getMinecraft().thePlayer.getDisplayName() + " you have been banned from the mod" + DovakiinAPI.GREEN + " 'Dovakiin'.", this.width / 2, offset, 0xFFFFFF);
+		this.drawCenteredString(this.fontRendererObj, DovakiinAPI.RED + "Dear, " + DovakiinAPI.AQUA + Minecraft.getMinecraft().thePlayer.getDisplayName() + DovakiinAPI.RED + " you have been banned from the mod" + DovakiinAPI.GREEN + " 'Dovakiin'.", this.width / 2, offset, 0xFFFFFF);
 		offset += 10;
-		this.drawCenteredString(this.fontRendererObj, DovakiinAPI.RED + "Please contact The_SlayerMC for help or to know the reason why.", this.width / 2, offset, 0xFFFFFF);
+		this.drawCenteredString(this.fontRendererObj, DovakiinAPI.RED + "Please contact " + DovakiinAPI.YELLOW + "The_SlayerMC " + DovakiinAPI.RED + "for help or to know the reason why.", this.width / 2, offset, 0xFFFFFF);
 		offset += 10;
-		this.drawCenteredString(this.fontRendererObj, DovakiinAPI.RED + "If you believe this is a miss understanding, contact me, The_SlayerMC.", this.width / 2, offset, 0xFFFFFF);
+		this.drawCenteredString(this.fontRendererObj, DovakiinAPI.RED + "If you believe this is a miss understanding, contact me, " + DovakiinAPI.YELLOW +"The_SlayerMC.", this.width / 2, offset, 0xFFFFFF);
 		offset += 10;
 		this.drawCenteredString(this.fontRendererObj, DovakiinAPI.RED + "And no, you can't un ban your self!", this.width / 2, offset, 0xFFFFFF);
 		offset += 10;
