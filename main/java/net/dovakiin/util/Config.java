@@ -16,7 +16,7 @@ public class Config {
 		file = new File("./Dovakiin/Dovakiin.cfg");
 		cfg = new Configuration(file);
 		
-		canShowWelcome 			= cfg.get("Misc", "Can show the welcome messages"  , true).getBoolean(true);
-		canShowInformation 		= cfg.get("Misc", "Can show the ingame information", true).getBoolean(true);
+		canShowWelcome 			=true;//= cfg.get("Misc", "Can show the welcome messages"  , true).getBoolean(true);
+		canShowInformation 		=true;//= cfg.get("Misc", "Can show the ingame information", true).getBoolean(true);
 	}
 }

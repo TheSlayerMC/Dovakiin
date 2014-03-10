@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.dovakiin.api.DovakiinAPI;
-import net.dovakiin.client.gui.GUIOverlay;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.UpdateChecker;
 import net.dovakiin.util.Utils;
@@ -22,13 +21,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class RenderEvent {
 	private boolean hasSeen;
-	private final GUIOverlay gui = new GUIOverlay();
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onRenderOverlay(RenderGameOverlayEvent event){
 		if(event.isCancelable() || event.type != ElementType.EXPERIENCE) return;
-		gui.draw();
+
 	}
 
 	@SubscribeEvent

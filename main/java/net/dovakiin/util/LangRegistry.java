@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.item.Item;
 
 public class LangRegistry {
@@ -17,7 +18,8 @@ public class LangRegistry {
 	private static ArrayList<Item>  items    = new ArrayList<Item>();
 	private static boolean          canWrite = false;
 	private static BufferedWriter   writer;
-
+	private static String 			MOB_NAME;
+	
 	public static void init() {
 		if(Utils.DEBUG){
 			File f = new File("./Dovakiin/en_US.lang");
@@ -29,6 +31,7 @@ public class LangRegistry {
 					addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
 					addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
 					addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
+					addToFile("entity.Giant Skeleton.name=Skeleton Boss");
 					canWrite = true;
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -43,6 +46,7 @@ public class LangRegistry {
 						addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
 						addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
 						addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
+						addToFile("entity.Giant Skeleton.name=Skeleton Boss");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -54,6 +58,7 @@ public class LangRegistry {
 						addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
 						addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
 						addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
+						addToFile("entity.Giant Skeleton.name=Skeleton Boss");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -87,7 +92,7 @@ public class LangRegistry {
 	public static void addItem(Item item){
 		items.add(item);
 	}
-
+	
 	public static void addBlockNames(){
 		for(int k = 0; k < blocks.size(); k++){
 			Block block = blocks.get(k);

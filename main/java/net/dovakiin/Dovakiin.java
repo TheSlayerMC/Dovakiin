@@ -18,10 +18,11 @@ import cpw.mods.fml.common.event.*;
 @Mod(modid = Utils.MOD_ID, name = Utils.MOD_NAME, version = Utils.MOD_VERSION)
 public class Dovakiin {
 	
-	public static int level = 0;
-	
+	public static int level = 0; 
+	public static float swordLevel = 0.0F;
+		
 	@Instance(Utils.MOD_ID)
-	public Dovakiin instance;
+	public static Dovakiin instance;
 	
 	@SidedProxy(clientSide = Utils.PROXY_CLIENT, serverSide = Utils.PROXY_SERVER)
 	public static CommonProxy proxy;
@@ -31,7 +32,7 @@ public class Dovakiin {
 	};
 	
 	public static CreativeTabs blocks = new CreativeTabs("Dovakiin: Blocks"){
-		@Override public Item getTabIconItem() { return Item.getItemFromBlock(Blocks.acacia_stairs); }
+		@Override public Item getTabIconItem() { return Item.getItemFromBlock(Dovakiin.greenBerryBushRipe); }
 	};
 	
 	public static CreativeTabs spawner = new CreativeTabs("Dovakiin: Spawner"){
@@ -45,7 +46,7 @@ public class Dovakiin {
 	public static final Block pigSpawner 			= new BlockSpawner("Pig")			 .registerBlock("pigSpawner");
 	public static final Block sheepSpawner 			= new BlockSpawner("Sheep")			 .registerBlock("sheepSpawner");
 	public static final Block cowSpawner 			= new BlockSpawner("Cow")			 .registerBlock("cowSpawner");
-	public static final Block horseSpawner 			= new BlockSpawner("Horse")			 .registerBlock("horseSpawner");
+	public static final Block horseSpawner 			= new BlockSpawner("EntityHorse")	 .registerBlock("horseSpawner");
 	public static final Block chikenSpawner 		= new BlockSpawner("Chicken")		 .registerBlock("chickenSpawner");
 	public static final Block creeperSpawner 		= new BlockSpawner("Creeper")		 .registerBlock("creeperSpawner");
 	public static final Block endermanSpawner 		= new BlockSpawner("Enderman")		 .registerBlock("endermanSpawner");
@@ -82,8 +83,13 @@ public class Dovakiin {
 	public static final Item greenBerry 			= new ModItem().registerItem("greenBerry");
 	public static final Item desertBerry 			= new ModItem().registerItem("desertBerry");
 	public static final Item waterBerry 			= new ModItem().registerItem("waterBerry");
+	
 	public static final Item dragonEssence 			= new ModItem().registerItem("dragonEssence").setCreativeTab(misc);
 	public static final Item witherEssence 			= new ModItem().registerItem("witherEssence").setCreativeTab(misc);
+	public static final Item skeletonEssence 		= new ModItem().registerItem("skeletonEssence").setCreativeTab(misc);
+	public static final Item zombieEssence 			= new ModItem().registerItem("zombieEssence").setCreativeTab(misc);
+	public static final Item creeperEssence 		= new ModItem().registerItem("creeperEssence").setCreativeTab(misc);
+	public static final Item endermanEssence 		= new ModItem().registerItem("endermanEssence").setCreativeTab(misc);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
@@ -99,6 +105,11 @@ public class Dovakiin {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event){
 		proxy.postInit(event);
+	}
+	
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event){
+		proxy.serverStarting(event);
 	}
 	
 }

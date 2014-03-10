@@ -1,7 +1,10 @@
 package net.dovakiin.api;
 
+import net.dovakiin.Dovakiin;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityList.EntityEggInfo;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -37,6 +40,11 @@ public class DovakiinAPI {
 	public static ChatComponentTranslation addChatMessage(String str, Object... args) {
 		ChatComponentTranslation ret = new ChatComponentTranslation(str, args);
 		return ret;
+	}
+	
+	public static void openGui(int id){
+		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+		p.openGui(Dovakiin.instance, id, p.worldObj, (int)p.posX, (int)p.posY, (int)p.posZ);
 	}
 	
 	public static int getWaterDepth(int posX,int posY, int posZ, World worldObj){
