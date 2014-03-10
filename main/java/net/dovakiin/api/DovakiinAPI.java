@@ -2,10 +2,12 @@ package net.dovakiin.api;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityList.EntityEggInfo;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
@@ -35,6 +37,15 @@ public class DovakiinAPI {
 	public static ChatComponentTranslation addChatMessage(String str, Object... args) {
 		ChatComponentTranslation ret = new ChatComponentTranslation(str, args);
 		return ret;
+	}
+	
+	public static int getWaterDepth(int posX,int posY, int posZ, World worldObj){
+		int count = 0;
+		while (worldObj.getBlock(posX, posY, posZ) == Blocks.water){
+			posY++;
+			count++;
+		}
+		return count;
 	}
 
 	public static String 

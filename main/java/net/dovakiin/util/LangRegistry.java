@@ -28,6 +28,7 @@ public class LangRegistry {
 					addToFile("itemGroup.Dovakiin: Items=Dovakiin: Items");
 					addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
 					addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
+					addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
 					canWrite = true;
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -41,6 +42,7 @@ public class LangRegistry {
 						addToFile("itemGroup.Dovakiin: Items=Dovakiin: Items");
 						addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
 						addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
+						addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -51,6 +53,7 @@ public class LangRegistry {
 						addToFile("itemGroup.Dovakiin: Items=Dovakiin: Items");
 						addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
 						addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
+						addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
