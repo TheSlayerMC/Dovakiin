@@ -10,6 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMonsterPlacer;
+import net.minecraft.world.gen.structure.MapGenNetherBridge;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.*;
 import cpw.mods.fml.common.*;
@@ -54,7 +55,7 @@ public class Dovakiin {
 	public static final Block dragonSpawner 		= new BlockSpawner("EnderDragon")	 .registerBlock("dragonSpawner");
 	public static final Block skeletonSpawner 		= new BlockSpawner("Skeleton")		 .registerBlock("skeletonSpawner");
 	public static final Block pigmanSpawner 		= new BlockSpawner("PigZombie")		 .registerBlock("pigmanSpawner");
-	public static final Block witherSkeletonSpawner = new BlockSpawner("WitherSkeleton") .registerBlock("witherSkeletonSpawner");
+	public static final Block witherSkeletonSpawner = new BlockSpawner("Wither Skeleton").registerBlock("witherSkeletonSpawner");
 	public static final Block blazeSpawner 			= new BlockSpawner("Blaze")			 .registerBlock("blazeSpawner");
 	public static final Block villagerSpawner 		= new BlockSpawner("Villager")		 .registerBlock("villagerSpawner");
 	public static final Block slimeSpawner 			= new BlockSpawner("Slime")			 .registerBlock("slimeSpawner");

@@ -2,6 +2,7 @@ package net.dovakiin;
 
 import net.dovakiin.api.*;
 import net.dovakiin.client.*;
+import net.dovakiin.entity.mob.EntityWitherSkeleton;
 import net.dovakiin.entity.mob.boss.*;
 import net.dovakiin.event.*;
 import net.dovakiin.generation.*;
@@ -32,10 +33,12 @@ public class CommonProxy {
 		}
 		LangRegistry.closeFile();
 		DovakiinAPI.registerMob(EntityGiantSkeleton.class, "Giant Skeleton");
+		DovakiinAPI.registerMob(EntityWitherSkeleton.class, "Wither Skeleton");
+		DovakiinAPI.registerMob(EntityGiantZombie.class, "Giant Zombie");
 	}
 	
 	public void init(FMLInitializationEvent event){
-		GameRegistry.registerWorldGenerator(new BerryWorldGen(), 10);
+		GameRegistry.registerWorldGenerator(new BerryWorldGen(), 9);
 	}
 	
 	public void postInit(FMLPostInitializationEvent event){ }

@@ -28,12 +28,11 @@ public class DovakiinAPI {
 		int entityID = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityID);
 		EntityList.IDtoClassMapping.put(entityID, entityClass);
-		EntityList.entityEggs.put(entityID, new EntityEggInfo(entityID, 0x000000, 0xFFFFFF));
+		EntityList.entityEggs.put(entityID, new EntityEggInfo(entityID, 0x152678, 0x1534864));
 	}
 	
-	public static ChatComponentTranslation addChatMessage(EnumChatFormatting color, String str, Object... args) {
-		ChatComponentTranslation ret = new ChatComponentTranslation(str, args);
-		ret.getChatStyle().setColor(color);
+	public static ChatComponentTranslation addChatMessage(String colour, String str, Object... args) {
+		ChatComponentTranslation ret = new ChatComponentTranslation(colour + str, args);
 		return ret;
 	}
 	

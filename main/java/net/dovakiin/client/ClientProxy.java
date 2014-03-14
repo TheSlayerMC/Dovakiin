@@ -2,8 +2,9 @@ package net.dovakiin.client;
 
 import net.dovakiin.CommonProxy;
 import net.dovakiin.Dovakiin;
-import net.dovakiin.client.render.RenderSkeletonBoss;
-import net.dovakiin.entity.mob.boss.EntityGiantSkeleton;
+import net.dovakiin.client.render.*;
+import net.dovakiin.entity.mob.*;
+import net.dovakiin.entity.mob.boss.*;
 import net.dovakiin.util.KeyHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -16,6 +17,9 @@ public class ClientProxy extends CommonProxy{
 		NetworkRegistry.INSTANCE.registerGuiHandler(Dovakiin.instance, new GuiHandler());
 		FMLCommonHandler.instance().bus().register(new KeyHandler());
 		RenderingRegistry.registerEntityRenderingHandler(EntityGiantSkeleton.class, new RenderSkeletonBoss());
+		RenderingRegistry.registerEntityRenderingHandler(EntityWitherSkeleton.class, new RenderWitherSkeleton());
+		RenderingRegistry.registerEntityRenderingHandler(EntityGiantZombie.class, new RenderZombieBoss());
+
 	}
 	
 }

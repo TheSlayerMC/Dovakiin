@@ -12,16 +12,19 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModItem extends Item{
 
-	public ModItem() {
-		LangRegistry.addItem(this);
-		setCreativeTab(Dovakiin.items);
-	}
-	
 	public Item registerItem(String name){
 		setTextureName(Utils.PREFIX + name);
 		setUnlocalizedName(name);
 		GameRegistry.registerItem(this, name);
 		return this;
+	}
+	
+	public ModItem() {
+		LangRegistry.addItem(this);
+		setCreativeTab(Dovakiin.items);
+		if(this.getUnlocalizedName().substring(5).contains("Essence")){
+			setMaxStackSize(1);
+		}
 	}
 
 	@Override

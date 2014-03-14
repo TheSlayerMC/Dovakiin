@@ -32,6 +32,8 @@ public class LangRegistry {
 					addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
 					addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
 					addToFile("entity.Giant Skeleton.name=Skeleton Boss");
+					addToFile("entity.Giant Zombie.name=Zombie Boss");
+					addToFile("entity.Wither Skeleton.name=Wither Skeleton");
 					canWrite = true;
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -47,6 +49,8 @@ public class LangRegistry {
 						addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
 						addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
 						addToFile("entity.Giant Skeleton.name=Skeleton Boss");
+						addToFile("entity.Giant Zombie.name=Zombie Boss");
+						addToFile("entity.Wither Skeleton.name=Wither Skeleton");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -59,6 +63,8 @@ public class LangRegistry {
 						addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
 						addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
 						addToFile("entity.Giant Skeleton.name=Skeleton Boss");
+						addToFile("entity.Giant Zombie.name=Zombie Boss");
+						addToFile("entity.Wither Skeleton.name=Wither Skeleton");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
