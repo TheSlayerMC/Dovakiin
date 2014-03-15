@@ -20,10 +20,11 @@ public class CommonProxy {
 	
 	//ClientProxy
 	public void preInit(FMLPreInitializationEvent event){
-		MinecraftForge.EVENT_BUS.register(new RenderEvent());
-		MinecraftForge.EVENT_BUS.register(new BannedEvent());
-		MinecraftForge.EVENT_BUS.register(new BonemealEvent());
-		MinecraftForge.EVENT_BUS.register(new DropsEvent());
+		RenderEvent.register();
+		BannedEvent.register();
+		BonemealEvent.register();
+		DropsEvent.register();
+		PlayerEvent.register();
 		
 		Config.init();
 		LangRegistry.init();
@@ -33,8 +34,9 @@ public class CommonProxy {
 		}
 		LangRegistry.closeFile();
 		DovakiinAPI.registerMob(EntityGiantSkeleton.class, "Giant Skeleton");
-		DovakiinAPI.registerMob(EntityWitherSkeleton.class, "Wither Skeleton");
 		DovakiinAPI.registerMob(EntityGiantZombie.class, "Giant Zombie");
+		DovakiinAPI.registerMob(EntityGiantCreeper.class, "Giant Creeper");
+		DovakiinAPI.registerMob(EntityWitherSkeleton.class, "Wither Skeleton");
 	}
 	
 	public void init(FMLInitializationEvent event){

@@ -3,6 +3,7 @@ package net.dovakiin.event;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.blocks.BlockBerryPlant;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class BonemealEvent {
@@ -24,5 +25,9 @@ public class BonemealEvent {
 		if(event.block == Dovakiin.desertBerryBush){
 			((BlockBerryPlant)Dovakiin.desertBerryBush).grow(event.world, event.x, event.y, event.z);
 		}
+	}
+	
+	public static void register(){
+		MinecraftForge.EVENT_BUS.register(new BonemealEvent());
 	}
 }

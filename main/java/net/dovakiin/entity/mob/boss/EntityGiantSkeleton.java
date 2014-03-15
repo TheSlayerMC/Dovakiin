@@ -29,6 +29,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
@@ -49,7 +50,8 @@ public class EntityGiantSkeleton extends EntityMob implements IRangedAttackMob, 
 
 	private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue(), 10, 60);
 	private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
-
+	private int tick;
+	
 	public EntityGiantSkeleton(World par1World) {
 		super(par1World);
 		this.tasks.addTask(1, new EntityAISwimming(this));
@@ -62,8 +64,32 @@ public class EntityGiantSkeleton extends EntityMob implements IRangedAttackMob, 
 			this.setCombatTask();
 		}
 		setSize(2F, 6F);
+		tick = 50;
 	}
 
+	@Override
+	public void onLivingUpdate() {
+		if(tick == 0 && !worldObj.isRemote){
+			EntitySkeleton z = new EntitySkeleton(worldObj);
+            z.setLocationAndAngles(posX + 3, posY, posZ, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntitySkeleton z1 = new EntitySkeleton(worldObj);
+            z1.setLocationAndAngles(posX - 3, posY, posZ, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntitySkeleton z2 = new EntitySkeleton(worldObj);
+            z2.setLocationAndAngles(posX, posY, posZ + 3, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntitySkeleton z3 = new EntitySkeleton(worldObj);
+            z3.setLocationAndAngles(posX, posY, posZ - 3, this.rand.nextFloat() * 360.0F, 0.0F);
+            
+            this.worldObj.spawnEntityInWorld(z);
+            this.worldObj.spawnEntityInWorld(z1);
+            this.worldObj.spawnEntityInWorld(z2);
+            this.worldObj.spawnEntityInWorld(z3);
+
+			tick = 300;
+		}
+		tick--;
+		super.onLivingUpdate();
+	}
+	
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30D);

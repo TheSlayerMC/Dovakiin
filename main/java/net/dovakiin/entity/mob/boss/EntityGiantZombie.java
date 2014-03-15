@@ -9,18 +9,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -30,7 +26,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
-
+	
+	private int tick;
+	
 	public EntityGiantZombie(World par1World) {
 		super(par1World);
 		this.tasks.addTask(1, new EntityAISwimming(this));
@@ -40,6 +38,7 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
 		setSize(2F, 6F);
 		this.experienceValue = 1000;
+		tick = 30;
 	}
 
 	protected void applyEntityAttributes() {
@@ -72,6 +71,29 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
 	}
+	
+	@Override
+	public void onLivingUpdate() {
+		if(tick == 0 && !worldObj.isRemote){
+			EntityZombie z = new EntityZombie(worldObj);
+            z.setLocationAndAngles(posX + 3, posY, posZ, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntityZombie z1 = new EntityZombie(worldObj);
+            z1.setLocationAndAngles(posX - 3, posY, posZ, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntityZombie z2 = new EntityZombie(worldObj);
+            z2.setLocationAndAngles(posX, posY, posZ + 3, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntityZombie z3 = new EntityZombie(worldObj);
+            z3.setLocationAndAngles(posX, posY, posZ - 3, this.rand.nextFloat() * 360.0F, 0.0F);
+            
+            this.worldObj.spawnEntityInWorld(z);
+            this.worldObj.spawnEntityInWorld(z1);
+            this.worldObj.spawnEntityInWorld(z2);
+            this.worldObj.spawnEntityInWorld(z3);
+
+			tick = 300;
+		}
+		tick--;
+		super.onLivingUpdate();
+	}
 
 	public void onDeath(DamageSource d) {
 		super.onDeath(d);
@@ -88,8 +110,8 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 	}
 	
 	protected void addRandomArmor() {
-		super.addRandomArmor();
 		this.setCurrentItemOrArmor(0, new ItemStack(Items.diamond_sword));
+		this.setCurrentItemOrArmor(4, new ItemStack(Items.golden_helmet));
 	}
 
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData par1EntityLivingData) {
@@ -98,7 +120,7 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 		this.addRandomArmor();
 		this.enchantEquipment();
 
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * this.worldObj.func_147462_b(this.posX, this.posY, this.posZ));
+		//this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * this.worldObj.func_147462_b(this.posX, this.posY, this.posZ));
 
 		if(this.getEquipmentInSlot(4) == null) {
 			Calendar calendar = this.worldObj.getCurrentDate();

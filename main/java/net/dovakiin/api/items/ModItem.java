@@ -11,7 +11,15 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModItem extends Item{
-
+	
+	public ModItem() {
+		LangRegistry.addItem(this);
+		setCreativeTab(Dovakiin.items);
+		if(isEssence()){
+			setMaxStackSize(1);
+		}
+	}
+	
 	public Item registerItem(String name){
 		setTextureName(Utils.PREFIX + name);
 		setUnlocalizedName(name);
@@ -19,12 +27,8 @@ public class ModItem extends Item{
 		return this;
 	}
 	
-	public ModItem() {
-		LangRegistry.addItem(this);
-		setCreativeTab(Dovakiin.items);
-		if(this.getUnlocalizedName().substring(5).contains("Essence")){
-			setMaxStackSize(1);
-		}
+	private boolean isEssence(){
+		return getUnlocalizedName().substring(5).contains("Essence");
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import net.dovakiin.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -84,4 +85,8 @@ public class RenderEvent {
 			}
 		}
 	} 
+	
+	public static void register(){
+		MinecraftForge.EVENT_BUS.register(new RenderEvent());
+	}
 }

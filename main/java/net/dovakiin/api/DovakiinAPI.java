@@ -20,6 +20,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class DovakiinAPI {
 
+	public static EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+	
 	public static void addBucket(Fluid fluid, ItemStack modBucket){
 		FluidContainerRegistry.registerFluidContainer(new FluidContainerData(FluidRegistry.getFluidStack(fluid.getName(), FluidContainerRegistry.BUCKET_VOLUME), modBucket, new ItemStack(Items.bucket)));
 	}

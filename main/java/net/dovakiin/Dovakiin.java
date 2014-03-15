@@ -2,7 +2,9 @@ package net.dovakiin;
 
 import net.dovakiin.api.blocks.BlockBerryPlant;
 import net.dovakiin.api.blocks.BlockSpawner;
+import net.dovakiin.api.items.ModInformationBook;
 import net.dovakiin.api.items.ModItem;
+import net.dovakiin.client.GuiHandler;
 import net.dovakiin.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -73,7 +75,10 @@ public class Dovakiin {
 	public static final Block snowManSpawner 		= new BlockSpawner("SnowMan")		 .registerBlock("snowManSpawner");
 	public static final Block giantSpawner 			= new BlockSpawner("Giant")			 .registerBlock("giantSpawner");
 	public static final Block villagerGolemSpawner 	= new BlockSpawner("VillagerGolem")	 .registerBlock("golemSpawner");
-	
+	public static final Block giantSkeletonSpawner 	= new BlockSpawner("Giant Skeleton") .registerBlock("skeletonBossSpawner");
+	public static final Block giantZombieSpawner 	= new BlockSpawner("Giant Zombie")	 .registerBlock("zombieBossSpawner");
+	public static final Block giantZombieCreeper 	= new BlockSpawner("Giant Creeper")	 .registerBlock("creeperBossSpawner");
+
 	public static final Block greenBerryBush 		= new BlockBerryPlant()				 .registerBlock("greenBerryBush");
 	public static final Block greenBerryBushRipe 	= new BlockBerryPlant()				 .registerBlock("greenBerryBushRipe");
 	public static final Block waterBerryBush 		= new BlockBerryPlant()				 .registerBlock("waterBerryBush").setLightLevel(1.0F);
@@ -91,6 +96,8 @@ public class Dovakiin {
 	public static final Item zombieEssence 			= new ModItem().registerItem("zombieEssence").setCreativeTab(misc);
 	public static final Item creeperEssence 		= new ModItem().registerItem("creeperEssence").setCreativeTab(misc);
 	public static final Item endermanEssence 		= new ModItem().registerItem("endermanEssence").setCreativeTab(misc);
+	
+	public static final Item startingBook 			= new ModInformationBook(GuiHandler.startingBook).registerItem("welcome").setCreativeTab(misc);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){

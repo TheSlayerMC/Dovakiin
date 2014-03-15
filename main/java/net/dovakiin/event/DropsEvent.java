@@ -22,6 +22,7 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -76,20 +77,20 @@ public class DropsEvent {
 		}*/
 	}
 	
-	public String getAlteredEntityName(EntityLiving entity) {
+	private String getAlteredEntityName(EntityLiving entity) {
 		return EntityList.getEntityString(entity) + "JAHSBJAGBVHFSVGBA";
 	}
 	
-	public static String getUnalteredItemName(Item item) {
+	private static String getUnalteredItemName(Item item) {
         return StatCollector.translateToLocal(item.getUnlocalizedName() + ".name");
 	}
 	
-	public static Entity setName(EntityLiving entity, String name) {
+	private static Entity setName(EntityLiving entity, String name) {
 		entity.setCustomNameTag(name);
 		return entity;
 	}
 	
-	public static String getUnalteredName(Entity entity) {
+	private static String getUnalteredName(Entity entity) {
 		String s = EntityList.getEntityString(entity);
         if(s == null) 
         	s = "generic";
@@ -98,5 +99,9 @@ public class DropsEvent {
 
 	private boolean isHoldingSword(EntityPlayer p){
 		return p.getHeldItem().getItem() instanceof ItemSword;
+	}
+	
+	public static void register(){
+		MinecraftForge.EVENT_BUS.register(new DropsEvent());
 	}
 }

@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class BannedEvent {
@@ -32,4 +33,8 @@ public class BannedEvent {
 		return !name.equals(player.getDisplayName());*/
 		return false;
 	} 
+	
+	public static void register(){
+		MinecraftForge.EVENT_BUS.register(new BannedEvent());
+	}
 }
