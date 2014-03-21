@@ -184,6 +184,11 @@ public class EntityGiantCreeper extends EntityMob implements IBossDisplayData {
 	}
 	
 	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
+	
+	@Override
 	protected void dropFewItems(boolean par1, int par2) {
 		this.dropItem(Dovakiin.creeperEssence, 1);
 	}

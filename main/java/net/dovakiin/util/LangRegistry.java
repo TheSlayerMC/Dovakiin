@@ -16,6 +16,7 @@ public class LangRegistry {
 
 	private static ArrayList<Block> blocks   = new ArrayList<Block>();
 	private static ArrayList<Item>  items    = new ArrayList<Item>();
+	private static ArrayList<Item>  egg	     = new ArrayList<Item>();
 	private static boolean          canWrite = false;
 	private static BufferedWriter   writer;
 	private static String 			MOB_NAME;
@@ -100,6 +101,41 @@ public class LangRegistry {
 
 	public static void addItem(Item item){
 		items.add(item);
+	}
+	
+	public static void addEgg(Item item){
+		egg.add(item);
+	}
+	
+	public static void addEggNames(){
+		for(int k = 0; k < egg.size(); k++){
+			Item item = egg.get(k);
+			String name = item.getUnlocalizedName().substring(5);
+			char firstLetter = name.charAt(0);
+			int numChars = 0;
+			if (Character.isLowerCase(firstLetter)) {
+				firstLetter = Character.toUpperCase(firstLetter);
+			}
+
+			String inGame = name.substring(1);
+			for (int p = 0; p < name.length(); p++) {
+				char c = name.charAt(p);
+				int code = (int) c;
+
+				if (p != 0) {
+					for (int n = 65; n < 90; n++) {
+						if (code == n) {
+							numChars++;
+							if (numChars == 1)
+								inGame = new StringBuffer(inGame).insert(p - 1, " ").toString();
+							else
+								inGame = new StringBuffer(inGame).insert(p, " ").toString();
+						}
+					}
+				}
+			}
+			addToFile("item." + name + ".name=Egg");
+		}
 	}
 	
 	public static void addBlockNames(){

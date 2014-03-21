@@ -201,6 +201,11 @@ public class EntityGiantSkeleton extends EntityMob implements IRangedAttackMob, 
 		this.worldObj.spawnEntityInWorld(entityarrow);
 	}
 
+	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
+	
 	public void setCurrentItemOrArmor(int par1, ItemStack par2ItemStack) {
 		super.setCurrentItemOrArmor(par1, par2ItemStack);
 

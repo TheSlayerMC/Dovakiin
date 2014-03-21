@@ -9,7 +9,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -28,9 +27,12 @@ public class DovakiinAPI {
 	
 	public static void registerMob(Class entityClass, String entityName) {
 		int entityID = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityID, 0x152678, 0x1534864);
+	}
+	
+	public static void registerEntity(Class entityClass, String entityName) {
+		int entityID = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityID);
-		EntityList.IDtoClassMapping.put(entityID, entityClass);
-		EntityList.entityEggs.put(entityID, new EntityEggInfo(entityID, 0x152678, 0x1534864));
 	}
 	
 	public static ChatComponentTranslation addChatMessage(String colour, String str, Object... args) {
@@ -48,7 +50,7 @@ public class DovakiinAPI {
 		p.openGui(Dovakiin.instance, id, p.worldObj, (int)p.posX, (int)p.posY, (int)p.posZ);
 	}
 	
-	public static int getWaterDepth(int posX,int posY, int posZ, World worldObj){
+	public static int getWaterDepth(int posX, int posY, int posZ, World worldObj){
 		int count = 0;
 		while (worldObj.getBlock(posX, posY, posZ) == Blocks.water){
 			posY++;

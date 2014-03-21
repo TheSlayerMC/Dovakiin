@@ -28,9 +28,9 @@ import net.minecraft.world.World;
 public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 	
 	private int tick;
-	
 	public EntityGiantZombie(World par1World) {
 		super(par1World);
+		tick = 30;
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
@@ -38,7 +38,6 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
 		setSize(2F, 6F);
 		this.experienceValue = 1000;
-		tick = 30;
 	}
 
 	protected void applyEntityAttributes() {
@@ -76,18 +75,31 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 	public void onLivingUpdate() {
 		if(tick == 0 && !worldObj.isRemote){
 			EntityZombie z = new EntityZombie(worldObj);
-            z.setLocationAndAngles(posX + 3, posY, posZ, this.rand.nextFloat() * 360.0F, 0.0F);
+            z.setLocationAndAngles(posX - 3, posY, posZ, this.rand.nextFloat() * 360.0F, 0.0F);
             EntityZombie z1 = new EntityZombie(worldObj);
-            z1.setLocationAndAngles(posX - 3, posY, posZ, this.rand.nextFloat() * 360.0F, 0.0F);
+            z1.setLocationAndAngles(posX + 3, posY, posZ, this.rand.nextFloat() * 360.0F, 0.0F);
             EntityZombie z2 = new EntityZombie(worldObj);
             z2.setLocationAndAngles(posX, posY, posZ + 3, this.rand.nextFloat() * 360.0F, 0.0F);
             EntityZombie z3 = new EntityZombie(worldObj);
             z3.setLocationAndAngles(posX, posY, posZ - 3, this.rand.nextFloat() * 360.0F, 0.0F);
             
+            EntityZombie z4 = new EntityZombie(worldObj);
+            z4.setLocationAndAngles(posX + 2, posY, posZ - 2, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntityZombie z5 = new EntityZombie(worldObj);
+            z5.setLocationAndAngles(posX - 2, posY, posZ + 2, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntityZombie z6 = new EntityZombie(worldObj);
+            z6.setLocationAndAngles(posX + 2, posY, posZ + 2, this.rand.nextFloat() * 360.0F, 0.0F);
+            EntityZombie z7 = new EntityZombie(worldObj);
+            z7.setLocationAndAngles(posX - 2, posY, posZ - 2, this.rand.nextFloat() * 360.0F, 0.0F);
+            
             this.worldObj.spawnEntityInWorld(z);
             this.worldObj.spawnEntityInWorld(z1);
             this.worldObj.spawnEntityInWorld(z2);
             this.worldObj.spawnEntityInWorld(z3);
+            this.worldObj.spawnEntityInWorld(z4);
+            this.worldObj.spawnEntityInWorld(z5);
+            this.worldObj.spawnEntityInWorld(z6);
+            this.worldObj.spawnEntityInWorld(z7);
 
 			tick = 300;
 		}
@@ -95,6 +107,11 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 		super.onLivingUpdate();
 	}
 
+	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
+	
 	public void onDeath(DamageSource d) {
 		super.onDeath(d);
 		if(d.getSourceOfDamage() instanceof EntityPlayer){
