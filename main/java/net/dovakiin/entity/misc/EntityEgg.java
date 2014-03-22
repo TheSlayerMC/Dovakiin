@@ -7,6 +7,7 @@ import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.GuiHandler;
 import net.dovakiin.entity.mob.boss.EntityGiantCreeper;
 import net.dovakiin.entity.mob.boss.EntityGiantZombie;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
@@ -52,28 +53,28 @@ public class EntityEgg extends EntityModMob {
 	public boolean canBreatheUnderwater() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean canPickUpLoot() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean allowLeashing() {
 		return false;
 	}
-	
-	@Override
-    @SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float par1) {
-        return 15728880;
-    }
 
-    @Override
-    public float getBrightness(float par1) {
-        return 1.0F;
-    }
-	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getBrightnessForRender(float par1) {
+		return 15728880;
+	}
+
+	@Override
+	public float getBrightness(float par1) {
+		return 1.0F;
+	}
+
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		return !(par1DamageSource.getSourceOfDamage() instanceof EntityPlayer);
@@ -85,20 +86,21 @@ public class EntityEgg extends EntityModMob {
 		boolean light = worldObj.getBlockLightValue((int)posX, (int)posY, (int)posZ) >= 4;
 		if(ticks == 0 && !worldObj.isRemote && light){
 			EntitySkeleton e = new EntitySkeleton(worldObj);
-            e.setLocationAndAngles(posX, posY, posZ, 360.0F, 0.0F);
+			e.setLocationAndAngles(posX, posY, posZ, 360.0F, 0.0F);
 			//worldObj.spawnEntityInWorld(e);
-			//this.setDead();
+			this.setDead();
+			//addChatMessage(DovakiinAPI.addChatMessage("Your egg has hatched!"));
 		}
 		ticks--;
 	}
-	
+
 	@Override
 	protected void fall(float par1) { }
-	
+
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
 		super.onDeath(par1DamageSource);
-		if(!(par1DamageSource.getSourceOfDamage() instanceof EntityPlayer))
-			DovakiinAPI.addChatMessage("Your egg has hatched!");
+		
+		
 	}
 }

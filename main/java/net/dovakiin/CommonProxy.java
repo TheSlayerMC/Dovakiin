@@ -8,6 +8,7 @@ import net.dovakiin.client.*;
 import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.entity.mob.EntityWitherSkeleton;
 import net.dovakiin.entity.mob.boss.*;
+import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.event.*;
 import net.dovakiin.generation.*;
 import net.dovakiin.generation.buildings.village.ComponentMerchent;
@@ -50,6 +51,7 @@ public class CommonProxy {
 		DovakiinAPI.registerMob(EntityGiantZombie.class, "Giant Zombie");
 		DovakiinAPI.registerMob(EntityGiantCreeper.class, "Giant Creeper");
 		DovakiinAPI.registerMob(EntityWitherSkeleton.class, "Wither Skeleton");
+		DovakiinAPI.registerMob(EntityMerchent.class, "Merchent");
 		DovakiinAPI.registerEntity(EntityEgg.class, "Egg");
 	}
 	
