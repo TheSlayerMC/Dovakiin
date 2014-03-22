@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.dovakiin.Dovakiin;
+import net.dovakiin.client.DovakiinTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -19,7 +20,7 @@ public class BlockBerryPlant extends ModBlock implements IShearable {
 	
 	public BlockBerryPlant() {
 		super(Material.leaves);
-		setCreativeTab(Dovakiin.blocks);
+		setCreativeTab(DovakiinTabs.blocks);
 		setHardness(0.4F);
 		setTickRandomly(true);
 		setStepSound(Block.soundTypeGrass);

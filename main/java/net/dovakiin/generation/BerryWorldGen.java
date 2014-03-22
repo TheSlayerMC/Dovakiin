@@ -3,7 +3,6 @@ package net.dovakiin.generation;
 import java.util.Random;
 
 import net.dovakiin.Dovakiin;
-import net.dovakiin.generation.buildings.GenMerchent;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;

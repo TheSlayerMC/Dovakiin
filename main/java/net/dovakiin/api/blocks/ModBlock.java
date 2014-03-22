@@ -1,6 +1,6 @@
 package net.dovakiin.api.blocks;
 
-import net.dovakiin.Dovakiin;
+import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.util.LangRegistry;
 import net.dovakiin.util.Utils;
 import net.minecraft.block.Block;
@@ -12,7 +12,7 @@ public class ModBlock extends Block{
 	public ModBlock(Material material) {
 		super(material);
 		LangRegistry.addBlock(this);
-		setCreativeTab(Dovakiin.blocks);
+		setCreativeTab(DovakiinTabs.blocks);
 	}
 	
 	public Block registerBlock(String name){

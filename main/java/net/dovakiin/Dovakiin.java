@@ -3,22 +3,21 @@ package net.dovakiin;
 import net.dovakiin.api.blocks.BlockBerryPlant;
 import net.dovakiin.api.blocks.BlockSpawner;
 import net.dovakiin.api.items.ItemEgg;
-import net.dovakiin.api.items.ItemMerchent;
 import net.dovakiin.api.items.ModInformationBook;
 import net.dovakiin.api.items.ModItem;
+import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.client.GuiHandler;
-import net.dovakiin.util.*;
+import net.dovakiin.util.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemMonsterPlacer;
-import net.minecraft.world.gen.structure.MapGenNetherBridge;
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.Mod.*;
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = Utils.MOD_ID, name = Utils.MOD_NAME, version = Utils.MOD_VERSION)
 public class Dovakiin {
@@ -31,22 +30,6 @@ public class Dovakiin {
 	
 	@SidedProxy(clientSide = Utils.PROXY_CLIENT, serverSide = Utils.PROXY_SERVER)
 	public static CommonProxy proxy;
-	
-	public static CreativeTabs items = new CreativeTabs("Dovakiin: Items"){
-		@Override public Item getTabIconItem() { return Dovakiin.greenBerry; }
-	};
-	
-	public static CreativeTabs blocks = new CreativeTabs("Dovakiin: Blocks"){
-		@Override public Item getTabIconItem() { return Item.getItemFromBlock(Dovakiin.greenBerryBushRipe); }
-	};
-	
-	public static CreativeTabs spawner = new CreativeTabs("Dovakiin: Spawner"){
-		@Override public Item getTabIconItem() { return Item.getItemFromBlock(Dovakiin.dragonSpawner); }
-	};
-	
-	public static CreativeTabs misc = new CreativeTabs("Dovakiin: Misc"){
-		@Override public Item getTabIconItem() { return Dovakiin.dragonEssence; }
-	};
 	
 	public static final Block pigSpawner 			= new BlockSpawner("Pig")			 .registerBlock("pigSpawner");
 	public static final Block sheepSpawner 			= new BlockSpawner("Sheep")			 .registerBlock("sheepSpawner");
@@ -87,23 +70,22 @@ public class Dovakiin {
 	public static final Block waterBerryBushRipe 	= new BlockBerryPlant()				 .registerBlock("waterBerryBushRipe").setLightLevel(1.0F);
 	public static final Block desertBerryBush 		= new BlockBerryPlant()				 .registerBlock("desertBerryBush");
 	public static final Block desertBerryBushRipe 	= new BlockBerryPlant()				 .registerBlock("desertBerryBushRipe");
-	
+
 	public static final Item greenBerry 			= new ModItem().registerItem("greenBerry");
 	public static final Item desertBerry 			= new ModItem().registerItem("desertBerry");
 	public static final Item waterBerry 			= new ModItem().registerItem("waterBerry");
 	
-	public static final Item dragonEssence 			= new ModItem().registerItem("dragonEssence").setCreativeTab(misc);
-	public static final Item witherEssence 			= new ModItem().registerItem("witherEssence").setCreativeTab(misc);
-	public static final Item skeletonEssence 		= new ModItem().registerItem("skeletonEssence").setCreativeTab(misc);
-	public static final Item zombieEssence 			= new ModItem().registerItem("zombieEssence").setCreativeTab(misc);
-	public static final Item creeperEssence 		= new ModItem().registerItem("creeperEssence").setCreativeTab(misc);
-	public static final Item endermanEssence 		= new ModItem().registerItem("endermanEssence").setCreativeTab(misc);
+	public static final Item dragonEssence 			= new ModItem(true).registerItem("dragonEssence").setCreativeTab(DovakiinTabs.misc);
+	public static final Item witherEssence 			= new ModItem(true).registerItem("witherEssence").setCreativeTab(DovakiinTabs.misc);
+	public static final Item skeletonEssence 		= new ModItem(true).registerItem("skeletonEssence").setCreativeTab(DovakiinTabs.misc);
+	public static final Item zombieEssence 			= new ModItem(true).registerItem("zombieEssence").setCreativeTab(DovakiinTabs.misc);
+	public static final Item creeperEssence 		= new ModItem(true).registerItem("creeperEssence").setCreativeTab(DovakiinTabs.misc);
+	public static final Item endermanEssence 		= new ModItem(true).registerItem("endermanEssence").setCreativeTab(DovakiinTabs.misc);
 	
-	public static final Item startingBook 			= new ModInformationBook(GuiHandler.startingBook).registerItem("welcome").setCreativeTab(misc);
+	public static final Item startingBook 			= new ModInformationBook(GuiHandler.startingBook).registerItem("welcome").setCreativeTab(DovakiinTabs.misc);
 	
 	public static final Item basicEgg 			   	= new ItemEgg().registerItem("basicEgg"); 
-	public static final Item merchent 			   	= new ItemMerchent().registerItem("merchent"); 
-
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
 		proxy.preInit(event);

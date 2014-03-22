@@ -2,10 +2,7 @@ package net.dovakiin.api.blocks;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.dovakiin.Dovakiin;
+import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.util.LangRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -15,6 +12,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockSpawner extends BlockContainer {
 
@@ -23,7 +23,7 @@ public class BlockSpawner extends BlockContainer {
 
 	public BlockSpawner(String name) {
 		super(Material.rock);
-		setCreativeTab(Dovakiin.spawner);
+		setCreativeTab(DovakiinTabs.spawner);
 		LangRegistry.addBlock(this);
 		disableStats();
 		setHardness(2.0F);
@@ -65,9 +65,9 @@ public class BlockSpawner extends BlockContainer {
     }
     
 	public Block registerBlock(String name){
-		GameRegistry.registerBlock(this, name);
-		setBlockName(name);
 		setBlockTextureName("mob_spawner");
+		setBlockName(name);
+		GameRegistry.registerBlock(this, name);
 		return this;
 	}
 }

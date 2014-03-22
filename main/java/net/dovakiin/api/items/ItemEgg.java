@@ -3,6 +3,7 @@ package net.dovakiin.api.items;
 import java.util.Random;
 
 import net.dovakiin.Dovakiin;
+import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.util.LangRegistry;
 import net.dovakiin.util.Utils;
@@ -16,7 +17,7 @@ public class ItemEgg extends Item{
 
 	public ItemEgg() {
 		LangRegistry.addEgg(this);
-		setCreativeTab(Dovakiin.items);
+		setCreativeTab(DovakiinTabs.items);
 	}
 
 	private Random rand = new Random();

@@ -3,6 +3,7 @@ package net.dovakiin.api.items;
 import java.util.List;
 
 import net.dovakiin.Dovakiin;
+import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.util.LangRegistry;
 import net.dovakiin.util.Utils;
@@ -15,10 +16,16 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class ModItem extends Item{
 	
 	public ModItem() {
+		this(false);
 		LangRegistry.addItem(this);
-		setCreativeTab(Dovakiin.items);
-		if(isEssence()){
+		setCreativeTab(DovakiinTabs.items);			
+	}
+	
+	public ModItem(boolean flag){
+		if(flag){
+			setCreativeTab(DovakiinTabs.misc);
 			setMaxStackSize(1);
+			LangRegistry.addItem(this);
 		}
 	}
 	

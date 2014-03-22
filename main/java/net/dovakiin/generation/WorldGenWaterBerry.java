@@ -3,7 +3,6 @@ package net.dovakiin.generation;
 import java.util.Random;
 
 import net.dovakiin.Dovakiin;
-import net.dovakiin.api.DovakiinAPI;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
