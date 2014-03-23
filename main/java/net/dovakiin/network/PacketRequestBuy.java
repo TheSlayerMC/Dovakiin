@@ -47,7 +47,7 @@ public class PacketRequestBuy extends AbstractPacket {
 		}
 		if(player.capabilities.isCreativeMode) {
 			player.inventory.addItemStackToInventory(is);
-		} else if(Dovakiin.coins >= cost) {
+		} else if(DataHelper.getCoins(player) >= cost) {
 			player.inventory.addItemStackToInventory(is);
 			useCoins(player, cost);
 		} else { 

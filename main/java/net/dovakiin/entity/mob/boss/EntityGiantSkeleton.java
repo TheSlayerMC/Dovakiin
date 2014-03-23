@@ -109,20 +109,6 @@ public class EntityGiantSkeleton extends EntityMob implements IRangedAttackMob, 
 		return EnumCreatureAttribute.UNDEAD;
 	}
 
-	public void onDeath(DamageSource d) {
-		super.onDeath(d);
-		if(d.getSourceOfDamage() instanceof EntityPlayer){
-			int levels = 0;
-			if(Dovakiin.level >= 16){
-				levels = (int)(rand.nextInt(1) + 1.7);
-			} else {
-				levels = rand.nextInt(4) + 1;
-			}
-			Dovakiin.level += levels;
-			DovakiinAPI.addChatMessage(DovakiinAPI.BLUE, Minecraft.getMinecraft().thePlayer.getDisplayName() + "Has killed the Giant Skeleton and gained " + levels + "levels");
-		}
-	}
-
 	protected void dropFewItems(boolean par1, int par2) {
 		this.dropItem(Dovakiin.skeletonEssence, 1);
 	}

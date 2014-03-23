@@ -5,7 +5,6 @@ import java.util.Random;
 import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
-import net.dovakiin.network.PacketRequestStats;
 import net.dovakiin.util.LangRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -14,7 +13,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -50,7 +48,7 @@ public class DropsEvent {
 	}
 	
 	public static Entity setName(EntityLivingBase entity, String name) {
-		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + Dovakiin.mobLevel);
+		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
 		return entity;
 	}
 
@@ -60,11 +58,9 @@ public class DropsEvent {
 		if(!event.entity.worldObj.isRemote){
 			if(p.getHeldItem().getItem() instanceof ItemSword && event.source.getSourceOfDamage() instanceof EntityPlayer){
 				final int level = rand.nextInt(2) + 1;
-				DataHelper.loadPlayer(p);
-				Dovakiin.packetHandler.sendToServer(new PacketRequestStats());
 				DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
-				p.addChatComponentMessage(DovakiinAPI.addChatMessage("[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
-				p.addChatComponentMessage(DovakiinAPI.addChatMessage("[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
+				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
+				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
 			}
 		}
 	}

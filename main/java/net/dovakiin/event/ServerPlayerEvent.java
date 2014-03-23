@@ -1,8 +1,6 @@
 package net.dovakiin.event;
 
-import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
-import net.dovakiin.network.PacketRequestStats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,8 +14,6 @@ public class ServerPlayerEvent {
 		if(ev.entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) ev.entity;
 			if(!ev.world.isRemote){
-				DataHelper.loadPlayer(player);
-				Dovakiin.packetHandler.sendToServer(new PacketRequestStats());
 				if(!player.inventory.hasItem(Dovakiin.startingBook)) {
 					int es = player.inventory.getFirstEmptyStack();
 					player.inventory.setInventorySlotContents(es, new ItemStack(Dovakiin.startingBook, 1));

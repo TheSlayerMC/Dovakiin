@@ -112,20 +112,6 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 		return false;
 	}
 	
-	public void onDeath(DamageSource d) {
-		super.onDeath(d);
-		if(d.getSourceOfDamage() instanceof EntityPlayer){
-			int levels = 0;
-			if(Dovakiin.level >= 16){
-				levels = (int)(rand.nextInt(1) + 1.7);
-			} else {
-				levels = rand.nextInt(4) + 1;
-			}
-			Dovakiin.level += levels;
-			DovakiinAPI.addChatMessage(DovakiinAPI.BLUE, Minecraft.getMinecraft().thePlayer.getDisplayName() + "Has killed the Giant Zombie and gained " + levels + "levels");
-		}
-	}
-	
 	protected void addRandomArmor() {
 		this.setCurrentItemOrArmor(0, new ItemStack(Items.diamond_sword));
 		this.setCurrentItemOrArmor(4, new ItemStack(Items.golden_helmet));

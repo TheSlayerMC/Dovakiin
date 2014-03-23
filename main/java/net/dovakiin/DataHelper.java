@@ -13,18 +13,9 @@ import net.minecraft.nbt.NBTTagCompound;
 public class DataHelper {
 	
 	private static String sword = "SwordLevel";
-	
-	public static void loadPlayer(EntityPlayer player) {
-		NBTTagCompound nbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-		nbt.setInteger(sword, 0);
-		nbt.setInteger("Level", 0);
-		nbt.setInteger("Coins", 0);
-		nbt.setInteger("MobLevel", 0);
-	}
 
 	public static void setSwordLevel(EntityPlayer player, int level) {
 		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger(sword, level);
-		Dovakiin.sendStats(player);
 		for(int i = 0; i < 10; i++)
 			System.out.println(level);
 		for(int i = 0; i < 10; i++)
@@ -37,7 +28,6 @@ public class DataHelper {
 	
 	public static void setLevel(EntityPlayer player, int level) {
 		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("Level", level);
-		Dovakiin.sendStats(player);
 	}
 
 	public static int getLevel(EntityPlayer player) {
@@ -46,7 +36,6 @@ public class DataHelper {
 	
 	public static void setCoins(EntityPlayer player, int c) {
 		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("Coins", c);
-		Dovakiin.sendStats(player);
 	}
 
 	public static int getCoins(EntityPlayer player) {
@@ -55,7 +44,6 @@ public class DataHelper {
 	
 	public static void setMobLevel(EntityLivingBase e, int l) {
 		e.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("MobLevel", l);
-		Dovakiin.sendStats(Minecraft.getMinecraft().thePlayer);
 	}
 
 	public static int getMobLevel(EntityLivingBase e) {
