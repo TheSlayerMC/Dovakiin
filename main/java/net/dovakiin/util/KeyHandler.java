@@ -1,11 +1,10 @@
 package net.dovakiin.util;
 
 import net.dovakiin.Dovakiin;
-import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.GuiHandler;
+import net.dovakiin.network.PacketOpenGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.EntityPlayer;
 
 import org.lwjgl.input.Keyboard;
 
@@ -24,8 +23,7 @@ public class KeyHandler {
 	public void KeyInputEvent(KeyInputEvent event) {
 		if(stats.isPressed()) {
 			if(Minecraft.getMinecraft().currentScreen == null) {
-				EntityPlayer p = Minecraft.getMinecraft().thePlayer;
-				p.openGui(Dovakiin.instance, GuiHandler.statsGUI, p.worldObj, (int)p.posX, (int)p.posY, (int)p.posZ);
+				Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(GuiHandler.statsGUI));
 			}
 		}
 	}

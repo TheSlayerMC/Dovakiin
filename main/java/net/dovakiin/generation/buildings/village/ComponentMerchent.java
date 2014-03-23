@@ -134,7 +134,7 @@ public class ComponentMerchent extends StructureVillagePieces.House1 {
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 7, 1, 8, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.leaves, 0, 7, 2, 8, sbb);
 
-		spawnVillagers(world, sbb, 4, 1, 2, 1);
+		//spawnVillagers(world, sbb, 4, 1, 2, 1);
 		return true;
 	}
 	

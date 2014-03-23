@@ -7,8 +7,16 @@ import net.dovakiin.api.items.ModInformationBook;
 import net.dovakiin.api.items.ModItem;
 import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.client.GuiHandler;
+import net.dovakiin.network.PacketHandler;
+import net.dovakiin.network.PacketOpenGui;
+import net.dovakiin.network.PacketRefreshStats;
+import net.dovakiin.network.PacketRequestBuy;
+import net.dovakiin.network.PacketRequestStats;
 import net.dovakiin.util.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -18,13 +26,17 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = Utils.MOD_ID, name = Utils.MOD_NAME, version = Utils.MOD_VERSION)
 public class Dovakiin {
 	
-	public static int level = 0; 
-	public static float swordLevel = 0.0F;
+	@SideOnly(Side.CLIENT)
+	public static int level, coins, mobLevel, swordLevel;
 		
+	public static final PacketHandler packetHandler = new PacketHandler();
+	
 	@Instance(Utils.MOD_ID)
 	public static Dovakiin instance;
 	
@@ -95,11 +107,17 @@ public class Dovakiin {
 	@EventHandler
 	public void init(FMLInitializationEvent event){
 		proxy.init(event);
+		packetHandler.init();
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event){
 		proxy.postInit(event);
+		packetHandler.registerPacket(PacketRefreshStats.class);
+		packetHandler.registerPacket(PacketRequestStats.class);
+		packetHandler.registerPacket(PacketOpenGui.class);
+		packetHandler.registerPacket(PacketRequestBuy.class);
+		packetHandler.postInit();
 	}
 	
 	@EventHandler
@@ -107,4 +125,12 @@ public class Dovakiin {
 		proxy.serverStarting(event);
 	}
 	
+	public static void sendStats(EntityPlayer player) {
+		PacketRefreshStats ps = new PacketRefreshStats();
+		ps.mobLevel = DataHelper.getMobLevel(player);
+		ps.level = DataHelper.getLevel(player);
+		ps.swordLevel = DataHelper.getSwordLevel(player);
+		ps.coins = DataHelper.getCoins(player);
+		Dovakiin.packetHandler.sendTo(ps, (EntityPlayerMP)player);
+	}
 }

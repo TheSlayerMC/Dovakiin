@@ -7,16 +7,16 @@ import net.minecraftforge.common.config.Configuration;
 public class Config {
 
 	private static Configuration cfg;
-	private static File file;
 	
-	public static boolean canShowWelcome, canShowInformation;
+	public static boolean canShowWelcome;
 	
 	
 	public static void init() {
-		file = new File("./Dovakiin/Dovakiin.cfg");
-		cfg = new Configuration(file);
+		cfg = new Configuration(new File("./" + Utils.MOD_NAME + "/Dovakiin.cfg"));
+		cfg.load();
+		canShowWelcome 			= cfg.get("Misc", "Can show the welcome messages"  , true).getBoolean(true);
 		
-		canShowWelcome 			=true;//= cfg.get("Misc", "Can show the welcome messages"  , true).getBoolean(true);
-		canShowInformation 		=true;//= cfg.get("Misc", "Can show the ingame information", true).getBoolean(true);
+		
+		cfg.save();
 	}
 }

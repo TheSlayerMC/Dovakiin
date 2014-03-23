@@ -14,19 +14,22 @@ import net.dovakiin.entity.mob.boss.EntityGiantCreeper;
 import net.dovakiin.entity.mob.boss.EntityGiantSkeleton;
 import net.dovakiin.entity.mob.boss.EntityGiantZombie;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
-import net.dovakiin.util.KeyHandler;
+import net.dovakiin.event.ServerPlayerEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.entity.RenderBiped;
+import net.minecraft.client.renderer.ThreadDownloadImageData;
+import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class ClientProxy extends CommonProxy{
 
 	@Override
 	public void registerClient() { 
-		NetworkRegistry.INSTANCE.registerGuiHandler(Dovakiin.instance, new GuiHandler());
-		FMLCommonHandler.instance().bus().register(new KeyHandler());
+		NetworkRegistry nr = NetworkRegistry.INSTANCE;
+		ServerPlayerEvent.register();
+		nr.registerGuiHandler(Dovakiin.instance, new GuiHandler());
 		RenderingRegistry.registerEntityRenderingHandler(EntityGiantSkeleton.class, new RenderSkeletonBoss());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWitherSkeleton.class, new RenderWitherSkeleton());
 		RenderingRegistry.registerEntityRenderingHandler(EntityGiantZombie.class, new RenderZombieBoss());
@@ -35,5 +38,4 @@ public class ClientProxy extends CommonProxy{
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityEgg.class, new RenderEgg());
 	}
-	
 }

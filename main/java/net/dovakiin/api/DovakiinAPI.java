@@ -27,8 +27,6 @@ import cpw.mods.fml.common.registry.VillagerRegistry.IVillageCreationHandler;
 
 public class DovakiinAPI {
 
-	public static EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-
 	public static Logger logger = Logger.getLogger(Utils.MOD_ID);
 	
 	public static void addBucket(Fluid fluid, ItemStack modBucket){

@@ -13,13 +13,16 @@ import net.dovakiin.event.*;
 import net.dovakiin.generation.*;
 import net.dovakiin.generation.buildings.village.ComponentMerchent;
 import net.dovakiin.generation.buildings.village.VillageMerchentHandler;
+import net.dovakiin.network.PacketHandler;
 import net.dovakiin.util.*;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.*;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
@@ -29,12 +32,13 @@ public class CommonProxy {
 	
 	//ClientProxy
 	public void preInit(FMLPreInitializationEvent event){
+		NetworkRegistry nr = NetworkRegistry.INSTANCE;
 		RenderEvent.register();
 		BannedEvent.register();
 		BonemealEvent.register();
 		DropsEvent.register();
-		PlayerEvent.register();
-		
+		ClientPlayerEvent.register();
+		nr.newChannel(Utils.MOD_NAME, new PacketHandler());
 		Config.init();
 		LangRegistry.init();
 		if(Utils.DEBUG){
@@ -43,7 +47,7 @@ public class CommonProxy {
 		    LangRegistry.addEggNames();
 		}
 		LangRegistry.closeFile();
-		
+		FMLCommonHandler.instance().bus().register(new KeyHandler());
 		DovakiinAPI.addVillageCreationHandler(new VillageMerchentHandler());
 		DovakiinAPI.addVillagePiece(ComponentMerchent.class, "MERCHENT");
 		
@@ -58,7 +62,6 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event){
 		GameRegistry.registerWorldGenerator(new BerryWorldGen(), 9);
 		GameRegistry.registerWorldGenerator(new WorldGenerationBuildings(), 10);
-		PlayerEvent.register();
 	}
 	
 	public void postInit(FMLPostInitializationEvent event){ }

@@ -1,5 +1,6 @@
 package net.dovakiin.event;
 
+import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -9,7 +10,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
-public class PlayerEvent {
+public class ClientPlayerEvent {
 
 	@SubscribeEvent
 	public void crafting(ItemCraftedEvent event){
@@ -24,17 +25,9 @@ public class PlayerEvent {
 	}
 
 	@SubscribeEvent
-	public void joined(EntityJoinWorldEvent ev){
-		if(ev.entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) ev.entity;
-			if(!player.inventory.hasItem(Dovakiin.startingBook)) {
-				int es = player.inventory.getFirstEmptyStack();
-				player.inventory.setInventorySlotContents(es, new ItemStack(Dovakiin.startingBook, 1));
-			}
-		}
-	}
+	public void joined(EntityJoinWorldEvent ev){ }
 
 	public static void register(){
-		MinecraftForge.EVENT_BUS.register(new PlayerEvent());
+		MinecraftForge.EVENT_BUS.register(new ClientPlayerEvent());
 	}
 }

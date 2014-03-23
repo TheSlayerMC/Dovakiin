@@ -2,7 +2,11 @@ package net.dovakiin.event;
 
 import java.util.Random;
 
+import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
+import net.dovakiin.api.DovakiinAPI;
+import net.dovakiin.network.PacketRequestStats;
+import net.dovakiin.util.LangRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -10,6 +14,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -36,62 +41,58 @@ public class DropsEvent {
 		}
 	}
 	
+	@SubscribeEvent
 	public void onPlayerLoggedIn(EntityJoinWorldEvent event){
 		Entity entity = event.entity;
 		if(entity instanceof EntityLiving) {
-			setName((EntityLiving) entity, getAlteredEntityName((EntityLiving) entity));
+			setName((EntityLiving) entity, getAlteredEntityName((EntityLiving)entity));
 		}
+	}
+	
+	public static Entity setName(EntityLivingBase entity, String name) {
+		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + Dovakiin.mobLevel);
+		return entity;
 	}
 
 	@SubscribeEvent
 	public void onKilledMob(LivingDeathEvent event){
-		/*EntityPlayer p = (EntityPlayer)event.source.getEntity();
+		EntityPlayer p = (EntityPlayer)event.source.getEntity();
 		if(!event.entity.worldObj.isRemote){
-			if(event.entity instanceof EntityMob && isHoldingSword(p)){
-				float level = rand.nextInt(1) + 0.3F;
-				Dovakiin.swordLevel += level;
-				
-				if(Dovakiin.swordLevel <= 10 && ((ItemSword)Items.diamond_sword).getMaxDamage() > 10000){
-					((ItemSword)Items.diamond_sword).setMaxDamage(((ItemSword)Items.diamond_sword).getMaxDamage() + (int)Dovakiin.swordLevel + 300);
-					((ItemSword)Items.diamond_sword).setTextureName(Utils.PREFIX + "dragonEssence");
-				}
-				
-				if(Dovakiin.swordLevel <= 20){
-					((ItemSword)Items.diamond_sword).setMaxDamage(((ItemSword)Items.diamond_sword).getMaxDamage() + (int)Dovakiin.swordLevel + 600);
-					((ItemSword)Items.diamond_sword).setTextureName(Utils.PREFIX + "creeperEssence");
-				}
-				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.BLUE, "[Dovakiin] " + p.getDisplayName() + " Has Gained " + level + " Levels!"));
+			if(p.getHeldItem().getItem() instanceof ItemSword && !(event.entity instanceof EntityBat)){
+				final int level = rand.nextInt(2) + 1;
+				DataHelper.loadPlayer(p);
+				Dovakiin.packetHandler.sendToServer(new PacketRequestStats());
+
+				DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
+				p.addChatComponentMessage(DovakiinAPI.addChatMessage("[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
+				p.addChatComponentMessage(DovakiinAPI.addChatMessage("[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
 			}
 		}
-		
-		/*if(p.getHeldItem() == null) {
-		} else if(p.getHeldItem().getItem() != null && isHoldingSword(p)) {
-			getUnalteredItemName(p.getHeldItem().getItem());
-		}*/
 	}
 	
 	private String getAlteredEntityName(EntityLiving entity) {
-		return EntityList.getEntityString(entity) + "JAHSBJAGBVHFSVGBA";
+		return EntityList.getEntityString(entity);
 	}
 	
 	private static String getUnalteredItemName(Item item) {
         return StatCollector.translateToLocal(item.getUnlocalizedName() + ".name");
 	}
 	
-	private static Entity setName(EntityLiving entity, String name) {
-		entity.setCustomNameTag(name);
-		return entity;
+	private static String getAlteredItemName(Item item, String name) {
+		LangRegistry.addToFile(item.getUnlocalizedName() + name + ".name=" + name);
+        return StatCollector.translateToLocal(item.getUnlocalizedName() + name + ".name");
 	}
 	
 	private static String getUnalteredName(Entity entity) {
 		String s = EntityList.getEntityString(entity);
-        if(s == null) 
-        	s = "generic";
         return StatCollector.translateToLocal("entity." + s + ".name");
 	}
 
 	private boolean isHoldingSword(EntityPlayer p){
-		return p.getHeldItem().getItem() instanceof ItemSword;
+		if(p.getHeldItem().getItem() instanceof ItemSword){
+			return true;
+		}
+		return false;
 	}
 	
 	public static void register(){
