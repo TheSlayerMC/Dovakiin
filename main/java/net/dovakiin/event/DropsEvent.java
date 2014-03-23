@@ -58,11 +58,10 @@ public class DropsEvent {
 	public void onKilledMob(LivingDeathEvent event){
 		EntityPlayer p = (EntityPlayer)event.source.getEntity();
 		if(!event.entity.worldObj.isRemote){
-			if(p.getHeldItem().getItem() instanceof ItemSword && !(event.entity instanceof EntityBat)){
+			if(p.getHeldItem().getItem() instanceof ItemSword && event.source.getSourceOfDamage() instanceof EntityPlayer){
 				final int level = rand.nextInt(2) + 1;
 				DataHelper.loadPlayer(p);
 				Dovakiin.packetHandler.sendToServer(new PacketRequestStats());
-
 				DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage("[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage("[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
