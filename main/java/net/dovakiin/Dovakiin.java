@@ -2,6 +2,7 @@ package net.dovakiin;
 
 import net.dovakiin.api.blocks.BlockBerryPlant;
 import net.dovakiin.api.blocks.BlockSpawner;
+import net.dovakiin.api.items.ItemCoin;
 import net.dovakiin.api.items.ItemEgg;
 import net.dovakiin.api.items.ModInformationBook;
 import net.dovakiin.api.items.ModItem;
@@ -84,9 +85,10 @@ public class Dovakiin {
 	public static final Item creeperEssence 		= new ModItem(true).registerItem("creeperEssence").setCreativeTab(DovakiinTabs.misc);
 	public static final Item endermanEssence 		= new ModItem(true).registerItem("endermanEssence").setCreativeTab(DovakiinTabs.misc);
 	
-	public static final Item startingBook 			= new ModInformationBook(GuiHandler.startingBook).registerItem("welcome").setCreativeTab(DovakiinTabs.misc);
+	public static final Item startingBook 			= new ModInformationBook(GuiHandler.startingBook).registerItem("welcome");
 	
-	public static final Item basicEgg 			   	= new ItemEgg().registerItem("basicEgg"); 
+	public static final Item basicEgg 			   	= new ItemEgg().registerItem("basicEgg");
+	public static final Item coin 					= new ItemCoin().registerItem("coin");
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){

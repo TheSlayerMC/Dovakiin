@@ -3,6 +3,8 @@ package net.dovakiin.api.items;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
+import net.dovakiin.client.DovakiinTabs;
+import net.dovakiin.network.PacketOpenGui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,11 +17,12 @@ public class ModInformationBook extends ModItem{
 	
 	public ModInformationBook(int guiID){
 		GUI_ID = guiID;
+		setCreativeTab(DovakiinTabs.misc);
 	}
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack i, World w, EntityPlayer p) {
-		DovakiinAPI.openGui(GUI_ID);
+		Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(GUI_ID));
 		return i;
 	}
 	

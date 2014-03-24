@@ -15,38 +15,34 @@ public class DataHelper {
 	private static String sword = "SwordLevel";
 
 	public static void setSwordLevel(EntityPlayer player, int level) {
-		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger(sword, level);
-		for(int i = 0; i < 10; i++)
-			System.out.println(level);
-		for(int i = 0; i < 10; i++)
-			System.out.println(getSwordLevel(player));
+		player.getEntityData().setInteger(sword, level);
 	}
 
 	public static int getSwordLevel(EntityPlayer player) {
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger(sword);
+		return player.getEntityData().getInteger(sword);
 	}
 	
 	public static void setLevel(EntityPlayer player, int level) {
-		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("Level", level);
+		player.getEntityData().setInteger("Level", level);
 	}
 
 	public static int getLevel(EntityPlayer player) {
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("Level");
+		return player.getEntityData().getInteger("Level");
 	}
 	
 	public static void setCoins(EntityPlayer player, int c) {
-		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("Coins", c);
+		player.getEntityData().setInteger("Coins", c);
 	}
 
 	public static int getCoins(EntityPlayer player) {
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("Coins");
+		return player.getEntityData().getInteger("Coins");
 	}
 	
 	public static void setMobLevel(EntityLivingBase e, int l) {
-		e.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("MobLevel", l);
+		e.getEntityData().setInteger("MobLevel", getSwordLevel((EntityPlayer)e) * 2 / 2 + 1);
 	}
 
 	public static int getMobLevel(EntityLivingBase e) {
-		return e.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("MobLevel");
+		return e.getEntityData().getInteger("MobLevel");
 	}
 }

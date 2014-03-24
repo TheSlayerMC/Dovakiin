@@ -47,9 +47,8 @@ public class CommonProxy {
 		    LangRegistry.addEggNames();
 		}
 		LangRegistry.closeFile();
-		FMLCommonHandler.instance().bus().register(new KeyHandler());
-		DovakiinAPI.addVillageCreationHandler(new VillageMerchentHandler());
 		DovakiinAPI.addVillagePiece(ComponentMerchent.class, "MERCHENT");
+		DovakiinAPI.addVillageCreationHandler(new VillageMerchentHandler());
 		
 		DovakiinAPI.registerMob(EntityGiantSkeleton.class, "Giant Skeleton");
 		DovakiinAPI.registerMob(EntityGiantZombie.class, "Giant Zombie");
@@ -57,6 +56,8 @@ public class CommonProxy {
 		DovakiinAPI.registerMob(EntityWitherSkeleton.class, "Wither Skeleton");
 		DovakiinAPI.registerMob(EntityMerchent.class, "Merchent");
 		DovakiinAPI.registerEntity(EntityEgg.class, "Egg");
+		
+		FMLCommonHandler.instance().bus().register(new KeyHandler());
 	}
 	
 	public void init(FMLInitializationEvent event){
