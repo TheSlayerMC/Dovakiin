@@ -47,8 +47,7 @@ public class CommonProxy {
 		    LangRegistry.addEggNames();
 		}
 		LangRegistry.closeFile();
-		DovakiinAPI.addVillagePiece(ComponentMerchent.class, "MERCHENT");
-		DovakiinAPI.addVillageCreationHandler(new VillageMerchentHandler());
+		
 		
 		DovakiinAPI.registerMob(EntityGiantSkeleton.class, "Giant Skeleton");
 		DovakiinAPI.registerMob(EntityGiantZombie.class, "Giant Zombie");
@@ -63,6 +62,8 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event){
 		GameRegistry.registerWorldGenerator(new BerryWorldGen(), 9);
 		GameRegistry.registerWorldGenerator(new WorldGenerationBuildings(), 10);
+		DovakiinAPI.addVillagePiece(ComponentMerchent.class, "MERCHENT");
+		DovakiinAPI.addVillageCreationHandler(new VillageMerchentHandler());
 	}
 	
 	public void postInit(FMLPostInitializationEvent event){ }

@@ -1,5 +1,6 @@
 package net.dovakiin.api;
 
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +29,8 @@ import cpw.mods.fml.common.registry.VillagerRegistry.IVillageCreationHandler;
 public class DovakiinAPI {
 
 	public static Logger logger = Logger.getLogger(Utils.MOD_ID);
+	public static Random rand = new Random();
+	public static EntityPlayer clientPlayer = Minecraft.getMinecraft().thePlayer;
 	
 	public static void addBucket(Fluid fluid, ItemStack modBucket){
 		FluidContainerRegistry.registerFluidContainer(new FluidContainerData(FluidRegistry.getFluidStack(fluid.getName(), FluidContainerRegistry.BUCKET_VOLUME), modBucket, new ItemStack(Items.bucket)));

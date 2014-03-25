@@ -7,6 +7,7 @@ import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.util.LangRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -14,9 +15,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -30,8 +32,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class DropsEvent {
 
-	private Random rand = new Random();
-
 	@SubscribeEvent
 	public void onDrop(LivingDropsEvent event){
 		EntityLivingBase e = event.entityLiving;
@@ -42,8 +42,16 @@ public class DropsEvent {
 		if(e instanceof EntityWither){
 			event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.witherEssence)));
 		}
-		if(e instanceof EntityCreeper){
+		if(e instanceof EntityMob){
 			for(int i = 0; i < r.nextInt(50); i++)
+				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
+		}
+		if(e instanceof EntitySlime){
+			for(int i = 0; i < r.nextInt(10); i++)
+				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
+		}
+		if(e instanceof EntityAnimal){
+			for(int i = 0; i < 1; i++)
 				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 		}
 	}
@@ -54,10 +62,21 @@ public class DropsEvent {
 		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg)) {
 			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
 		}
+		if(entity instanceof EntityEgg){
+			//setEggName((EntityEgg)entity, ((EntityPlayer)event.entity).getDisplayName());
+		}
 	}
 
 	public static Entity setName(EntityLivingBase entity, String name) {
 		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
+		if(EntityList.getEntityString(entity) == "EntityHorse")
+			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Horse" + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
+
+		return entity;
+	}
+
+	public static Entity setEggName(EntityEgg entity, String user) {
+		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + user + "'s Egg");
 		return entity;
 	}
 
@@ -67,8 +86,7 @@ public class DropsEvent {
 			EntityPlayer p = (EntityPlayer)event.source.getSourceOfDamage();
 
 			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
-
-				final int level = rand.nextInt(2) + 1;
+				final int level = DovakiinAPI.rand.nextInt(2) + 1;
 				DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving)));
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));

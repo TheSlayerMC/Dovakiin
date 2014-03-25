@@ -88,8 +88,9 @@ public class EntityEgg extends EntityModMob {
 			EntitySkeleton e = new EntitySkeleton(worldObj);
 			e.setLocationAndAngles(posX, posY, posZ, 360.0F, 0.0F);
 			//worldObj.spawnEntityInWorld(e);
-			this.setDead();
-			//addChatMessage(DovakiinAPI.addChatMessage("Your egg has hatched!"));
+			//this.setDead();
+			EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+			p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.DARK_AQUA + "Your egg has hatched!"));
 		}
 		ticks--;
 	}
