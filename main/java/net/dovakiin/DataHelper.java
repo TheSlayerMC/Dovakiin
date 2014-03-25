@@ -11,38 +11,52 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class DataHelper {
-	
+
 	private static String sword = "SwordLevel";
 
+	public static NBTTagCompound getOrCreatePersistedTag(EntityPlayer player) {
+		if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
+			player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, new NBTTagCompound());
+		}
+		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+	}
+	
+	public static NBTTagCompound getOrCreatePersistedTag(EntityLivingBase player) {
+		if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
+			player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, new NBTTagCompound());
+		}
+		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+	}
+
 	public static void setSwordLevel(EntityPlayer player, int level) {
-		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger(sword, level);
+		getOrCreatePersistedTag(player).setInteger(sword, level);
 	}
 
 	public static int getSwordLevel(EntityPlayer player) {
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger(sword);
+		return getOrCreatePersistedTag(player).getInteger(sword);
 	}
-	
+
 	public static void setLevel(EntityPlayer player, int level) {
-		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("Level", level);
+		getOrCreatePersistedTag(player).setInteger("Level", level);
 	}
 
 	public static int getLevel(EntityPlayer player) {
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("Level");
+		return getOrCreatePersistedTag(player).getInteger("Level");
 	}
-	
+
 	public static void setCoins(EntityPlayer player, int c) {
-		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("Coins", c);
+		getOrCreatePersistedTag(player).setInteger("Coins", c);
 	}
 
 	public static int getCoins(EntityPlayer player) {
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("Coins");
+		return getOrCreatePersistedTag(player).getInteger("Coins");
 	}
-	
+
 	public static void setMobLevel(EntityLivingBase e, int l) {
-		e.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("MobLevel", l);
+		getOrCreatePersistedTag(e).setInteger("Mob Level", l);
 	}
 
 	public static int getMobLevel(EntityLivingBase e) {
-		return e.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("MobLevel");
+		return getOrCreatePersistedTag(e).getInteger("Mob Level");
 	}
 }
