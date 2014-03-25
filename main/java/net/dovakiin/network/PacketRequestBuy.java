@@ -34,8 +34,7 @@ public class PacketRequestBuy extends AbstractPacket {
 	}
 
 	@Override
-	public void handleClientSide(EntityPlayer player) {
-	}
+	public void handleClientSide(EntityPlayer player) { }
 
 	@Override
 	public void handleServerSide(EntityPlayer player) {

@@ -15,34 +15,34 @@ public class DataHelper {
 	private static String sword = "SwordLevel";
 
 	public static void setSwordLevel(EntityPlayer player, int level) {
-		player.getEntityData().setInteger(sword, level);
+		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger(sword, level);
 	}
 
 	public static int getSwordLevel(EntityPlayer player) {
-		return player.getEntityData().getInteger(sword);
+		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger(sword);
 	}
 	
 	public static void setLevel(EntityPlayer player, int level) {
-		player.getEntityData().setInteger("Level", level);
+		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("Level", level);
 	}
 
 	public static int getLevel(EntityPlayer player) {
-		return player.getEntityData().getInteger("Level");
+		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("Level");
 	}
 	
 	public static void setCoins(EntityPlayer player, int c) {
-		player.getEntityData().setInteger("Coins", c);
+		player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("Coins", c);
 	}
 
 	public static int getCoins(EntityPlayer player) {
-		return player.getEntityData().getInteger("Coins");
+		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("Coins");
 	}
 	
 	public static void setMobLevel(EntityLivingBase e, int l) {
-		e.getEntityData().setInteger("MobLevel", getSwordLevel((EntityPlayer)e) * 2 / 2 + 1);
+		e.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setInteger("MobLevel", l);
 	}
 
 	public static int getMobLevel(EntityLivingBase e) {
-		return e.getEntityData().getInteger("MobLevel");
+		return e.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getInteger("MobLevel");
 	}
 }

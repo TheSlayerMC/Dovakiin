@@ -16,6 +16,7 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -24,6 +25,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class DropsEvent {
@@ -61,16 +63,29 @@ public class DropsEvent {
 
 	@SubscribeEvent
 	public void onKilledMob(LivingDeathEvent event){
-		EntityPlayer p = (EntityPlayer)event.source.getEntity();
-		if(!event.entity.worldObj.isRemote){
-			if(p.getHeldItem().getItem() instanceof ItemSword && event.source.getSourceOfDamage() instanceof EntityPlayer){
+		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
+			EntityPlayer p = (EntityPlayer)event.source.getSourceOfDamage();
+
+			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
+
 				final int level = rand.nextInt(2) + 1;
 				DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
+				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving)));
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
 			}
 		}
 	}
+
+	@SubscribeEvent
+	public void onEntitySetTarget(LivingSetAttackTargetEvent event) {
+		if (event.target != null && event.target instanceof EntityPlayer && event.entityLiving.func_94060_bK() != event.target) {
+			if (event.target.isInvisible()) {
+				((EntityLiving)event.entity).setAttackTarget(null);
+			}
+		}
+	}
+
 
 	private String getAlteredEntityName(EntityLiving entity) {
 		return EntityList.getEntityString(entity);
@@ -88,13 +103,6 @@ public class DropsEvent {
 	private static String getUnalteredName(Entity entity) {
 		String s = EntityList.getEntityString(entity);
 		return StatCollector.translateToLocal("entity." + s + ".name");
-	}
-
-	private boolean isHoldingSword(EntityPlayer p){
-		if(p.getHeldItem().getItem() instanceof ItemSword){
-			return true;
-		}
-		return false;
 	}
 
 	public static void register(){
