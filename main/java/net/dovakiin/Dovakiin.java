@@ -11,6 +11,7 @@ import net.dovakiin.client.GuiHandler;
 import net.dovakiin.network.PacketHandler;
 import net.dovakiin.network.PacketOpenGui;
 import net.dovakiin.network.PacketRequestBuy;
+import net.dovakiin.network.PacketSyncServer;
 import net.dovakiin.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -107,6 +108,7 @@ public class Dovakiin {
 		proxy.postInit(event);
 		packetHandler.registerPacket(PacketOpenGui.class);
 		packetHandler.registerPacket(PacketRequestBuy.class);
+		packetHandler.registerPacket(PacketSyncServer.class);
 		packetHandler.postInit();
 	}
 	
