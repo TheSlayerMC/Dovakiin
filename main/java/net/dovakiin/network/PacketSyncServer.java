@@ -12,6 +12,12 @@ public class PacketSyncServer extends AbstractPacket{
 	
 	public PacketSyncServer() { }
 	
+	public PacketSyncServer(EntityPlayer player) {
+		coins = DataHelper.getCoins(player);
+		sword = DataHelper.getSwordLevel(player);
+		level = DataHelper.getLevel(player);
+	}
+	
 	@Override
 	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
 		buffer.writeInt(coins);
@@ -30,12 +36,11 @@ public class PacketSyncServer extends AbstractPacket{
 
 	@Override
 	public void handleClientSide(EntityPlayer player) {
-		
+		DataHelper.getCoins(player);
+		DataHelper.getSwordLevel(player);
+		DataHelper.getLevel(player);
 	}
 
 	@Override
-	public void handleServerSide(EntityPlayer player) {
-		DataHelper.setCoins(player, coins);
-		DataHelper.setSwordLevel(player, sword);
-	}
+	public void handleServerSide(EntityPlayer player) { }
 }

@@ -4,6 +4,7 @@ import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.ContainerEmpty;
 import net.dovakiin.api.DovakiinAPI;
+import net.dovakiin.network.PacketSyncServer;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -34,13 +35,12 @@ public class GuiStats extends GuiContainer {
 		text = "Level: " + DataHelper.getLevel(player);
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 25, 4210752);
 		text = "Sword Level: " + DataHelper.getSwordLevel(player);
-		System.out.println(DataHelper.getSwordLevel(player));//TODO Make an ender plant and other things
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 35, 4210752);
 		text = "Coin Total: " + DataHelper.getCoins(player);
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 45, 4210752);
-		text = "Enemys around: "  + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.monster, true);
+		text = "Enemys around: " + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.monster, true);
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 55, 4210752);
-		text = "Friendly creatures around: "  + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.creature, true);
+		text = "Friendly creatures around: " + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.creature, true);
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 65, 4210752);
 	}
 	

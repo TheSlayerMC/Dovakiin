@@ -7,7 +7,10 @@ import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
+import net.dovakiin.network.PacketSyncServer;
 import net.dovakiin.util.LangRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -58,13 +61,16 @@ public class DropsEvent {
 
 	@SubscribeEvent
 	public void onPlayerLoggedIn(EntityJoinWorldEvent event){
+		Minecraft mc = Minecraft.getMinecraft();
 		Entity entity = event.entity;
+		//if(mc.currentScreen != null){
 		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent)) {
 			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
 		}
 		if(entity instanceof EntityEgg){
 			//setEggName((EntityEgg)entity, ((EntityPlayer)event.entity).getDisplayName());
 		}
+		//}
 	}
 
 	public static Entity setName(EntityLivingBase entity, String name) {
@@ -92,6 +98,7 @@ public class DropsEvent {
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
 			}
+			Dovakiin.packetHandler.sendToServer(new PacketSyncServer(p));
 		}
 	}
 
