@@ -111,7 +111,6 @@ public class DropsEvent {
 		}
 	}
 
-
 	private String getAlteredEntityName(EntityLiving entity) {
 		return EntityList.getEntityString(entity);
 	}
