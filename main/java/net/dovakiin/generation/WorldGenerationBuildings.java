@@ -27,7 +27,7 @@ public class WorldGenerationBuildings implements IWorldGenerator{
 			int yPos = random.nextInt(80);
 			int zPos = z + random.nextInt(16) + 8;
 			if(random.nextInt(8) == 0) {
-				(new GenIceHouse()).generate(world, random, xPos, yPos, zPos);
+				//(new GenIceHouse()).generate(world, random, xPos, yPos, zPos);
 			}
 		}
 	}

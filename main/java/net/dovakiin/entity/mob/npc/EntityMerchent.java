@@ -72,7 +72,7 @@ public class EntityMerchent extends EntityModMob{
 	@Override
 	protected boolean interact(EntityPlayer par1EntityPlayer) {
 		if(!par1EntityPlayer.worldObj.isRemote){
-			switch(rand.nextInt(3)){
+			switch(rand.nextInt(5)){
 			case 0:
 				par1EntityPlayer.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "Merchent: " + DovakiinAPI.YELLOW + "Welcome!"));
 				break;
@@ -84,6 +84,10 @@ public class EntityMerchent extends EntityModMob{
 				break;
 			case 3:
 				par1EntityPlayer.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "Merchent: " + DovakiinAPI.YELLOW + "We have shiny things!"));
+				break;
+			case 4:
+				par1EntityPlayer.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "Merchent: " + DovakiinAPI.YELLOW + "Take a look around?"));
+				break;
 			}
 			DovakiinAPI.openGui(GuiHandler.startingBook);
 			return true;

@@ -17,16 +17,17 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderEgg extends RenderLiving {
 
-	private ModelBase model;
-	//private static final ResourceLocation tex = new ResourceLocation(Utils.PREFIX + "textures/entity/egg.png");
-	private static final ResourceLocation tex = new ResourceLocation(Utils.PREFIX + "textures/entity/dragonEgg.png");
-
-    public RenderEgg() {
-        super(new ModelDragonEgg(), 0.2F);
+	private ResourceLocation texture;
+	private float fl;
+	
+    public RenderEgg(ResourceLocation r, float f) {
+        super(new ModelDragonEgg(), f / 2 - 2);
+        texture = r;
+        fl = f;
     }
 
     protected ResourceLocation getEntityTexture(EntityEgg par1EntityCow) {
-        return tex;
+        return texture;
     }
 
     protected ResourceLocation getEntityTexture(Entity par1Entity) {
@@ -34,6 +35,6 @@ public class RenderEgg extends RenderLiving {
     }
     
     protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2) {
-    	GL11.glScalef(0.3F, 0.3F, 0.3F);
+    	GL11.glScalef(fl, fl, fl);
     }
 }

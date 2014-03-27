@@ -30,7 +30,15 @@ public class DovakiinAPI {
 
 	public static Logger logger = Logger.getLogger(Utils.MOD_ID);
 	public static Random rand = new Random();
-	public static EntityPlayer clientPlayer = Minecraft.getMinecraft().thePlayer;
+	private static EntityPlayer clientPlayer = Minecraft.getMinecraft().thePlayer;
+	
+	public static EntityPlayer getClientPlayer(){
+		return clientPlayer;
+	}
+	
+	public static String getClientPlayerName(){
+		return clientPlayer.getDisplayName();
+	}
 	
 	public static void addBucket(Fluid fluid, ItemStack modBucket){
 		FluidContainerRegistry.registerFluidContainer(new FluidContainerData(FluidRegistry.getFluidStack(fluid.getName(), FluidContainerRegistry.BUCKET_VOLUME), modBucket, new ItemStack(Items.bucket)));
@@ -45,6 +53,12 @@ public class DovakiinAPI {
 		int entityID = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityID);
 	}
+	
+	public static void registerEggEntity(Class entityClass, String colour) {
+		int entityID = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(entityClass, colour + " Dragon Egg", entityID);
+	}
+
 
 	public static ChatComponentTranslation addChatMessage(String colour, String str, Object... args) {
 		ChatComponentTranslation ret = new ChatComponentTranslation(colour + str, args);
@@ -72,6 +86,10 @@ public class DovakiinAPI {
 	public static ChatComponentTranslation addChatMessage(String str, Object... args) {
 		ChatComponentTranslation ret = new ChatComponentTranslation(str, args);
 		return ret;
+	}
+	
+	public static void sendChatMessage(EntityPlayer player, String message){
+		player.addChatMessage(addChatMessage(message));
 	}
 
 	public static void openGui(int id){

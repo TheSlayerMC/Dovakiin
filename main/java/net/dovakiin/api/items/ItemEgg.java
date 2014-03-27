@@ -5,6 +5,7 @@ import java.util.Random;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.entity.misc.EntityEgg;
+import net.dovakiin.entity.misc.egg.EntityGreenDragonEgg;
 import net.dovakiin.util.LangRegistry;
 import net.dovakiin.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,13 +26,14 @@ public class ItemEgg extends Item{
 	@Override
 	public boolean onItemUse(ItemStack i, EntityPlayer p, World w, int x, int y, int z, int par7, float par8, float par9, float par10) {
 		if(!w.isRemote){
+			EntityEgg e = null;
 			if(i.getItem() == Dovakiin.basicEgg){
-				EntityEgg e = new EntityEgg(w);
-				e.setLocationAndAngles(x + 0.5, y + 1.5, z + 0.5, rand.nextFloat() * 360F, 0.0F);
-				w.spawnEntityInWorld(e);
-				i.stackSize--;
-				return true;
+				e = new EntityGreenDragonEgg(w);
 			}
+			e.setLocationAndAngles(x + 0.5, y + 1.5, z + 0.5, rand.nextFloat() * 360F, 0.0F);
+			w.spawnEntityInWorld(e);
+			i.stackSize--;
+			return true;
 		}
 		return false;
 	}

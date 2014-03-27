@@ -9,7 +9,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
 
-	public static int gui = 0, statsGUI = gui++, startingBook = gui++;
+	public static int gui = 0, statsGUI = gui++, startingBook = gui++, greenDragon = gui++;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

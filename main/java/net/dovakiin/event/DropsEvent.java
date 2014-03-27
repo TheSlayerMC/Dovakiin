@@ -6,8 +6,8 @@ import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.entity.misc.EntityEgg;
+import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.util.LangRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -59,7 +59,7 @@ public class DropsEvent {
 	@SubscribeEvent
 	public void onPlayerLoggedIn(EntityJoinWorldEvent event){
 		Entity entity = event.entity;
-		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg)) {
+		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent)) {
 			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
 		}
 		if(entity instanceof EntityEgg){

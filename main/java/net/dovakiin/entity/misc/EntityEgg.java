@@ -1,39 +1,39 @@
 package net.dovakiin.entity.misc;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.dovakiin.Dovakiin;
-import net.dovakiin.api.DovakiinAPI;
-import net.dovakiin.client.GuiHandler;
-import net.dovakiin.entity.mob.boss.EntityGiantCreeper;
-import net.dovakiin.entity.mob.boss.EntityGiantZombie;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
+import net.dovakiin.client.Sounds;
+import net.dovakiin.network.PacketOpenGui;
+import net.dovakiin.util.Utils;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityEgg extends EntityModMob {
 
-	public int ticks;
+	protected int ticks, guiID;
+	public boolean light = worldObj.getBlockLightValue((int)posX, (int)posY, (int)posZ) >= 4;
 
-	public EntityEgg(World par1World) {
+	public EntityEgg(World par1World, int tick, int GUI) {
 		super(par1World);
 		setSize(0.4F, 0.5F);
-		ticks = rand.nextInt(100) + 10;
+		ticks = tick;
+		guiID = GUI;
 		isImmuneToFire = true;
 		this.experienceValue = 0;
 	}
 
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0D);
 	}
 
+	public String playSound(String sounds){
+		return Sounds.playSound(Utils.PREFIX + sounds, worldObj, this);
+	}
+	
 	@Override
 	protected boolean canDespawn() {
 		return false;
@@ -81,18 +81,12 @@ public class EntityEgg extends EntityModMob {
 	}
 
 	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		boolean light = worldObj.getBlockLightValue((int)posX, (int)posY, (int)posZ) >= 4;
-		if(ticks == 0 && !worldObj.isRemote && light){
-			EntitySkeleton e = new EntitySkeleton(worldObj);
-			e.setLocationAndAngles(posX, posY, posZ, 360.0F, 0.0F);
-			//worldObj.spawnEntityInWorld(e);
-			//this.setDead();
-			EntityPlayer p = Minecraft.getMinecraft().thePlayer;
-			p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.DARK_AQUA + "Your egg has hatched!"));
+	protected boolean interact(EntityPlayer par1EntityPlayer) {
+		if(ticks != 0){
+			Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(guiID));
+			return true;
 		}
-		ticks--;
+		return super.interact(par1EntityPlayer);
 	}
 
 	@Override
@@ -101,7 +95,5 @@ public class EntityEgg extends EntityModMob {
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
 		super.onDeath(par1DamageSource);
-		
-		
 	}
 }

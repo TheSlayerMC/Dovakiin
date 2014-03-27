@@ -7,7 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class PacketSyncServer extends AbstractPacket{
 
-	public static int coins, sword, level, mob;
+	private int coins, sword, level, mob;
+	
+	
+	public PacketSyncServer() { }
 	
 	@Override
 	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
@@ -32,8 +35,7 @@ public class PacketSyncServer extends AbstractPacket{
 
 	@Override
 	public void handleServerSide(EntityPlayer player) {
-		DataHelper.setCoins(player, DataHelper.getCoins(player));
-		DataHelper.setSwordLevel(player, DataHelper.getSwordLevel(player));
+		DataHelper.setCoins(player, coins);
+		DataHelper.setSwordLevel(player, sword);
 	}
-
 }

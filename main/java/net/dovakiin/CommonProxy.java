@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import net.dovakiin.api.*;
 import net.dovakiin.client.*;
 import net.dovakiin.entity.misc.EntityEgg;
+import net.dovakiin.entity.misc.egg.EntityGreenDragonEgg;
 import net.dovakiin.entity.mob.EntityWitherSkeleton;
 import net.dovakiin.entity.mob.boss.*;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
@@ -54,7 +55,7 @@ public class CommonProxy {
 		DovakiinAPI.registerMob(EntityGiantCreeper.class, "Giant Creeper");
 		DovakiinAPI.registerMob(EntityWitherSkeleton.class, "Wither Skeleton");
 		DovakiinAPI.registerMob(EntityMerchent.class, "Merchent");
-		DovakiinAPI.registerEntity(EntityEgg.class, "Egg");
+		DovakiinAPI.registerEntity(EntityGreenDragonEgg.class, "Green");
 		
 		FMLCommonHandler.instance().bus().register(new KeyHandler());
 	}
@@ -62,7 +63,8 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event){
 		GameRegistry.registerWorldGenerator(new BerryWorldGen(), 9);
 		GameRegistry.registerWorldGenerator(new WorldGenerationBuildings(), 10);
-		DovakiinAPI.addVillagePiece(ComponentMerchent.class, "MERCHENT");
+		
+		DovakiinAPI.addVillagePiece(ComponentMerchent.class, "Merchent");
 		DovakiinAPI.addVillageCreationHandler(new VillageMerchentHandler());
 	}
 	

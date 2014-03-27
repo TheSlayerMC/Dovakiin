@@ -15,6 +15,7 @@ import net.dovakiin.entity.mob.boss.EntityGiantSkeleton;
 import net.dovakiin.entity.mob.boss.EntityGiantZombie;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.event.ServerPlayerEvent;
+import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.ThreadDownloadImageData;
@@ -24,6 +25,10 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class ClientProxy extends CommonProxy{
+
+	//private static final ResourceLocation greenDragon = new ResourceLocation(Utils.PREFIX + "textures/entity/egg.png");
+	private static final ResourceLocation basicEgg = new ResourceLocation(Utils.PREFIX + "textures/entity/dragonEgg.png");
+
 
 	@Override
 	public void registerClient() { 
@@ -36,6 +41,6 @@ public class ClientProxy extends CommonProxy{
 		RenderingRegistry.registerEntityRenderingHandler(EntityGiantCreeper.class, new RenderCreeperBoss());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMerchent.class, new RenderMerchent());
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityEgg.class, new RenderEgg());
+		RenderingRegistry.registerEntityRenderingHandler(EntityEgg.class, new RenderEgg(basicEgg, 0.7F));
 	}
 }
