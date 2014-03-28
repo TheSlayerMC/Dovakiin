@@ -9,14 +9,15 @@ public class Config {
 	private static Configuration cfg;
 	
 	public static boolean canShowWelcome;
-	
-	
+
 	public static void init() {
-		cfg = new Configuration(new File("./" + Utils.MOD_NAME + "/Dovakiin.cfg"));
+		cfg = new Configuration(new File("./" + Utils.MOD_NAME + "/" + Utils.MOD_NAME + ".cfg"));
 		cfg.load();
-		canShowWelcome 			= cfg.get("Misc", "Can show the welcome messages"  , true).getBoolean(true);
-		
-		
+		misc();
 		cfg.save();
+	}
+	
+	public static void misc(){
+		canShowWelcome = cfg.get("Misc", "Show the welcome message", true).getBoolean(true);
 	}
 }

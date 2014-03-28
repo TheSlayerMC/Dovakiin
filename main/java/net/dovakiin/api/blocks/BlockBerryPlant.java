@@ -18,9 +18,13 @@ import net.minecraftforge.common.IShearable;
 
 public class BlockBerryPlant extends ModBlock implements IShearable {
 	
-	public BlockBerryPlant() {
+	public BlockBerryPlant(boolean ripe) {
 		super(Material.leaves);
-		setCreativeTab(DovakiinTabs.blocks);
+		if(ripe){
+			setCreativeTab(null);
+		}else{
+			setCreativeTab(DovakiinTabs.blocks);
+		}
 		setHardness(0.4F);
 		setTickRandomly(true);
 		setStepSound(Block.soundTypeGrass);

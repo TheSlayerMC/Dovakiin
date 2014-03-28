@@ -33,7 +33,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class DropsEvent {
+public class LevelEvent {
 
 	@SubscribeEvent
 	public void onDrop(LivingDropsEvent event){
@@ -70,6 +70,9 @@ public class DropsEvent {
 		if(entity instanceof EntityEgg){
 			//setEggName((EntityEgg)entity, ((EntityPlayer)event.entity).getDisplayName());
 		}
+		if(entity instanceof EntityMerchent){
+			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
+		}
 		//}
 	}
 
@@ -77,7 +80,9 @@ public class DropsEvent {
 		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
 		if(EntityList.getEntityString(entity) == "EntityHorse")
 			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Horse" + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
-
+		if(EntityList.getEntityString(entity) == "Merchent")
+			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Merchent");
+		
 		return entity;
 	}
 
@@ -130,6 +135,6 @@ public class DropsEvent {
 	}
 
 	public static void register(){
-		MinecraftForge.EVENT_BUS.register(new DropsEvent());
+		MinecraftForge.EVENT_BUS.register(new LevelEvent());
 	}
 }

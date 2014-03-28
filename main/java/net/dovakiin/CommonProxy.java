@@ -34,12 +34,12 @@ public class CommonProxy {
 	//ClientProxy
 	public void preInit(FMLPreInitializationEvent event){
 		NetworkRegistry nr = NetworkRegistry.INSTANCE;
+		nr.newChannel(Utils.MOD_NAME, new PacketHandler());
 		RenderEvent.register();
 		BannedEvent.register();
 		BonemealEvent.register();
-		DropsEvent.register();
+		LevelEvent.register();
 		ClientPlayerEvent.register();
-		nr.newChannel(Utils.MOD_NAME, new PacketHandler());
 		Config.init();
 		LangRegistry.init();
 		if(Utils.DEBUG){

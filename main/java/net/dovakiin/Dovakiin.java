@@ -68,12 +68,12 @@ public class Dovakiin {
 	public static final Block giantZombieSpawner 	= new BlockSpawner("Giant Zombie")	 .registerBlock("zombieBossSpawner");
 	public static final Block giantZombieCreeper 	= new BlockSpawner("Giant Creeper")	 .registerBlock("creeperBossSpawner");
 
-	public static final Block greenBerryBush 		= new BlockBerryPlant()				 .registerBlock("greenBerryBush");
-	public static final Block greenBerryBushRipe 	= new BlockBerryPlant()				 .registerBlock("greenBerryBushRipe");
-	public static final Block waterBerryBush 		= new BlockBerryPlant()				 .registerBlock("waterBerryBush").setLightLevel(1.0F);
-	public static final Block waterBerryBushRipe 	= new BlockBerryPlant()				 .registerBlock("waterBerryBushRipe").setLightLevel(1.0F);
-	public static final Block desertBerryBush 		= new BlockBerryPlant()				 .registerBlock("desertBerryBush");
-	public static final Block desertBerryBushRipe 	= new BlockBerryPlant()				 .registerBlock("desertBerryBushRipe");
+	public static final Block greenBerryBush 		= new BlockBerryPlant(false)		 .registerBlock("greenBerryBush");
+	public static final Block greenBerryBushRipe 	= new BlockBerryPlant(true)			 .registerBlock("greenBerryBushRipe");
+	public static final Block waterBerryBush 		= new BlockBerryPlant(false)		 .registerBlock("waterBerryBush").setLightLevel(1.0F);
+	public static final Block waterBerryBushRipe 	= new BlockBerryPlant(true)			 .registerBlock("waterBerryBushRipe").setLightLevel(1.0F);
+	public static final Block desertBerryBush 		= new BlockBerryPlant(false)		 .registerBlock("desertBerryBush");
+	public static final Block desertBerryBushRipe 	= new BlockBerryPlant(true)			 .registerBlock("desertBerryBushRipe");
 
 	public static final Item greenBerry 			= new ModItem().registerItem("greenBerry");
 	public static final Item desertBerry 			= new ModItem().registerItem("desertBerry");
@@ -88,7 +88,7 @@ public class Dovakiin {
 	
 	public static final Item startingBook 			= new ModInformationBook(GuiHandler.startingBook).registerItem("welcome");
 	
-	public static final Item basicEgg 			   	= new ItemEgg().registerItem("basicEgg");
+	public static final Item greenDragon 			= new ItemEgg().registerItem("basicEgg");
 	public static final Item coin 					= new ItemCoin().registerItem("coin");
 	
 	@EventHandler
