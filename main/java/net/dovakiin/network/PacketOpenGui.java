@@ -6,6 +6,7 @@ import net.dovakiin.Dovakiin;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class PacketOpenGui extends AbstractPacket {
+	
 	private int id;
 
 	public PacketOpenGui setID(int id) {
@@ -24,8 +25,7 @@ public class PacketOpenGui extends AbstractPacket {
 	}
 
 	@Override
-	public void handleClientSide(EntityPlayer player) {
-	}
+	public void handleClientSide(EntityPlayer player) { }
 
 	@Override
 	public void handleServerSide(EntityPlayer player) {

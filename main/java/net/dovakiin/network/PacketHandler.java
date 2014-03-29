@@ -11,7 +11,9 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 
+import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,7 +43,7 @@ public class PacketHandler extends MessageToMessageCodec<FMLProxyPacket, Abstrac
 	 */
 	public boolean registerPacket(Class<? extends AbstractPacket> clazz) {
 		if(this.packets.size() > 256) {
-			// You should log here!!
+			DovakiinAPI.logger.log(Level.SEVERE, "[DOVAKIIN] More than 256 packets have been registered!!! This is bad!");
 			return false;
 		}
 		if(this.packets.contains(clazz)) {

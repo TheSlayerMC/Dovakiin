@@ -14,7 +14,7 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 
-public class ComponentMerchent extends StructureVillagePieces.House1 {
+public class ComponentMerchent extends StructureVillagePieces.Village {
 
 	private int averageGroundLevel = -1;
 
@@ -88,7 +88,7 @@ public class ComponentMerchent extends StructureVillagePieces.House1 {
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 8, 1, 0, sbb);//Left
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 8, 2, 0, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 8, 3, 0, sbb);
-		
+
 		for(int l = 0; l < 8; l++)
 			this.placeBlockAtCurrentPosition(world, Blocks.glass_pane, 0, 8, 2, l + 1, sbb);
 
@@ -105,13 +105,13 @@ public class ComponentMerchent extends StructureVillagePieces.House1 {
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 8, 1, 9, sbb);//Left back
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 8, 2, 9, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 8, 3, 9, sbb);
-		
+
 		for(int b = 0; b < 4; b++)
 			this.placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, 1, 1, b + 1, sbb);
-		
+
 		this.placeBlockAtCurrentPosition(world, Blocks.lit_redstone_lamp, 0, 2, 0, 2, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.redstone_torch, 0, 2, -1, 2, sbb);
-		
+
 		this.placeBlockAtCurrentPosition(world, Blocks.lit_redstone_lamp, 0, 6, 0, 2, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.redstone_torch, 0, 6, -1, 2, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.fence, 0, 6, 1, 2, sbb);
@@ -123,7 +123,7 @@ public class ComponentMerchent extends StructureVillagePieces.House1 {
 
 		this.placeBlockAtCurrentPosition(world, Blocks.lit_redstone_lamp, 0, 6, 0, 7, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.redstone_torch, 0, 6, -1, 7, sbb);
-		
+
 		this.placeBlockAtCurrentPosition(world, Blocks.lit_redstone_lamp, 0, 2, 0, 7, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.redstone_torch, 0, 2, -1, 7, sbb);
 		for(int b = 0; b < 5; b++)
@@ -134,45 +134,13 @@ public class ComponentMerchent extends StructureVillagePieces.House1 {
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 7, 1, 8, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.leaves, 0, 7, 2, 8, sbb);
 
-		//spawnVillagers(world, sbb, 4, 1, 2, 1);
+		EntityMerchent m = new EntityMerchent(world);
+		m.setLocationAndAngles(4, 2, 6, 0.0F, 0.0F);
+		world.spawnEntityInWorld(m);
+		
 		return true;
 	}
-	
-    private int villagersSpawned;
-	
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
-    {
-        par1NBTTagCompound.setInteger("VCount", this.villagersSpawned);
-    }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
-    {
-        this.villagersSpawned = par1NBTTagCompound.getInteger("VCount");
-    }
-
-	protected void spawnVillagers(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6)
-    {
-        if (this.villagersSpawned < par6)
-        {
-            for (int i1 = this.villagersSpawned; i1 < par6; ++i1)
-            {
-                int j1 = 4;
-                int k1 = 1;
-                int l1 = 7;
-
-                if (!par2StructureBoundingBox.isVecInside(j1, k1, l1))
-                {
-                    break;
-                }
-
-                ++this.villagersSpawned;
-                EntityMerchent entityvillager = new EntityMerchent(par1World);
-                entityvillager.setLocationAndAngles((double)j1, (double)k1 + 0.5D, (double)l1, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entityvillager);
-            }
-        }
-    }
-	
 	private void fill(int x, int y, int z, int x1, int y1, int z1, Block b){
 		this.fillWithBlocks(w, sbb, x, y, z, x1, y1, z1, b, b, false);
 	}
