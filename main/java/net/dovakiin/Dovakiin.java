@@ -1,6 +1,7 @@
 package net.dovakiin;
 
 import net.dovakiin.api.blocks.BlockBerryPlant;
+import net.dovakiin.api.blocks.BlockBucketInteraction;
 import net.dovakiin.api.blocks.BlockSpawner;
 import net.dovakiin.api.items.ItemCoin;
 import net.dovakiin.api.items.ItemEgg;
@@ -68,6 +69,8 @@ public class Dovakiin {
 	public static final Block giantZombieSpawner 	= new BlockSpawner("Giant Zombie")	 .registerBlock("zombieBossSpawner");
 	public static final Block giantZombieCreeper 	= new BlockSpawner("Giant Creeper")	 .registerBlock("creeperBossSpawner");
 
+	public static final Block bucketInteraction 	= new BlockBucketInteraction()	 	 .registerBlock("bucketFiller");
+	
 	public static final Block greenBerryBush 		= new BlockBerryPlant(false)		 .registerBlock("greenBerryBush");
 	public static final Block greenBerryBushRipe 	= new BlockBerryPlant(true)			 .registerBlock("greenBerryBushRipe");
 	public static final Block waterBerryBush 		= new BlockBerryPlant(false)		 .registerBlock("waterBerryBush").setLightLevel(1.0F);

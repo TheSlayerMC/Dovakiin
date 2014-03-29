@@ -9,7 +9,6 @@ public class PacketSyncServer extends AbstractPacket{
 
 	private int coins, sword, level, mob;
 	
-	
 	public PacketSyncServer() { }
 	
 	public PacketSyncServer(EntityPlayer player) {

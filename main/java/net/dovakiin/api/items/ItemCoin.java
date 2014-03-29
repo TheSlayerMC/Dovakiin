@@ -20,7 +20,6 @@ public class ItemCoin extends ModItem{
 			if(e instanceof EntityPlayer){
 				EntityPlayer p = (EntityPlayer)e;
 				DataHelper.setCoins(p, DataHelper.getCoins(p) + i.stackSize);
-				int es = p.inventory.getFirstEmptyStack();
 				p.inventory.setInventorySlotContents(j, null);
 			} else {
 				i = null;
@@ -33,11 +32,6 @@ public class ItemCoin extends ModItem{
 				i = null;
 			}
 		}
-	}
-
-	@Override
-	public boolean shouldRotateAroundWhenRendering() {
-		return true;
 	}
 
 	@Override

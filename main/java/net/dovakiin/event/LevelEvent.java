@@ -1,5 +1,6 @@
 package net.dovakiin.event;
 
+import java.awt.List;
 import java.util.Random;
 
 import net.dovakiin.DataHelper;
@@ -9,8 +10,8 @@ import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.network.PacketSyncServer;
 import net.dovakiin.util.LangRegistry;
+import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -21,7 +22,9 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -38,7 +41,7 @@ public class LevelEvent {
 	@SubscribeEvent
 	public void onDrop(LivingDropsEvent event){
 		EntityLivingBase e = event.entityLiving;
-		Random r = new Random();
+		Random r = DovakiinAPI.rand;
 		if(e instanceof EntityDragon){
 			event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.dragonEssence)));
 		}
@@ -46,15 +49,15 @@ public class LevelEvent {
 			event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.witherEssence)));
 		}
 		if(e instanceof EntityMob){
-			for(int i = 0; i < r.nextInt(50); i++)
+			for(int i = 0; i < r.nextInt(80); i++)
 				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 		}
 		if(e instanceof EntitySlime){
-			for(int i = 0; i < r.nextInt(10); i++)
+			for(int i = 0; i < r.nextInt(20); i++)
 				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 		}
 		if(e instanceof EntityAnimal){
-			for(int i = 0; i < 1; i++)
+			for(int i = 0; i < r.nextInt(2) + 1; i++)
 				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 		}
 	}
@@ -78,9 +81,9 @@ public class LevelEvent {
 
 	public static Entity setName(EntityLivingBase entity, String name) {
 		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
-		if(EntityList.getEntityString(entity) == "EntityHorse")
+		if(entity instanceof EntityHorse)
 			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Horse" + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
-		if(EntityList.getEntityString(entity) == "Merchent")
+		if(entity instanceof EntityMerchent)
 			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Merchent");
 		
 		return entity;
@@ -95,10 +98,11 @@ public class LevelEvent {
 	public void onKilledMob(LivingDeathEvent event){
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
 			EntityPlayer p = (EntityPlayer)event.source.getSourceOfDamage();
-
+			
 			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
 				final int level = DovakiinAPI.rand.nextInt(2) + 1;
 				DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
+				
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving)));
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
