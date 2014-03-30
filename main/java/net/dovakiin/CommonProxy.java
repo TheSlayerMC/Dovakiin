@@ -36,6 +36,7 @@ public class CommonProxy {
 	
 	//ClientProxy
 	public void preInit(FMLPreInitializationEvent event){
+		Config.init();
 		NetworkRegistry nr = NetworkRegistry.INSTANCE;
 		nr.newChannel(Utils.MOD_NAME, new PacketHandler());
 		RenderEvent.register();
@@ -43,7 +44,6 @@ public class CommonProxy {
 		BonemealEvent.register();
 		LevelEvent.register();
 		//ClientPlayerEvent.register();
-		Config.init();
 		LangRegistry.init();
 		if(Utils.DEBUG){
 		    LangRegistry.addBlockNames();

@@ -1,8 +1,10 @@
 package net.dovakiin.entity.mob.npc;
 
+import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.GuiHandler;
 import net.dovakiin.entity.misc.EntityModMob;
+import net.dovakiin.network.PacketOpenGui;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -89,7 +91,7 @@ public class EntityMerchent extends EntityModMob{
 				par1EntityPlayer.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "Merchent: " + DovakiinAPI.YELLOW + "Take a look around?"));
 				break;
 			}
-			DovakiinAPI.openGui(GuiHandler.startingBook);
+			Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(GuiHandler.merchent));
 			return true;
 		}
 		return super.interact(par1EntityPlayer);

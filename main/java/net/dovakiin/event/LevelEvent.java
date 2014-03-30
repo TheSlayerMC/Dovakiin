@@ -45,9 +45,13 @@ public class LevelEvent {
 		Random r = DovakiinAPI.rand;
 		if(e instanceof EntityDragon){
 			event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.dragonEssence)));
+			for(int i = 0; i < r.nextInt(500); i++)
+				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 		}
 		if(e instanceof EntityWither){
 			event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.witherEssence)));
+			for(int i = 0; i < r.nextInt(500); i++)
+				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 		}
 		if(e instanceof EntityMob){
 			for(int i = 0; i < r.nextInt(80); i++)
@@ -79,6 +83,7 @@ public class LevelEvent {
 	}
 
 	public static Entity setName(EntityLivingBase entity, String name) {
+		EntityPlayer p = DovakiinAPI.getClientPlayer();
 		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
 		if(entity instanceof EntityMerchent)
 			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Merchent");

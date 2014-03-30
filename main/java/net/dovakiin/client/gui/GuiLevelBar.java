@@ -2,17 +2,20 @@ package net.dovakiin.client.gui;
 
 import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
+import net.dovakiin.api.ContainerEmpty;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiLevelBar {
+public class GuiLevelBar{
 
 	private static ResourceLocation bar = new ResourceLocation(Utils.PREFIX + "textures/gui/levelBar.png");
 
@@ -45,5 +48,7 @@ public class GuiLevelBar {
 		}else{
 			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + level, w1 + 118, h1 + 6, 0, false);
 		}
+		String s = "Coins: " + DataHelper.getCoins(p);
+		mc.fontRenderer.drawString(DovakiinAPI.GOLD + s, w1 + 110, h1 + 20, 0, false);
 	}
 }

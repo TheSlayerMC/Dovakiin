@@ -134,6 +134,8 @@ public class ComponentMerchent extends StructureVillagePieces.Village {
 
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 7, 1, 8, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.leaves, 0, 7, 2, 8, sbb);
+		this.placeBlockAtCurrentPosition(world, Dovakiin.bucketInteraction, 0, 7, 1, 7, sbb);
+		this.placeBlockAtCurrentPosition(world, Dovakiin.bucketInteraction, 0, 2, 1, 1, sbb);
 
 		return true;
 	}

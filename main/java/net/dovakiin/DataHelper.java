@@ -51,7 +51,8 @@ public class DataHelper {
 	}
 
 	public static int getMobLevel(EntityLivingBase player) {
-		return player.worldObj.isRemote ? Dovakiin.mobLevel : player.getEntityData().getInteger("Mob Level");
+		//return player.worldObj.isRemote ? Dovakiin.mobLevel : player.getEntityData().getInteger("Mob Level");
+		return DovakiinAPI.rand.nextInt(20) + 2;
 	}
 	
 	public static NBTTagCompound getNBT(EntityPlayer player) {
