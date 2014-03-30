@@ -32,13 +32,8 @@ public class DataHelper {
 		return player.worldObj.isRemote ? Dovakiin.level : getNBT(player).getInteger("Level");
 	}
 	
-	public static void setMaxLevel(EntityPlayer player, int level){
-		getNBT(player).setInteger("Max Level", level);
-		Dovakiin.sendStats(player);
-	}
-	
-	public static int getMaxLevel(EntityPlayer player) {
-		return player.worldObj.isRemote ? Dovakiin.maxLevel : getNBT(player).getInteger("Max Level");
+	public static int getMaxLevel() {
+		return 245;
 	}
 
 	public static void setCoins(EntityPlayer player, int c) {
@@ -50,20 +45,16 @@ public class DataHelper {
 		return player.worldObj.isRemote ? Dovakiin.coins : getNBT(player).getInteger("Coins");
 	}
 
-	public static void setMobLevel(EntityLivingBase e, int l) {
-		getNBT(e).setInteger("Mob Level", l);
+	public static void setMobLevel(EntityLivingBase e) {
+		getNBT((EntityPlayer)e).setInteger("Mob Level", getLevel((EntityPlayer)e) == 0 ? 1 : getLevel((EntityPlayer)e) / 2 + 1);
 		Dovakiin.sendStats((EntityPlayer)e);
 	}
 
-	public static int getMobLevel(EntityLivingBase e) {
-		return e.worldObj.isRemote ? Dovakiin.mobLevel : getNBT(e).getInteger("Mob Level");
+	public static int getMobLevel(EntityLivingBase player) {
+		return player.worldObj.isRemote ? Dovakiin.mobLevel : player.getEntityData().getInteger("Mob Level");
 	}
 	
 	public static NBTTagCompound getNBT(EntityPlayer player) {
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-	}
-	
-	public static NBTTagCompound getNBT(EntityLivingBase mob) {
-		return mob.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+		return player.getEntityData();
 	}
 }

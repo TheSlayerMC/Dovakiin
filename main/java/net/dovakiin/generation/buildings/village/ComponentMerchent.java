@@ -3,11 +3,11 @@ package net.dovakiin.generation.buildings.village;
 import java.util.List;
 import java.util.Random;
 
-import net.dovakiin.entity.mob.npc.EntityMerchent;
+import net.dovakiin.Dovakiin;
 import net.minecraft.block.Block;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
@@ -129,15 +129,12 @@ public class ComponentMerchent extends StructureVillagePieces.Village {
 		for(int b = 0; b < 5; b++)
 			this.placeBlockAtCurrentPosition(world, Blocks.fence, 0, b + 1, 1, 6, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.fence_gate, this.getMetadataWithOffset(Blocks.fence_gate, 1), 5, 1, 7, sbb);
+		this.placeBlockAtCurrentPosition(world, Dovakiin.merchentSpawner, 0, 4, 0, 7, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.fence, 0, 5, 1, 8, sbb);
 
 		this.placeBlockAtCurrentPosition(world, Blocks.log, 0, 7, 1, 8, sbb);
 		this.placeBlockAtCurrentPosition(world, Blocks.leaves, 0, 7, 2, 8, sbb);
 
-		EntityMerchent m = new EntityMerchent(world);
-		m.setLocationAndAngles(4, 2, 6, 0.0F, 0.0F);
-		world.spawnEntityInWorld(m);
-		
 		return true;
 	}
 

@@ -32,16 +32,14 @@ public class GuiStats extends GuiContainer {
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 5, 4210752);
 		text = "Time: " + Minecraft.getMinecraft().theWorld.getWorldTime();
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 15, 4210752);
-		text = "Level: " + DataHelper.getLevel(player);
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 25, 4210752);
 		text = "Sword Level: " + DataHelper.getSwordLevel(player);
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 35, 4210752);
+		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 25, 4210752);
 		text = "Coin Total: " + DataHelper.getCoins(player);
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 45, 4210752);
+		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 35, 4210752);
 		text = "Enemys around: " + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.monster, true);
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 55, 4210752);
+		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 45, 4210752);
 		text = "Friendly creatures around: " + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.creature, true);
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 65, 4210752);
+		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 55, 4210752);
 	}
 	
 	@Override

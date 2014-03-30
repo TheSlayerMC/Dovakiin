@@ -13,6 +13,7 @@ import net.dovakiin.util.LangRegistry;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -66,8 +67,7 @@ public class LevelEvent {
 	public void onPlayerLoggedIn(EntityJoinWorldEvent event){
 		Minecraft mc = Minecraft.getMinecraft();
 		Entity entity = event.entity;
-		//if(mc.currentScreen != null){
-		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent)) {
+		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent) && !(entity instanceof EntityAgeable)) {
 			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
 		}
 		if(entity instanceof EntityEgg){
@@ -76,16 +76,12 @@ public class LevelEvent {
 		if(entity instanceof EntityMerchent){
 			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
 		}
-		//}
 	}
 
 	public static Entity setName(EntityLivingBase entity, String name) {
 		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
-		if(entity instanceof EntityHorse)
-			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Horse" + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
 		if(entity instanceof EntityMerchent)
 			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Merchent");
-		
 		return entity;
 	}
 
@@ -98,17 +94,38 @@ public class LevelEvent {
 	public void onKilledMob(LivingDeathEvent event){
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
 			EntityPlayer p = (EntityPlayer)event.source.getSourceOfDamage();
-			
+
 			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
-				final int level = DovakiinAPI.rand.nextInt(2) + 1;
-				DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
+				int level = (DovakiinAPI.rand.nextInt(8) / 2);
+				System.out.println((float)level);
+				
+				if(DataHelper.getLevel(p) >= 245){
+					level = 0;
+					DataHelper.setLevel(p, 245);
+				}
+				
+				//DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
+				DataHelper.setLevel(p, DataHelper.getLevel(p) + level);
 				
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving)));
-				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
-				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
 			}
 		}
 	}
+	
+	public static void addLevel(int par1, EntityPlayer p) {
+        int j = Integer.MAX_VALUE - DataHelper.getLevel(p), level = DataHelper.getLevel(p);
+
+        if (par1 > j) {
+            par1 = j;
+        }
+
+        level += (float)par1 / (float)DataHelper.getMaxLevel();
+
+        for (level += par1; level >= 1.0F; level /= (float)DataHelper.getMaxLevel()) {
+            level = (int)((level - 1.0F) * (float)DataHelper.getMaxLevel());
+            DataHelper.setLevel(p, level + 1);
+        }
+    }
 
 	@SubscribeEvent
 	public void onEntitySetTarget(LivingSetAttackTargetEvent event) {

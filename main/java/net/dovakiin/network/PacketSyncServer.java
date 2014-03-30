@@ -8,7 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class PacketSyncServer extends AbstractPacket{
 
-	private int coins, sword, level, mob, maxLevel;
+	private int coins, mob;
+	private int sword, level;
 	
 	@Override
 	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
@@ -16,7 +17,6 @@ public class PacketSyncServer extends AbstractPacket{
 		buffer.writeInt(sword);
 		buffer.writeInt(level);
 		buffer.writeInt(mob);
-		buffer.writeInt(maxLevel);
 	}
 
 	@Override
@@ -25,7 +25,6 @@ public class PacketSyncServer extends AbstractPacket{
 		sword = buffer.readInt();
 		level = buffer.readInt();
 		mob = buffer.readInt();
-		maxLevel = buffer.readInt();
 	}
 
 	@Override
@@ -34,7 +33,6 @@ public class PacketSyncServer extends AbstractPacket{
 		Dovakiin.swordLevel = sword;
 		Dovakiin.level = level;
 		Dovakiin.mobLevel = mob;
-		Dovakiin.maxLevel = maxLevel;
 	}
 
 	@Override
@@ -45,7 +43,6 @@ public class PacketSyncServer extends AbstractPacket{
 		sword = DataHelper.getSwordLevel(player);
 		level = DataHelper.getLevel(player);
 		mob = DataHelper.getMobLevel(player);
-		maxLevel = DataHelper.getMaxLevel(player);
 		return this;
 	}
 }

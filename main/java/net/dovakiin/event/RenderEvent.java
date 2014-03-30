@@ -39,14 +39,15 @@ public class RenderEvent {
 				if (p.worldObj.isRemote) {
 					if(!hasSeen) {
 						try {
-							if(!UpdateChecker.isOnline() && !BannedEvent.isBanned(p)){
+							if(!UpdateChecker.isOnline()){
 								if (p.getDisplayName().equals("The_SlayerMC")) {
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.DARK_PURPLE, "Oh hey! Look! A developer!"));
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.LIGHT_PURPLE, "Your internet crashed from how awesome you are."));
 								} else {
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA, "Thank you " + p.getDisplayName() + ", for downloading and playing" + DovakiinAPI.GREEN + " Dovakiin!"));
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA, "[Version: " + Utils.MOD_VERSION + "]"));
-									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.LIGHT_PURPLE, "Unable to check for latest version, you may want to check your internet connection!"));
+									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.LIGHT_PURPLE, "Unable to check for latest version, you may want to check"));
+									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.LIGHT_PURPLE, " your internet connection!"));
 								}
 							}
 							if (UpdateChecker.isUpdateAvailable() && UpdateChecker.isOnline()) {

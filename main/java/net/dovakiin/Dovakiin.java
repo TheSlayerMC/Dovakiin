@@ -2,6 +2,7 @@ package net.dovakiin;
 
 import net.dovakiin.api.blocks.BlockBerryPlant;
 import net.dovakiin.api.blocks.BlockBucketInteraction;
+import net.dovakiin.api.blocks.BlockMerchentSpawner;
 import net.dovakiin.api.blocks.BlockSpawner;
 import net.dovakiin.api.items.ItemCoin;
 import net.dovakiin.api.items.ItemEgg;
@@ -75,6 +76,7 @@ public class Dovakiin {
 	public static final Block giantZombieCreeper 	= new BlockSpawner("Giant Creeper")	 .registerBlock("creeperBossSpawner");
 
 	public static final Block bucketInteraction 	= new BlockBucketInteraction()	 	 .registerBlock("bucketFiller");
+	public static final Block merchentSpawner		= new BlockMerchentSpawner()		 .registerBlock("merchentSpawner");
 	
 	public static final Block greenBerryBush 		= new BlockBerryPlant(false)		 .registerBlock("greenBerryBush");
 	public static final Block greenBerryBushRipe 	= new BlockBerryPlant(true)			 .registerBlock("greenBerryBushRipe");
@@ -131,5 +133,7 @@ public class Dovakiin {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public static int level, mobLevel, swordLevel, maxLevel, coins;
+	public static int mobLevel, maxLevel, coins, LEVEL;
+	@SideOnly(Side.CLIENT)
+	public static int level, swordLevel;
 }
