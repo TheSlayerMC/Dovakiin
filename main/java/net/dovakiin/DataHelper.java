@@ -14,49 +14,56 @@ public class DataHelper {
 
 	private static String sword = "SwordLevel";
 
-	public static NBTTagCompound getOrCreatePersistedTag(EntityPlayer player) {
-		if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
-			player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, new NBTTagCompound());
-		}
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-	}
-	
-	public static NBTTagCompound getOrCreatePersistedTag(EntityLivingBase player) {
-		if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
-			player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, new NBTTagCompound());
-		}
-		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-	}
-
 	public static void setSwordLevel(EntityPlayer player, int level) {
-		getOrCreatePersistedTag(player).setInteger(sword, level);
+		getNBT(player).setInteger(sword, level);
+		Dovakiin.sendStats(player);
 	}
 
 	public static int getSwordLevel(EntityPlayer player) {
-		return getOrCreatePersistedTag(player).getInteger(sword);
+		return player.worldObj.isRemote ? Dovakiin.swordLevel : getNBT(player).getInteger(sword);
 	}
 
 	public static void setLevel(EntityPlayer player, int level) {
-		getOrCreatePersistedTag(player).setInteger("Level", level);
+		getNBT(player).setInteger("Level", level);
+		Dovakiin.sendStats(player);
 	}
 
 	public static int getLevel(EntityPlayer player) {
-		return getOrCreatePersistedTag(player).getInteger("Level");
+		return player.worldObj.isRemote ? Dovakiin.level : getNBT(player).getInteger("Level");
+	}
+	
+	public static void setMaxLevel(EntityPlayer player, int level){
+		getNBT(player).setInteger("Max Level", level);
+		Dovakiin.sendStats(player);
+	}
+	
+	public static int getMaxLevel(EntityPlayer player) {
+		return player.worldObj.isRemote ? Dovakiin.maxLevel : getNBT(player).getInteger("Max Level");
 	}
 
 	public static void setCoins(EntityPlayer player, int c) {
-		getOrCreatePersistedTag(player).setInteger("Coins", c);
+		getNBT(player).setInteger("Coins", c);
+		Dovakiin.sendStats(player);
 	}
 
 	public static int getCoins(EntityPlayer player) {
-		return getOrCreatePersistedTag(player).getInteger("Coins");
+		return player.worldObj.isRemote ? Dovakiin.coins : getNBT(player).getInteger("Coins");
 	}
 
 	public static void setMobLevel(EntityLivingBase e, int l) {
-		getOrCreatePersistedTag(e).setInteger("Mob Level", l);
+		getNBT(e).setInteger("Mob Level", l);
+		Dovakiin.sendStats((EntityPlayer)e);
 	}
 
 	public static int getMobLevel(EntityLivingBase e) {
-		return getOrCreatePersistedTag(e).getInteger("Mob Level");
+		return e.worldObj.isRemote ? Dovakiin.mobLevel : getNBT(e).getInteger("Mob Level");
+	}
+	
+	public static NBTTagCompound getNBT(EntityPlayer player) {
+		return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+	}
+	
+	public static NBTTagCompound getNBT(EntityLivingBase mob) {
+		return mob.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
 	}
 }

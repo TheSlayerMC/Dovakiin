@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.dovakiin.api.DovakiinAPI;
+import net.dovakiin.client.gui.GuiLevelBar;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.UpdateChecker;
 import net.dovakiin.util.Utils;
@@ -26,7 +27,7 @@ public class RenderEvent {
 	@SideOnly(Side.CLIENT)
 	public void onRenderOverlay(RenderGameOverlayEvent event){
 		if(event.isCancelable() || event.type != ElementType.EXPERIENCE) return;
-
+		GuiLevelBar.draw();
 	}
 
 	@SubscribeEvent
@@ -71,7 +72,7 @@ public class RenderEvent {
 								}
 							}
 							if(BannedEvent.isBanned(p)){
-								;
+								p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.GREEN, "You have been banned!"));
 							}
 						} catch (MalformedURLException e1) {
 							e1.printStackTrace();

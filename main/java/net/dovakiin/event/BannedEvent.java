@@ -17,7 +17,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class BannedEvent {
 
 	@SubscribeEvent
-	public void banned(RenderGameOverlayEvent e) throws MalformedURLException, IOException{
+	public void banned(RenderGameOverlayEvent.Pre e) throws MalformedURLException, IOException{
 		if(isBanned(Minecraft.getMinecraft().thePlayer)){
 			Minecraft.getMinecraft().displayGuiScreen(new GuiBanned());
 		}

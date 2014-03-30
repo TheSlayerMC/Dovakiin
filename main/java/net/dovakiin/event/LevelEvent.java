@@ -107,7 +107,6 @@ public class LevelEvent {
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Gained " + DovakiinAPI.GREEN + level + DovakiinAPI.AQUA + " Level!"));
 				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + "'s Level Is Now: " + DovakiinAPI.GREEN + DataHelper.getSwordLevel(p)));
 			}
-			Dovakiin.packetHandler.sendToServer(new PacketSyncServer(p));
 		}
 	}
 

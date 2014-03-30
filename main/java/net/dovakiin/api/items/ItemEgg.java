@@ -1,7 +1,5 @@
 package net.dovakiin.api.items;
 
-import java.util.Random;
-
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.DovakiinTabs;
@@ -15,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class ItemEgg extends Item{
+public class ItemEgg extends ModItem{
 
 	public ItemEgg() {
 		LangRegistry.addEgg(this);
@@ -37,7 +35,7 @@ public class ItemEgg extends Item{
 		return false;
 	}
 
-	public Item registerItem(String name){
+	public Item registerItem(String name) {
 		setTextureName(Utils.PREFIX + name);
 		setUnlocalizedName(name);
 		GameRegistry.registerItem(this, name);
