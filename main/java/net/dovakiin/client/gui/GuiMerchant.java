@@ -32,11 +32,11 @@ public class GuiMerchant extends GuiContainer {
 		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 - 20, 6 - 25, 4210752);
 		String credits;
 		if(DataHelper.getCoins(player) == 0)
-			credits = EnumChatFormatting.YELLOW + "Credits: " + EnumChatFormatting.RED + DataHelper.getCoins(player);
+			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.RED + DataHelper.getCoins(player);
 		else if(DataHelper.getCoins(player) < 30)
-			credits = EnumChatFormatting.YELLOW + "Credits: " + EnumChatFormatting.YELLOW + DataHelper.getCoins(player);
+			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.YELLOW + DataHelper.getCoins(player);
 		else
-			credits = EnumChatFormatting.YELLOW + "Credits: " + EnumChatFormatting.GREEN + DataHelper.getCoins(player);
+			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.GREEN + DataHelper.getCoins(player);
 		s = credits;
 		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 + 50, 6 - 25, 4210752);
 		s = EnumChatFormatting.YELLOW + "Page: " + EnumChatFormatting.WHITE + pageNum + "/" + maxPageNums;

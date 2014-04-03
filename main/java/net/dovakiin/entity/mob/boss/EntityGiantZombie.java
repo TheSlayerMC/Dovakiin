@@ -104,6 +104,7 @@ public class EntityGiantZombie extends EntityMob implements IBossDisplayData {
 			tick = 300;
 		}
 		tick--;
+		addRandomArmor();
 		super.onLivingUpdate();
 	}
 

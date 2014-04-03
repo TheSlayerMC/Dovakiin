@@ -72,6 +72,7 @@ public class EntityGiantSkeleton extends EntityMob implements IRangedAttackMob, 
 			tick = 300;
 		}
 		tick--;
+		addRandomArmor();
 		super.onLivingUpdate();
 	}
 	
@@ -114,7 +115,6 @@ public class EntityGiantSkeleton extends EntityMob implements IRangedAttackMob, 
 	}
 
 	protected void addRandomArmor() {
-		super.addRandomArmor();
 		this.setCurrentItemOrArmor(0, new ItemStack(Items.bow));
 	}
 

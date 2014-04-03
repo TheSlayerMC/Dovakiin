@@ -9,6 +9,7 @@ import net.dovakiin.entity.mob.boss.EntityGiantSkeleton;
 import net.dovakiin.entity.mob.boss.EntityGiantZombie;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.event.BonemealEvent;
+import net.dovakiin.event.ClientPlayerEvent;
 import net.dovakiin.event.LevelEvent;
 import net.dovakiin.event.RenderEvent;
 import net.dovakiin.generation.BerryWorldGen;
@@ -43,7 +44,7 @@ public class CommonProxy {
 		//BannedEvent.register();
 		BonemealEvent.register();
 		LevelEvent.register();
-		//ClientPlayerEvent.register();
+		ClientPlayerEvent.register();
 		LangRegistry.init();
 		if(Utils.DEBUG){
 		    LangRegistry.addBlockNames();
