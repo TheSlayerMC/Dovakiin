@@ -22,7 +22,7 @@ public class ModInformationBook extends ModItem{
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack i, World w, EntityPlayer p) {
-		Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(GUI_ID));
+		DovakiinAPI.openGui(GUI_ID);
 		return i;
 	}
 	

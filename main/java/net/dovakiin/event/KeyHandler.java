@@ -1,6 +1,7 @@
-package net.dovakiin.util;
+package net.dovakiin.event;
 
 import net.dovakiin.Dovakiin;
+import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.GuiHandler;
 import net.dovakiin.network.PacketOpenGui;
 import net.minecraft.client.Minecraft;
@@ -23,7 +24,7 @@ public class KeyHandler {
 	public void KeyInputEvent(KeyInputEvent event) {
 		if(stats.isPressed()) {
 			if(Minecraft.getMinecraft().currentScreen == null) {
-				Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(GuiHandler.statsGUI));
+				DovakiinAPI.openGui(GuiHandler.stats);
 			}
 		}
 	}

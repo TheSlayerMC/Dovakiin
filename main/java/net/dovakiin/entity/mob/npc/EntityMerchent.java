@@ -91,7 +91,7 @@ public class EntityMerchent extends EntityModMob{
 				par1EntityPlayer.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "Merchent: " + DovakiinAPI.YELLOW + "Take a look around?"));
 				break;
 			}
-			Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(GuiHandler.merchent));
+			DovakiinAPI.openGui(GuiHandler.merchent);
 			return true;
 		}
 		return super.interact(par1EntityPlayer);

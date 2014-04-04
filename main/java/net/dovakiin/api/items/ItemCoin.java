@@ -1,6 +1,7 @@
 package net.dovakiin.api.items;
 
 import net.dovakiin.DataHelper;
+import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.DovakiinTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ public class ItemCoin extends ModItem{
 		if(!w.isRemote){
 			if(e instanceof EntityPlayer){
 				EntityPlayer p = (EntityPlayer)e;
-				DataHelper.setCoins(p, DataHelper.getCoins(p) + i.stackSize);
+				DataHelper.setCoins(p, DataHelper.getCoins(p) + i.stackSize + DovakiinAPI.rand.nextInt(3));
 				p.inventory.setInventorySlotContents(j, null);
 			} else {
 				i = null;

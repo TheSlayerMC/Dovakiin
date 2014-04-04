@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.dovakiin.Dovakiin;
+import net.dovakiin.network.PacketOpenGui;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandHandler;
@@ -57,7 +58,7 @@ public class DovakiinAPI {
 	
 	public static void registerEggEntity(Class entityClass, String colour) {
 		int entityID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(entityClass, colour + " Dragon Egg", entityID);
+		EntityRegistry.registerGlobalEntityID(entityClass, colour + " Egg", entityID);
 	}
 
 
@@ -94,8 +95,17 @@ public class DovakiinAPI {
 	}
 
 	public static void openGui(int id){
-		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
-		p.openGui(Dovakiin.instance, id, p.worldObj, (int)p.posX, (int)p.posY, (int)p.posZ);
+		Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(id));
+	}
+	
+	public static ChatComponentTranslation sendMessageToAll(String message){
+		return sendMessageToAll("[Dovakiin] " + message);
+	}
+	
+	private static ChatComponentTranslation sendMessageToAll(String m, Object... arg){
+		ChatComponentTranslation ret = new ChatComponentTranslation(m, arg);
+		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(ret);
+		return ret;
 	}
 
 	public static int getWaterDepth(int posX, int posY, int posZ, World worldObj){

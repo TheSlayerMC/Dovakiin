@@ -3,7 +3,7 @@ package net.dovakiin.util;
 public class Utils {
 
 	public static final String MOD_ID 		= "dovakiin";
-	public static final String MOD_NAME 	= "Dovakinn";
+	public static final String MOD_NAME 	= "Dovakiin";
 	public static final String MOD_VERSION  = "0.0.1";
 	public static final String PREFIX 		= MOD_ID + ":";
 	public static final String PROXY_BASE   = "net.dovakiin.";

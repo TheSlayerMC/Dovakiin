@@ -25,7 +25,7 @@ public class EntityGreenDragonEgg extends EntityEgg{
 				e.setLocationAndAngles(posX, posY + 0.1F, posZ, 360.0F, 0.0F);
 				worldObj.spawnEntityInWorld(e);
 				this.setDead();
-				//DovakiinAPI.sendChatMessage(DovakiinAPI.getClientPlayer(), DovakiinAPI.DARK_AQUA + "Your dragon has hatched!");
+				//DovakiinAPI.sendMessageToAll(DovakiinAPI.DARK_AQUA + "A dragon has hatched!");
 			}
 		}
 		if(ticks == 50){

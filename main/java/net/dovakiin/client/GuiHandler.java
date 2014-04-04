@@ -10,11 +10,11 @@ import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
 
-	public static int gui = 0, statsGUI = gui++, startingBook = gui++, greenDragon = gui++, merchent = gui++;
+	public static int gui = 0, stats = gui++, startingBook = gui++, greenDragon = gui++, merchent = gui++;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if(ID == statsGUI)
+		if(ID == stats)
 			return new ContainerEmpty();
 		if(ID == startingBook)
 			return new ContainerEmpty();
@@ -25,7 +25,7 @@ public class GuiHandler implements IGuiHandler {
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if(ID == statsGUI)
+		if(ID == stats)
 			return new GuiStats();
 		if(ID == startingBook)
 			return new GuiStartingBook();

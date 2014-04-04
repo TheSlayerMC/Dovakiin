@@ -9,6 +9,7 @@ import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.network.PacketSyncServer;
+import net.dovakiin.util.Config;
 import net.dovakiin.util.LangRegistry;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
@@ -102,35 +103,34 @@ public class LevelEvent {
 
 			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
 				int level = (DovakiinAPI.rand.nextInt(8) / 2);
-				System.out.println((float)level);
-				
+
 				if(DataHelper.getLevel(p) >= 245){
 					level = 0;
 					DataHelper.setLevel(p, 245);
 				}
-				
+
 				//DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
 				DataHelper.setLevel(p, DataHelper.getLevel(p) + level);
-				
-				p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving)));
+				if(Config.canShowDeathMessage)
+					p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving)));
 			}
 		}
 	}
-	
+
 	public static void addLevel(int par1, EntityPlayer p) {
-        int j = Integer.MAX_VALUE - DataHelper.getLevel(p), level = DataHelper.getLevel(p);
+		int j = Integer.MAX_VALUE - DataHelper.getLevel(p), level = DataHelper.getLevel(p);
 
-        if (par1 > j) {
-            par1 = j;
-        }
+		if (par1 > j) {
+			par1 = j;
+		}
 
-        level += (float)par1 / (float)DataHelper.getMaxLevel();
+		level += (float)par1 / (float)DataHelper.getMaxLevel();
 
-        for (level += par1; level >= 1.0F; level /= (float)DataHelper.getMaxLevel()) {
-            level = (int)((level - 1.0F) * (float)DataHelper.getMaxLevel());
-            DataHelper.setLevel(p, level + 1);
-        }
-    }
+		for (level += par1; level >= 1.0F; level /= (float)DataHelper.getMaxLevel()) {
+			level = (int)((level - 1.0F) * (float)DataHelper.getMaxLevel());
+			DataHelper.setLevel(p, level + 1);
+		}
+	}
 
 	@SubscribeEvent
 	public void onEntitySetTarget(LivingSetAttackTargetEvent event) {

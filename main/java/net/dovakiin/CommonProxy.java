@@ -10,6 +10,7 @@ import net.dovakiin.entity.mob.boss.EntityGiantZombie;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.event.BonemealEvent;
 import net.dovakiin.event.ClientPlayerEvent;
+import net.dovakiin.event.KeyHandler;
 import net.dovakiin.event.LevelEvent;
 import net.dovakiin.event.RenderEvent;
 import net.dovakiin.generation.BerryWorldGen;
@@ -20,7 +21,6 @@ import net.dovakiin.generation.buildings.village.VillageGardenHandler;
 import net.dovakiin.generation.buildings.village.VillageMerchentHandler;
 import net.dovakiin.network.PacketHandler;
 import net.dovakiin.util.Config;
-import net.dovakiin.util.KeyHandler;
 import net.dovakiin.util.LangRegistry;
 import net.dovakiin.util.Utils;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -62,7 +62,7 @@ public class CommonProxy {
 		DovakiinAPI.registerMob(EntityGiantCreeper.class, "Giant Creeper");
 		DovakiinAPI.registerMob(EntityWitherSkeleton.class, "Wither Skeleton");
 		DovakiinAPI.registerMob(EntityMerchent.class, "Merchent");
-		DovakiinAPI.registerEggEntity(EntityGreenDragonEgg.class, "Green");
+		DovakiinAPI.registerEggEntity(EntityGreenDragonEgg.class, "Green Dragon");
 		
 		FMLCommonHandler.instance().bus().register(new KeyHandler());
 	}

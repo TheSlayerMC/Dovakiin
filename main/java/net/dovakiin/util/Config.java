@@ -8,7 +8,7 @@ public class Config {
 
 	private static Configuration cfg;
 	
-	public static boolean canShowWelcome;
+	public static boolean canShowWelcome, canShowDeathMessage;
 	public static int levelHeight, levelWidth;
 
 	public static void init() {
@@ -22,5 +22,6 @@ public class Config {
 		levelHeight = 490;//cfg.get("GUI", "Level Bar Height", 490).getInt();
 		levelWidth = 610;//cfg.get("GUI", "Level Bar Width", 610).getInt();
 		canShowWelcome = cfg.get("Misc", "Show the welcome message", true).getBoolean(true);
+		canShowDeathMessage = cfg.get("Misc", "Show the death messages", true).getBoolean(true);
 	}
 }
