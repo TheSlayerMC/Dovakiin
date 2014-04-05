@@ -20,7 +20,7 @@ public class LangRegistry {
 	private static boolean          canWrite = false;
 	private static BufferedWriter   writer;
 	private static String 			MOB_NAME;
-	
+
 	public static void init() {
 		if(Utils.DEBUG){
 			File f = new File("./Dovakiin/en_US.lang");
@@ -102,11 +102,11 @@ public class LangRegistry {
 	public static void addItem(Item item){
 		items.add(item);
 	}
-	
+
 	public static void addEgg(Item item){
 		egg.add(item);
 	}
-	
+
 	public static void addEggNames(){
 		for(int k = 0; k < egg.size(); k++){
 			Item item = egg.get(k);
@@ -137,7 +137,7 @@ public class LangRegistry {
 			addToFile("item." + name + ".name=Egg");
 		}
 	}
-	
+
 	public static void addBlockNames(){
 		for(int k = 0; k < blocks.size(); k++){
 			Block block = blocks.get(k);

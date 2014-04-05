@@ -3,6 +3,7 @@ package net.dovakiin.api.items;
 import net.dovakiin.DataHelper;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.DovakiinTabs;
+import net.dovakiin.network.ExtendedPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,9 +19,11 @@ public class ItemCoin extends ModItem{
 	@Override
 	public void onUpdate(ItemStack i, World w, Entity e, int j, boolean b) {
 		if(!w.isRemote){
+			ExtendedPlayer props = ExtendedPlayer.get((EntityPlayer)e);
 			if(e instanceof EntityPlayer){
 				EntityPlayer p = (EntityPlayer)e;
-				DataHelper.setCoins(p, DataHelper.getCoins(p) + i.stackSize + DovakiinAPI.rand.nextInt(3));
+				//DataHelper.setCoins(p, DataHelper.getCoins(p) + i.stackSize + DovakiinAPI.rand.nextInt(3));
+				props.setCoins(i.stackSize + DovakiinAPI.rand.nextInt(3));
 				p.inventory.setInventorySlotContents(j, null);
 			} else {
 				i = null;

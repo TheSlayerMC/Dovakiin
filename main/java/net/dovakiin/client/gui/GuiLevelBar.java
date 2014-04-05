@@ -4,6 +4,7 @@ import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.ContainerEmpty;
 import net.dovakiin.api.DovakiinAPI;
+import net.dovakiin.network.ExtendedPlayer;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
@@ -29,13 +30,14 @@ public class GuiLevelBar{
 	private static void levelUp(EntityPlayer p){
 		Minecraft mc = Minecraft.getMinecraft(); 
 		ScaledResolution sc = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+		ExtendedPlayer props = ExtendedPlayer.get(p);
 		GuiIngame g = mc.ingameGUI;
 		int h = sc.getScaledHeight();
 		int w = sc.getScaledWidth();
 		int h1 = h - Config.levelHeight;
 		int w1 = w - Config.levelWidth;
 		int maxLevel = DataHelper.getMaxLevel();
-		int level = DataHelper.getLevel(p);
+		int level = props.getLevel();
 		if(maxLevel > 0){
 			g.drawTexturedModalRect(w1, h1, 0, 0, 256, 19);
 
@@ -48,7 +50,7 @@ public class GuiLevelBar{
 		}else{
 			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + level, w1 + 118, h1 + 6, 0, false);
 		}
-		String s = "Coins: " + DataHelper.getCoins(p);
+		String s = "Coins: " + props.getCoins(p);
 		mc.fontRenderer.drawString(DovakiinAPI.GOLD + s, w1 + 110, h1 + 20, 0, false);
 	}
 }

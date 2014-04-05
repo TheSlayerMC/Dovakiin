@@ -24,6 +24,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.fluids.FluidRegistry;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry.IVillageCreationHandler;
@@ -98,8 +99,8 @@ public class DovakiinAPI {
 		Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(id));
 	}
 	
-	public static ChatComponentTranslation sendMessageToAll(String message){
-		return sendMessageToAll("[Dovakiin] " + message);
+	public static void sendMessageToAll(String message){
+		FMLClientHandler.instance().getClient().ingameGUI.getChatGUI().printChatMessage(addChatMessage(AQUA + "[" + BLUE + "Dovakiin" + AQUA + "] " + AQUA + message));
 	}
 	
 	private static ChatComponentTranslation sendMessageToAll(String m, Object... arg){

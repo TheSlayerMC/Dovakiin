@@ -1,6 +1,5 @@
 package net.dovakiin.event;
 
-import java.awt.List;
 import java.util.Random;
 
 import net.dovakiin.DataHelper;
@@ -8,10 +7,9 @@ import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
-import net.dovakiin.network.PacketSyncServer;
+import net.dovakiin.network.ExtendedPlayer;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.LangRegistry;
-import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -24,14 +22,14 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -69,10 +67,19 @@ public class LevelEvent {
 	}
 
 	@SubscribeEvent
+	public void onEntityConstructing(EntityConstructing event) {
+		if (event.entity instanceof EntityPlayer && ExtendedPlayer.get((EntityPlayer) event.entity) == null)
+			ExtendedPlayer.register((EntityPlayer) event.entity);
+		
+		if (event.entity instanceof EntityPlayer && event.entity.getExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME) == null)
+			event.entity.registerExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME, new ExtendedPlayer((EntityPlayer) event.entity));
+	}
+
+	@SubscribeEvent
 	public void onPlayerLoggedIn(EntityJoinWorldEvent event){
 		Minecraft mc = Minecraft.getMinecraft();
 		Entity entity = event.entity;
-		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent) && !(entity instanceof EntityAgeable)) {
+		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent) && !(entity instanceof EntityAgeable) && !(entity instanceof EntityWaterMob)) {
 			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
 		}
 		if(entity instanceof EntityEgg){
@@ -100,19 +107,20 @@ public class LevelEvent {
 	public void onKilledMob(LivingDeathEvent event){
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
 			EntityPlayer p = (EntityPlayer)event.source.getSourceOfDamage();
-
+			
+			ExtendedPlayer props = ExtendedPlayer.get(p);
+			
 			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
 				int level = (DovakiinAPI.rand.nextInt(8) / 2);
 
-				if(DataHelper.getLevel(p) >= 245){
+				if(props.getLevel() >= 245){
 					level = 0;
-					DataHelper.setLevel(p, 245);
+					props.setLevel(245);
 				}
-
-				//DataHelper.setSwordLevel(p, DataHelper.getSwordLevel(p) + level);
-				DataHelper.setLevel(p, DataHelper.getLevel(p) + level);
+				props.setLevel(level);
+				//DataHelper.setLevel(p, DataHelper.getLevel(p) + level);
 				if(Config.canShowDeathMessage)
-					p.addChatComponentMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" + DovakiinAPI.BLUE + "Dovakiin" + DovakiinAPI.AQUA + "]" + " " + p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving)));
+					DovakiinAPI.sendMessageToAll(p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving));
 			}
 		}
 	}
