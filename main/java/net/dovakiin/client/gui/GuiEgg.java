@@ -1,13 +1,10 @@
 package net.dovakiin.client.gui;
 
-import net.dovakiin.DataHelper;
 import net.dovakiin.api.ContainerEmpty;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;

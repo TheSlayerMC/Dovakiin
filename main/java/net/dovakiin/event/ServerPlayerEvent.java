@@ -1,7 +1,6 @@
 package net.dovakiin.event;
 
 import net.dovakiin.Dovakiin;
-import net.dovakiin.network.PacketSyncServer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;

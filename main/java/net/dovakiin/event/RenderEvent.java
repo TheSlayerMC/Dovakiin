@@ -7,16 +7,26 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.dovakiin.api.DovakiinAPI;
+import net.dovakiin.client.gui.GuiBanned;
 import net.dovakiin.client.gui.GuiLevelBar;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.UpdateChecker;
 import net.dovakiin.util.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+
+import org.lwjgl.input.Keyboard;
+
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -30,6 +40,25 @@ public class RenderEvent {
 		GuiLevelBar.draw();
 	}
 
+	@SubscribeEvent
+    public void renderTick(TickEvent.RenderTickEvent event) {
+        if(event.phase == TickEvent.Phase.END) {
+            if(Minecraft.getMinecraft().currentScreen instanceof GuiOptions) {
+                GuiOptions gui = (GuiOptions)Minecraft.getMinecraft().currentScreen;
+                String s = "Hit O";
+                gui.drawString(Minecraft.getMinecraft().fontRenderer, s, gui.width - Minecraft.getMinecraft().fontRenderer.getStringWidth(s) - 2, gui.height - 10, 16777215);
+
+                if(!keyDown && Keyboard.isKeyDown(Keyboard.KEY_O)) {
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+                    FMLClientHandler.instance().showGuiScreen(new GuiBanned());
+                }
+                keyDown = Keyboard.isKeyDown(Keyboard.KEY_O);
+            }
+        }
+    }
+	
+	private boolean keyDown = false;
+	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onPlayerLogin(EntityJoinWorldEvent e) {

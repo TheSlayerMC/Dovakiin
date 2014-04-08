@@ -1,18 +1,13 @@
 package net.dovakiin.client.gui;
 
-import net.dovakiin.DataHelper;
-import net.dovakiin.Dovakiin;
 import net.dovakiin.api.ContainerEmpty;
 import net.dovakiin.api.DovakiinAPI;
-import net.dovakiin.network.PacketSyncServer;
+import net.dovakiin.network.ExtendedPlayer;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -28,13 +23,14 @@ public class GuiStats extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		ExtendedPlayer props = ExtendedPlayer.get(player);
 		String text = Utils.MOD_NAME + ": " + Utils.MOD_VERSION;
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 5, 4210752);
 		text = "Time: " + Minecraft.getMinecraft().theWorld.getWorldTime();
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 15, 4210752);
-		text = "Sword Level: " + DataHelper.getSwordLevel(player);
+		text = "Sword Level: " + props.getSwordLevel();
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 25, 4210752);
-		text = "Coin Total: " + DataHelper.getCoins(player);
+		text = "Coin Total: " + props.getCoins(player);
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 35, 4210752);
 		text = "Enemys around: " + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.monster, true);
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 45, 4210752);

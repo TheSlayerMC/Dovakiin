@@ -17,7 +17,5 @@ public class PacketRequestStats extends AbstractPacket{
 	public void handleClientSide(EntityPlayer player) { }
 
 	@Override
-	public void handleServerSide(EntityPlayer player) {
-		Dovakiin.sendStats(player);
-	}
+	public void handleServerSide(EntityPlayer player) { }
 }

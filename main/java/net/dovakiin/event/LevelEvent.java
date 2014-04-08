@@ -2,7 +2,6 @@ package net.dovakiin.event;
 
 import java.util.Random;
 
-import net.dovakiin.DataHelper;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.entity.misc.EntityEgg;
@@ -94,7 +93,7 @@ public class LevelEvent {
 
 	public static Entity setName(EntityLivingBase entity, String name) {
 		EntityPlayer p = DovakiinAPI.getClientPlayer();
-		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DataHelper.getMobLevel(entity));
+		((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + name + DovakiinAPI.GREEN + " Lv: " + DovakiinAPI.GOLD + DovakiinAPI.rand.nextInt(24));
 		if(entity instanceof EntityMerchent)
 			((EntityLiving)entity).setCustomNameTag(DovakiinAPI.AQUA + "Merchent");
 		return entity;
@@ -124,21 +123,6 @@ public class LevelEvent {
 				if(Config.canShowDeathMessage)
 					DovakiinAPI.sendMessageToAll(p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving));
 			}
-		}
-	}
-
-	public static void addLevel(int par1, EntityPlayer p) {
-		int j = Integer.MAX_VALUE - DataHelper.getLevel(p), level = DataHelper.getLevel(p);
-
-		if (par1 > j) {
-			par1 = j;
-		}
-
-		level += (float)par1 / (float)DataHelper.getMaxLevel();
-
-		for (level += par1; level >= 1.0F; level /= (float)DataHelper.getMaxLevel()) {
-			level = (int)((level - 1.0F) * (float)DataHelper.getMaxLevel());
-			DataHelper.setLevel(p, level + 1);
 		}
 	}
 

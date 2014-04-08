@@ -12,7 +12,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
 	public static EntityPlayer player;
 	public final static String EXTENDED_PROPERTIES_NAME = "ExtendedPlayer";
 
-	public static int coins, level;
+	public static int coins, level, sword;
 
 	public ExtendedPlayer() { }
 
@@ -29,6 +29,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
 		NBTTagCompound prop = new NBTTagCompound();
 		prop.setInteger("Coins", coins);
 		prop.setInteger("Level", level);
+		prop.setInteger("Sword", sword);
 		n.setTag(EXTENDED_PROPERTIES_NAME, prop);
 	}
 
@@ -37,6 +38,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
 		NBTTagCompound prop = (NBTTagCompound)n.getTag(EXTENDED_PROPERTIES_NAME);
 		this.coins = prop.getInteger("Coins");
 		this.level = prop.getInteger("Level");
+		this.sword = prop.getInteger("Sword");
 	}
 
 	@Override
@@ -56,6 +58,14 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
 
 	public static void setCoins(int c) {
 		coins += c;
+	}
+	
+	public static int getSwordLevel() {
+		return sword;
+	}
+
+	public static void setSwordLevel(int s) {
+		sword += s;
 	}
 
 	public static int getCoins(EntityPlayer player) {

@@ -8,7 +8,7 @@ import net.dovakiin.entity.mob.boss.EntityGiantCreeper;
 import net.dovakiin.entity.mob.boss.EntityGiantSkeleton;
 import net.dovakiin.entity.mob.boss.EntityGiantZombie;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
-import net.dovakiin.entity.mob.peacefull.EntityFish;
+import net.dovakiin.entity.mob.passive.EntityFish;
 import net.dovakiin.event.BonemealEvent;
 import net.dovakiin.event.ClientPlayerEvent;
 import net.dovakiin.event.KeyHandler;

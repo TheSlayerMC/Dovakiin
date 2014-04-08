@@ -1,6 +1,5 @@
 package net.dovakiin.api.items;
 
-import net.dovakiin.DataHelper;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.network.ExtendedPlayer;

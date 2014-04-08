@@ -8,9 +8,7 @@ public class ContainerEmpty extends Container{
 	
 	public ContainerEmpty() { }
 	
-	public ContainerEmpty(EntityPlayer p) {
-		Dovakiin.sendStats(p);
-	}
+	public ContainerEmpty(EntityPlayer p) { }
 
 	@Override
 	public boolean canInteractWith(EntityPlayer var1) {

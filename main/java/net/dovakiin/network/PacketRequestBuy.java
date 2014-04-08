@@ -2,8 +2,6 @@ package net.dovakiin.network;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import net.dovakiin.DataHelper;
-import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -38,30 +36,32 @@ public class PacketRequestBuy extends AbstractPacket {
 
 	@Override
 	public void handleServerSide(EntityPlayer player) {
+		ExtendedPlayer p = ExtendedPlayer.get(player);
 		ItemStack is = null;
 		if(item) {
-			is = new ItemStack(GameData.itemRegistry.get(name));
+			is = new ItemStack(GameData.getItemRegistry().getObject(name));
 		} else {
-			is = new ItemStack(GameData.blockRegistry.get(name));
+			is = new ItemStack(GameData.getBlockRegistry().getObject(name));
 		}
 		if(player.capabilities.isCreativeMode) {
 			player.inventory.addItemStackToInventory(is);
-		} else if(DataHelper.getCoins(player) >= cost) {
+		} else if(p.getCoins(player) >= cost) {
 			player.inventory.addItemStackToInventory(is);
 			useCoins(player, cost);
 		} else { 
-			int more = cost - DataHelper.getCoins(player);
+			int more = cost - p.getCoins(player);
 			player.addChatMessage(DovakiinAPI.addChatMessage(EnumChatFormatting.RED + "You need " + EnumChatFormatting.GOLD + more + EnumChatFormatting.RED + " more coins!"));
 		}
 	}
 
 	public static int useCoins(EntityPlayer player, int coins) {
-		int playerCoins = DataHelper.getCoins(player);
+		ExtendedPlayer p = ExtendedPlayer.get(player);
+		int playerCoins = p.getCoins(player);
 		if(playerCoins > 0) {
-			DataHelper.setCoins(player, playerCoins - coins);
-			return DataHelper.getCoins(player);
+			p.setCoins(playerCoins - coins);
+			return p.getCoins(player);
 		} else if(-1 > playerCoins) {
-			DataHelper.setCoins(player, 0);
+			p.setCoins(0);
 			return 0;
 		}
 		return playerCoins;

@@ -14,11 +14,8 @@ import net.dovakiin.network.PacketHandler;
 import net.dovakiin.network.PacketOpenGui;
 import net.dovakiin.network.PacketRequestBuy;
 import net.dovakiin.network.PacketRequestStats;
-import net.dovakiin.network.PacketSyncServer;
 import net.dovakiin.util.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -28,8 +25,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = Utils.MOD_ID, name = Utils.MOD_NAME, version = Utils.MOD_VERSION)
 public class Dovakiin {
@@ -118,7 +113,6 @@ public class Dovakiin {
 		proxy.postInit(event);
 		packetHandler.registerPacket(PacketOpenGui.class);
 		packetHandler.registerPacket(PacketRequestBuy.class);
-		packetHandler.registerPacket(PacketSyncServer.class);
 		packetHandler.registerPacket(PacketRequestStats.class);
 		packetHandler.postInit();
 	}
@@ -127,13 +121,4 @@ public class Dovakiin {
 	public void serverStarting(FMLServerStartingEvent event){
 		proxy.serverStarting(event);
 	}
-	
-	public static void sendStats(EntityPlayer player) {
-		packetHandler.sendTo(new PacketSyncServer().applyStats(player), (EntityPlayerMP)player);
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public static int mobLevel, maxLevel, coins, LEVEL;
-	@SideOnly(Side.CLIENT)
-	public static int level, swordLevel;
 }
