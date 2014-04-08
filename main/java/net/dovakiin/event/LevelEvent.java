@@ -78,7 +78,6 @@ public class LevelEvent {
 
 	@SubscribeEvent
 	public void onPlayerLoggedIn(EntityJoinWorldEvent event){
-		Minecraft mc = Minecraft.getMinecraft();
 		Entity entity = event.entity;
 		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent) && !(entity instanceof EntityAgeable) && !(entity instanceof EntityWaterMob)) {
 			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
@@ -104,6 +103,8 @@ public class LevelEvent {
 		return entity;
 	}
 
+	public static int expGained = (int)((float)DovakiinAPI.rand.nextInt(10) / 2);
+	
 	@SubscribeEvent
 	public void onKilledMob(LivingDeathEvent event){
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
@@ -112,14 +113,13 @@ public class LevelEvent {
 			ExtendedPlayer props = ExtendedPlayer.get(p);
 
 			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
-				int level = (DovakiinAPI.rand.nextInt(4) / 2);
 
 				if(props.getLevel() >= 245){
-					level = 0;
+					expGained = 0;
 					props.setLevel(245);
 				}
-				props.setLevel(level);
-				//DataHelper.setLevel(p, DataHelper.getLevel(p) + level);
+				
+				props.setLevel(expGained);
 				if(Config.canShowDeathMessage)
 					DovakiinAPI.sendMessageToAll(p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving));
 			}

@@ -33,18 +33,17 @@ public class GuiLevelBar{
 		int maxLevel = 245;
 		int level = props.getLevel();//The level that the player has (The amount of mobs it kills)
 		int levelWidth = (int)(((float)level / (float)maxLevel) * 245F);
-		if(maxLevel > 0){
-			g.drawTexturedModalRect(w1, h1, 0, 0, 256, 19);
+		//int levelWidth = (int)(LevelEvent.expGained / maxLevel * 245F);
 
-			if(level > 0){
-				g.drawTexturedModalRect(w1 + 5, h1 + 5, 5, 24, levelWidth, 33);
-			}
-		}
-		if(level >= maxLevel){
+		g.drawTexturedModalRect(w1, h1, 0, 0, 256, 19);
+		
+		if(level > 0)
+			g.drawTexturedModalRect(w1 + 5, h1 + 5, 5, 24, levelWidth, 33);
+		
+		if(level >= maxLevel)
 			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + level + " (Max)", w1 + 100, h1 + 6, 0, false);
-		}else{
+		else
 			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + level, w1 + 118, h1 + 6, 0, false);
-		}
 		String s = "Coins: " + props.getCoins(p);
 		mc.fontRenderer.drawString(DovakiinAPI.GOLD + s, w1 + 110, h1 + 20, 0, false);
 	}
