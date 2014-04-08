@@ -31,9 +31,8 @@ public class GuiLevelBar{
 		int h1 = h - Config.levelHeight;
 		int w1 = w - Config.levelWidth;
 		int maxLevel = 245;
-		int level = props.getLevel();
-		int levelUp = 10;
-		int levelWidth = (int)(((float)level / (float)levelUp) * 245);
+		int level = props.getLevel();//The level that the player has (The amount of mobs it kills)
+		int levelWidth = (int)(((float)level / (float)maxLevel) * 245F);
 		if(maxLevel > 0){
 			g.drawTexturedModalRect(w1, h1, 0, 0, 256, 19);
 

@@ -69,6 +69,6 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
 	}
 
 	public static int getCoins(EntityPlayer player) {
-		return coins;
+		return coins == -1 ? coins = 0 : coins;
 	}
 }
