@@ -42,27 +42,29 @@ public class LevelEvent {
 	public void onDrop(LivingDropsEvent event){
 		EntityLivingBase e = event.entityLiving;
 		Random r = DovakiinAPI.rand;
-		if(e instanceof EntityDragon){
-			event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.dragonEssence)));
-			for(int i = 0; i < r.nextInt(500); i++)
-				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
-		}
-		if(e instanceof EntityWither){
-			event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.witherEssence)));
-			for(int i = 0; i < r.nextInt(500); i++)
-				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
-		}
-		if(e instanceof EntityMob){
-			for(int i = 0; i < r.nextInt(80); i++)
-				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
-		}
-		if(e instanceof EntitySlime){
-			for(int i = 0; i < r.nextInt(20); i++)
-				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
-		}
-		if(e instanceof EntityAnimal){
-			for(int i = 0; i < r.nextInt(2) + 1; i++)
-				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
+		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
+			if(e instanceof EntityDragon){
+				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.dragonEssence)));
+				for(int i = 0; i < r.nextInt(500); i++)
+					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
+			}
+			if(e instanceof EntityWither){
+				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.witherEssence)));
+				for(int i = 0; i < r.nextInt(500); i++)
+					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
+			}
+			if(e instanceof EntityMob){
+				for(int i = 0; i < r.nextInt(80); i++)
+					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
+			}
+			if(e instanceof EntitySlime){
+				for(int i = 0; i < r.nextInt(20); i++)
+					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
+			}
+			if(e instanceof EntityAnimal){
+				for(int i = 0; i < r.nextInt(2) + 1; i++)
+					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
+			}
 		}
 	}
 
@@ -70,7 +72,7 @@ public class LevelEvent {
 	public void onEntityConstructing(EntityConstructing event) {
 		if (event.entity instanceof EntityPlayer && ExtendedPlayer.get((EntityPlayer) event.entity) == null)
 			ExtendedPlayer.register((EntityPlayer) event.entity);
-		
+
 		if (event.entity instanceof EntityPlayer && event.entity.getExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME) == null)
 			event.entity.registerExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME, new ExtendedPlayer((EntityPlayer) event.entity));
 	}
@@ -107,11 +109,11 @@ public class LevelEvent {
 	public void onKilledMob(LivingDeathEvent event){
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
 			EntityPlayer p = (EntityPlayer)event.source.getSourceOfDamage();
-			
+
 			ExtendedPlayer props = ExtendedPlayer.get(p);
-			
+
 			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
-				int level = (DovakiinAPI.rand.nextInt(8) / 2);
+				int level = (DovakiinAPI.rand.nextInt(4) / 2);
 
 				if(props.getLevel() >= 245){
 					level = 0;

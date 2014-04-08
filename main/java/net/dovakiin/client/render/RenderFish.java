@@ -20,16 +20,15 @@ public class RenderFish extends RenderLiving {
 	}
 
 	protected ResourceLocation getEntityTexture() {
-		/*switch(DovakiinAPI.rand.nextInt(4)){
-		case 0:
+		int t = DovakiinAPI.rand.nextInt(4);
+		if(t == 0)
 			return tex;
-		case 1:
+		if(t == 1)
 			return tex1;
-		case 2:
+		if(t == 2)
 			return tex2;
-		case 3:
+		if(t == 3)
 			return tex3;
-		}*/
 		return tex;
 	}
 

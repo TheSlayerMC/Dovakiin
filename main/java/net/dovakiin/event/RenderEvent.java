@@ -34,9 +34,9 @@ public class RenderEvent {
 	@SideOnly(Side.CLIENT)
 	public void onPlayerLogin(EntityJoinWorldEvent e) {
 		if(Config.canShowWelcome){
-			if (e.entity instanceof EntityPlayer) {
-				EntityPlayer p = (EntityPlayer) e.entity;
-				if (p.worldObj.isRemote) {
+			if(e.entity instanceof EntityPlayer) {
+				EntityPlayer p = (EntityPlayer)e.entity;
+				if(p.worldObj.isRemote) {
 					if(!hasSeen) {
 						try {
 							if(!UpdateChecker.isOnline()){
@@ -50,7 +50,7 @@ public class RenderEvent {
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.LIGHT_PURPLE, " your internet connection!"));
 								}
 							}
-							if (UpdateChecker.isUpdateAvailable() && UpdateChecker.isOnline()) {
+							if(UpdateChecker.isUpdateAvailable() && UpdateChecker.isOnline()) {
 								if (p.getDisplayName().equals("The_SlayerMC") && !BannedEvent.isBanned(p)) {
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.DARK_PURPLE, "Oh hey! A Developer!"));
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.YELLOW, "Wow, you don't even have the newest version of your own mod... Nice.."));
@@ -63,7 +63,7 @@ public class RenderEvent {
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.YELLOW, "[New Version: " + curVersion + "]")); 
 								}
 							}
-							if ((!UpdateChecker.isUpdateAvailable()) && UpdateChecker.isOnline() && !BannedEvent.isBanned(p)) {
+							if((!UpdateChecker.isUpdateAvailable()) && UpdateChecker.isOnline() && !BannedEvent.isBanned(p)) {
 								if (p.getDisplayName().equals("The_SlayerMC")) {
 									p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.DARK_PURPLE, "Oh hey! Look! A developer!"));
 								} else {
@@ -75,10 +75,10 @@ public class RenderEvent {
 							if(BannedEvent.isBanned(p)){
 								p.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.GREEN, "You have been banned!"));
 							}
-						} catch (MalformedURLException e1) {
+						} catch(MalformedURLException e1) {
 							e1.printStackTrace();
 
-						} catch (IOException e1) {
+						} catch(IOException e1) {
 							e1.printStackTrace();
 						}
 					}

@@ -22,7 +22,7 @@ public class UpdateChecker {
 
 		versionFile.close();
 
-		if (!curVersion.contains(Utils.MOD_VERSION)) 
+		if (!curVersion.equals(Utils.MOD_VERSION)) 
 			return true;
 
 		return false;
@@ -30,18 +30,17 @@ public class UpdateChecker {
 
 	public static boolean isOnline() throws SocketException {
 		Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-		while (interfaces.hasMoreElements()) {
+		while(interfaces.hasMoreElements()) {
 			NetworkInterface interf = interfaces.nextElement();
-			if (interf.isUp() && !interf.isLoopback()) {
+			if(interf.isUp() && !interf.isLoopback()) {
 				List<InterfaceAddress> adrs = interf.getInterfaceAddresses();
-				for (Iterator<InterfaceAddress> iter = adrs.iterator(); iter.hasNext();) {
+				for(Iterator<InterfaceAddress> iter = adrs.iterator(); iter.hasNext();) {
 					InterfaceAddress adr = iter.next();
 					InetAddress inadr = adr.getAddress();
-					if (inadr instanceof Inet4Address) return true;
+					if(inadr instanceof Inet4Address) return true;
 				}
 			}
 		}
 		return false;
 	}
-
 }
