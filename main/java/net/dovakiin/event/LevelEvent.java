@@ -5,6 +5,7 @@ import java.util.Random;
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.entity.misc.EntityEgg;
+import net.dovakiin.entity.mob.EntityWitherSkeleton;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.network.ExtendedPlayer;
 import net.dovakiin.util.Config;
@@ -19,13 +20,20 @@ import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -33,6 +41,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class LevelEvent {
@@ -40,8 +49,11 @@ public class LevelEvent {
 	@SubscribeEvent
 	public void onDrop(LivingDropsEvent event){
 		EntityLivingBase e = event.entityLiving;
+		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
 		Random r = DovakiinAPI.rand;
+		ExtendedPlayer props = ExtendedPlayer.get(p);
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
+			EntitySkeleton s = new EntitySkeleton(event.entity.worldObj);
 			if(e instanceof EntityDragon){
 				event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.dragonEssence)));
 				for(int i = 0; i < r.nextInt(500); i++)
@@ -64,6 +76,12 @@ public class LevelEvent {
 				for(int i = 0; i < r.nextInt(2) + 1; i++)
 					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 			}
+			if(s.getSkeletonType() == 1 || e instanceof EntityWitherSkeleton){
+				if(props.getHeadLevel() < 10){
+					if(r.nextInt(50) == 1)
+						event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Items.skull, 1, 1)));
+				}
+			}
 		}
 	}
 
@@ -80,13 +98,13 @@ public class LevelEvent {
 	public void onPlayerLoggedIn(EntityJoinWorldEvent event){
 		Entity entity = event.entity;
 		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent) && !(entity instanceof EntityAgeable) && !(entity instanceof EntityWaterMob)) {
-			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
+			setName((EntityLiving)entity, getEntityName((EntityLiving)entity));
 		}
 		if(entity instanceof EntityEgg){
 			//setEggName((EntityEgg)entity, ((EntityPlayer)event.entity).getDisplayName());
 		}
 		if(entity instanceof EntityMerchent){
-			setName((EntityLiving)entity, getAlteredEntityName((EntityLiving)entity));
+			setName((EntityLiving)entity, getEntityName((EntityLiving)entity));
 		}
 	}
 
@@ -103,8 +121,12 @@ public class LevelEvent {
 		return entity;
 	}
 
-	public static int expGained = (int)((float)DovakiinAPI.rand.nextInt(500) / 2);
-	
+	public static int expGained = (int)((float)DovakiinAPI.rand.nextInt(3) / 2);
+	public static int headXP = (int)((float)DovakiinAPI.rand.nextInt(10) / 2);
+	public static int bowXP = (int)((float)DovakiinAPI.rand.nextInt(5) / 2);
+	public static int swordXP = (int)((float)DovakiinAPI.rand.nextInt(5) / 2);
+	public static int pickXP = (int)((float)DovakiinAPI.rand.nextInt(5) / 2);
+
 	@SubscribeEvent
 	public void onKilledMob(LivingDeathEvent event){
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
@@ -112,16 +134,43 @@ public class LevelEvent {
 
 			ExtendedPlayer props = ExtendedPlayer.get(p);
 
-			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){
+			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){ 
+				props.addSwordExperience(swordXP, p);
+			}
 
-				if(props.getLevel() >= 245){
-					expGained = 0;
-					props.addExperience(245, p);
+			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemBow && event.source.isProjectile()){ 
+				props.addBowExperience(bowXP, p);
+			}
+
+			EntitySkeleton s = new EntitySkeleton(event.entity.worldObj);
+
+			if(s.getSkeletonType() == 1 || event.entityLiving instanceof EntityWitherSkeleton){
+				props.addHeadExperience(headXP, p);
+			}
+			//props.resetPlayer(p);
+			if(Config.canShowDeathMessage)
+				DovakiinAPI.sendMessageToAll(p.getDisplayName() + " Has Slain A " + getEntityName((EntityLiving)event.entityLiving));
+			props.addExperience(expGained, p);
+		}
+	}
+
+	@SubscribeEvent
+	public void onBlockHarvested(HarvestDropsEvent event){
+		EntityPlayer p = event.harvester;
+		Random r = DovakiinAPI.rand;
+		ExtendedPlayer props = ExtendedPlayer.get(p);
+		if(event.harvester != null) {
+			if(event.harvester.getHeldItem() != null && event.harvester.getHeldItem().getItem() instanceof ItemPickaxe) {
+				if(props.getPickaxeLevel() < 10){
+					if(r.nextInt(20) < 2){
+						ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(event.block, 1, event.blockMetadata));
+						if(stack != null && event.block != Blocks.redstone_ore && event.block != Blocks.lapis_ore) {
+							event.drops.clear();
+							event.drops.add(stack.copy());
+						}
+					}
 				}
-				
-				props.addExperience(expGained, p);
-				if(Config.canShowDeathMessage)
-					DovakiinAPI.sendMessageToAll(p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving));
+				props.addPickaxeExperience(pickXP, p);
 			}
 		}
 	}
@@ -135,7 +184,7 @@ public class LevelEvent {
 		}
 	}
 
-	private String getAlteredEntityName(EntityLiving entity) {
+	private String getEntityName(EntityLiving entity) {
 		return EntityList.getEntityString(entity);
 	}
 
@@ -143,8 +192,8 @@ public class LevelEvent {
 		return StatCollector.translateToLocal(item.getUnlocalizedName() + ".name");
 	}
 
-	private static String getAlteredItemName(Item item, String name) {
-		LangRegistry.addToFile(item.getUnlocalizedName() + name + ".name=" + name);
+	private static String setAlteredItemName(Item item, String name) {
+		LangRegistry.addToFile("item." + name + ".name=" + name);
 		return StatCollector.translateToLocal(item.getUnlocalizedName() + name + ".name");
 	}
 

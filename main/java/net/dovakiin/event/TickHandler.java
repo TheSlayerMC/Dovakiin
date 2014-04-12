@@ -1,7 +1,6 @@
 package net.dovakiin.event;
 
-import net.dovakiin.client.gui.GuiBanned;
-import net.dovakiin.client.gui.GuiMerchant;
+import net.dovakiin.client.gui.GuiItemStats;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiOptions;
@@ -22,13 +21,14 @@ public class TickHandler {
 		if(event.phase == TickEvent.Phase.END) {
 			if(Minecraft.getMinecraft().currentScreen instanceof GuiOptions) {
 				GuiOptions gui = (GuiOptions)Minecraft.getMinecraft().currentScreen;
-				String s = "Hit M For the merchent menu";
+				String s = "Hit 'L' For the Levels";
 				gui.drawString(Minecraft.getMinecraft().fontRenderer, s, gui.width - Minecraft.getMinecraft().fontRenderer.getStringWidth(s) - 10, gui.height - 20, 16777215);
 
-				if(!keyDown && Keyboard.isKeyDown(Keyboard.KEY_M)) {
+				if(!keyDown && Keyboard.isKeyDown(Keyboard.KEY_L)) {
 					Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-					FMLClientHandler.instance().showGuiScreen(new GuiMerchant());				}
-				keyDown = Keyboard.isKeyDown(Keyboard.KEY_M);
+					//FMLClientHandler.instance().showGuiScreen(new GuiItemStats());				
+				}
+				keyDown = Keyboard.isKeyDown(Keyboard.KEY_L);
 			}
 		}
 	}

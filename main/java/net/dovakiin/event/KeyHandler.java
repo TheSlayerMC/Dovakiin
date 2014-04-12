@@ -24,7 +24,7 @@ public class KeyHandler {
 	public void KeyInputEvent(KeyInputEvent event) {
 		if(stats.isPressed()) {
 			if(Minecraft.getMinecraft().currentScreen == null) {
-				DovakiinAPI.openGui(GuiHandler.stats);
+				DovakiinAPI.openGui(GuiHandler.levels);
 			}
 		}
 	}

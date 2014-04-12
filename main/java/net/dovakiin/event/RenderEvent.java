@@ -8,6 +8,7 @@ import java.net.URL;
 
 import net.dovakiin.api.DovakiinAPI;
 import net.dovakiin.client.gui.GuiBanned;
+import net.dovakiin.client.gui.GuiItemStats;
 import net.dovakiin.client.gui.GuiLevelBar;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.UpdateChecker;
