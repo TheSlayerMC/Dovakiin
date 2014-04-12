@@ -23,7 +23,7 @@ public class DovakiinCommands extends CommandBase{
 
 	@Override
 	public String getCommandUsage(ICommandSender var1) {
-		return new String("/Dovakiin");
+		return new String("/dovakiin");
 	}
 
 	@Override
@@ -45,7 +45,6 @@ public class DovakiinCommands extends CommandBase{
 	
 	@Override
 	public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2) {
-		return par2.length == 1 ? getListOfStringsMatchingLastWord(par2, new String[] {"Clear", "Heal"}) : null;
+		return par2.length == 1 ? getListOfStringsMatchingLastWord(par2, new String[] {"Heal"}) : null;
 	}
-
 }

@@ -72,7 +72,7 @@ public class DovakiinAPI {
 		try{
 			MapGenStructureIO.func_143031_a(c, s);
 		}catch(Exception e){
-			logger.log(Level.WARNING, "Dovakiin Failed To Spawn The Extra Village Pieces With The ID: " + s);
+			logger.log(Level.WARNING, "[Dovakiin] Failed To Spawn The Extra Village Pieces With The ID: " + s);
 		}
 	}
 	

@@ -39,25 +39,6 @@ public class RenderEvent {
 		if(event.isCancelable() || event.type != ElementType.EXPERIENCE) return;
 		GuiLevelBar.draw();
 	}
-
-	@SubscribeEvent
-    public void renderTick(TickEvent.RenderTickEvent event) {
-        if(event.phase == TickEvent.Phase.END) {
-            if(Minecraft.getMinecraft().currentScreen instanceof GuiOptions) {
-                GuiOptions gui = (GuiOptions)Minecraft.getMinecraft().currentScreen;
-                String s = "Hit O";
-                gui.drawString(Minecraft.getMinecraft().fontRenderer, s, gui.width - Minecraft.getMinecraft().fontRenderer.getStringWidth(s) - 2, gui.height - 10, 16777215);
-
-                if(!keyDown && Keyboard.isKeyDown(Keyboard.KEY_O)) {
-                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-                    FMLClientHandler.instance().showGuiScreen(new GuiBanned());
-                }
-                keyDown = Keyboard.isKeyDown(Keyboard.KEY_O);
-            }
-        }
-    }
-	
-	private boolean keyDown = false;
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)

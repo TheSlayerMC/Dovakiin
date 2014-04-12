@@ -14,12 +14,9 @@ import net.dovakiin.event.ClientPlayerEvent;
 import net.dovakiin.event.KeyHandler;
 import net.dovakiin.event.LevelEvent;
 import net.dovakiin.event.RenderEvent;
+import net.dovakiin.event.TickHandler;
 import net.dovakiin.generation.BerryWorldGen;
 import net.dovakiin.generation.WorldGenerationBuildings;
-import net.dovakiin.generation.buildings.village.ComponentMerchent;
-import net.dovakiin.generation.buildings.village.Field3;
-import net.dovakiin.generation.buildings.village.VillageGardenHandler;
-import net.dovakiin.generation.buildings.village.VillageMerchentHandler;
 import net.dovakiin.network.PacketHandler;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.LangRegistry;
@@ -31,11 +28,12 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class CommonProxy {
 
 	public void registerClient(){ }
-	
+
 	//ClientProxy
 	public void preInit(FMLPreInitializationEvent event){
 		Config.init();
@@ -48,16 +46,16 @@ public class CommonProxy {
 		ClientPlayerEvent.register();
 		LangRegistry.init();
 		if(Utils.DEBUG){
-		    LangRegistry.addBlockNames();
-		    LangRegistry.addItemNames();
-		    LangRegistry.addEggNames();
+			LangRegistry.addBlockNames();
+			LangRegistry.addItemNames();
+			LangRegistry.addEggNames();
 		}
 		LangRegistry.closeFile();
 		/*DovakiinAPI.addVillagePiece(ComponentMerchent.class, "Merchent");
 		DovakiinAPI.addVillagePiece(Field3.class, "Garden");
 		DovakiinAPI.addVillageCreationHandler(new VillageMerchentHandler());
 		DovakiinAPI.addVillageCreationHandler(new VillageGardenHandler());*/
-		
+
 		DovakiinAPI.registerMob(EntityGiantSkeleton.class, "Giant Skeleton");
 		DovakiinAPI.registerMob(EntityGiantZombie.class, "Giant Zombie");
 		DovakiinAPI.registerMob(EntityGiantCreeper.class, "Giant Creeper");
@@ -65,17 +63,18 @@ public class CommonProxy {
 		DovakiinAPI.registerMob(EntityMerchent.class, "Merchent");
 		DovakiinAPI.registerMob(EntityFish.class, "Fish");
 		DovakiinAPI.registerEggEntity(EntityGreenDragonEgg.class, "Green Dragon");
-		
+
 		FMLCommonHandler.instance().bus().register(new KeyHandler());
+		FMLCommonHandler.instance().bus().register(new TickHandler());
 	}
-	
+
 	public void init(FMLInitializationEvent event){
 		GameRegistry.registerWorldGenerator(new BerryWorldGen(), 9);
 		GameRegistry.registerWorldGenerator(new WorldGenerationBuildings(), 10);
 	}
-	
+
 	public void postInit(FMLPostInitializationEvent event){ }
-	
+
 	public void serverStarting(FMLServerStartingEvent event){
 		DovakiinAPI.registerCommand(new DovakiinCommands());
 	}

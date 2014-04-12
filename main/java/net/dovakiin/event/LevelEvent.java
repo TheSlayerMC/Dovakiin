@@ -103,7 +103,7 @@ public class LevelEvent {
 		return entity;
 	}
 
-	public static int expGained = (int)((float)DovakiinAPI.rand.nextInt(10) / 2);
+	public static int expGained = (int)((float)DovakiinAPI.rand.nextInt(500) / 2);
 	
 	@SubscribeEvent
 	public void onKilledMob(LivingDeathEvent event){
@@ -116,10 +116,10 @@ public class LevelEvent {
 
 				if(props.getLevel() >= 245){
 					expGained = 0;
-					props.setLevel(245);
+					props.addExperience(245, p);
 				}
 				
-				props.setLevel(expGained);
+				props.addExperience(expGained, p);
 				if(Config.canShowDeathMessage)
 					DovakiinAPI.sendMessageToAll(p.getDisplayName() + " Has Slain A " + getAlteredEntityName((EntityLiving)event.entityLiving));
 			}
