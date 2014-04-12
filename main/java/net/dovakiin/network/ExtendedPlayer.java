@@ -203,7 +203,6 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
 
         for (props.experienceTotal += par1; props.levelXP >= 1.0F; props.levelXP /= (float)xpBarCap(player)) {
         	props.levelXP = (props.levelXP - 1.0F) * (float)xpBarCap(player);
-        	addExperience(1, player);
         }
     }
 	
