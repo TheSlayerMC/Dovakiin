@@ -98,6 +98,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
         if (par1 > 0 && props.headExperience % 5 == 0 && (float)field_82249_h < (float)p.ticksExisted - 100.0F) {
             float f = props.headExperience > 30 ? 1.0F : (float)props.headExperience / 30.0F;
         }
+        DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" +  DovakiinAPI.BLUE + "Dovakiin" +  DovakiinAPI.AQUA + "] " +  DovakiinAPI.AQUA + "Your wither decapitation level has gone up!");
     }
 	
 	private void addBowLevel(int par1, EntityPlayer p) {
@@ -116,6 +117,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
         if (par1 > 0 && props.bowExperience % 5 == 0 && (float)field_82249_h < (float)p.ticksExisted - 100.0F) {
             float f = props.bowExperience > 30 ? 1.0F : (float)props.bowExperience / 30.0F;
         }
+        DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" +  DovakiinAPI.BLUE + "Dovakiin" +  DovakiinAPI.AQUA + "] " +  DovakiinAPI.AQUA + "Your bow level has gone up!");
     }
 	
 	private void addHoeLevel(int par1, EntityPlayer p) {
@@ -134,6 +136,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
         if (par1 > 0 && props.hoeExperience % 5 == 0 && (float)field_82249_h < (float)p.ticksExisted - 100.0F) {
             float f = props.hoeExperience > 30 ? 1.0F : (float)props.hoeExperience / 30.0F;
         }
+        DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" +  DovakiinAPI.BLUE + "Dovakiin" +  DovakiinAPI.AQUA + "] " +  DovakiinAPI.AQUA + "Your hoe level has gone up!");
     }
 	
 	private void addPickaxeLevel(int par1, EntityPlayer p) {
@@ -152,6 +155,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
         if (par1 > 0 && props.pickExperience % 5 == 0 && (float)field_82249_h < (float)p.ticksExisted - 100.0F) {
             float f = props.pickExperience > 30 ? 1.0F : (float)props.pickExperience / 30.0F;
         }
+        DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" +  DovakiinAPI.BLUE + "Dovakiin" +  DovakiinAPI.AQUA + "] " +  DovakiinAPI.AQUA + "Your pickaxe level has gone up!");
     }
 	
 	private void addSwordLevel(int par1, EntityPlayer p) {
@@ -170,6 +174,8 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
         if (par1 > 0 && props.swordExperience % 5 == 0 && (float)field_82249_h < (float)p.ticksExisted - 100.0F) {
             float f = props.swordExperience > 30 ? 1.0F : (float)props.swordExperience / 30.0F;
         }
+        
+        DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" +  DovakiinAPI.BLUE + "Dovakiin" +  DovakiinAPI.AQUA + "] " +  DovakiinAPI.AQUA + "Your sword level has gone up!");
     }
 	
 	public void addLevel(int par1, EntityPlayer p) {
@@ -188,10 +194,10 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
         if (par1 > 0 && props.experienceLevel % 5 == 0 && (float)field_82249_h < (float)p.ticksExisted - 100.0F) {
             float f = props.experienceLevel > 30 ? 1.0F : (float)props.experienceLevel / 30.0F;
         }
+        DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "[" +  DovakiinAPI.BLUE + "Dovakiin" +  DovakiinAPI.AQUA + "] " +  DovakiinAPI.AQUA + "Your level has gone up!");
     }
 	
-	public void addExperience(int par1, EntityPlayer player)
-    {
+	public void addExperience(int par1, EntityPlayer player) {
 		ExtendedPlayer props = ExtendedPlayer.get(player);
         int j = Integer.MAX_VALUE - props.experienceTotal;
 
@@ -203,6 +209,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
 
         for (props.experienceTotal += par1; props.levelXP >= 1.0F; props.levelXP /= (float)xpBarCap(player)) {
         	props.levelXP = (props.levelXP - 1.0F) * (float)xpBarCap(player);
+        	addLevel(1, player);
         }
     }
 	
@@ -296,7 +303,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties{
     }
 	
 	public static int normalCap(){
-		return 20;
+		return 23;
 	}
 	
 	public static void resetPlayer(EntityPlayer p){

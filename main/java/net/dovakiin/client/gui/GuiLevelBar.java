@@ -22,7 +22,6 @@ public class GuiLevelBar{
 	static int levelWidth = 610;
 
 	public static void draw(){
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft mc = Minecraft.getMinecraft();
 		EntityPlayer player = mc.thePlayer;
 		mc.getTextureManager().bindTexture(bar);
@@ -44,7 +43,12 @@ public class GuiLevelBar{
 		mc.mcProfiler.startSection("levelBar");
 		mc.getTextureManager().bindTexture(bar);
 		j1 = props.xpBarCap(player);
-
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(false);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glDisable(GL11.GL_ALPHA_TEST);
 		if (j1 > 0) {
 			short1 = 256;
 			l1 = (int)(props.levelXP * (float)(short1));
@@ -63,5 +67,8 @@ public class GuiLevelBar{
 		
 		String s = "Coins: " + props.getCoins(player);
 		mc.fontRenderer.drawString(DovakiinAPI.GOLD + s, w1 + 110, h1 + 20, 0, false);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(true);
 	}
 }

@@ -10,9 +10,9 @@ import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.network.ExtendedPlayer;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.LangRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,24 +23,24 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBow;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -77,9 +77,8 @@ public class LevelEvent {
 					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 			}
 			if(s.getSkeletonType() == 1 || e instanceof EntityWitherSkeleton){
-				if(props.getHeadLevel() < 10){
-					if(r.nextInt(50) == 1)
-						event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Items.skull, 1, 1)));
+				if(r.nextInt(props.getPickaxeLevel()) > 40){
+					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Items.skull, 1, 1)));
 				}
 			}
 		}
@@ -87,16 +86,16 @@ public class LevelEvent {
 
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
-		if (event.entity instanceof EntityPlayer && ExtendedPlayer.get((EntityPlayer) event.entity) == null)
+		if (event.entity instanceof EntityPlayer && ExtendedPlayer.get((EntityPlayer)event.entity) == null)
 			ExtendedPlayer.register((EntityPlayer) event.entity);
 
 		if (event.entity instanceof EntityPlayer && event.entity.getExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME) == null)
-			event.entity.registerExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME, new ExtendedPlayer((EntityPlayer) event.entity));
+			event.entity.registerExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME, new ExtendedPlayer((EntityPlayer)event.entity));
 	}
 
 	@SubscribeEvent
 	public void onPlayerLoggedIn(EntityJoinWorldEvent event){
-		Entity entity = event.entity;
+		/*Entity entity = event.entity;
 		if(entity instanceof EntityLiving && !(entity instanceof EntityEgg) && !(entity instanceof EntityMerchent) && !(entity instanceof EntityAgeable) && !(entity instanceof EntityWaterMob)) {
 			setName((EntityLiving)entity, getEntityName((EntityLiving)entity));
 		}
@@ -105,7 +104,7 @@ public class LevelEvent {
 		}
 		if(entity instanceof EntityMerchent){
 			setName((EntityLiving)entity, getEntityName((EntityLiving)entity));
-		}
+		}*/
 	}
 
 	public static Entity setName(EntityLivingBase entity, String name) {
@@ -126,6 +125,7 @@ public class LevelEvent {
 	public static int bowXP = (int)((float)DovakiinAPI.rand.nextInt(5) / 2);
 	public static int swordXP = (int)((float)DovakiinAPI.rand.nextInt(5) / 2);
 	public static int pickXP = (int)((float)DovakiinAPI.rand.nextInt(5) / 2);
+	public static int hoeXP = (int)((float)DovakiinAPI.rand.nextInt(5) / 2);
 
 	@SubscribeEvent
 	public void onKilledMob(LivingDeathEvent event){
@@ -138,19 +138,14 @@ public class LevelEvent {
 				props.addSwordExperience(swordXP, p);
 			}
 
-			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemBow && event.source.isProjectile()){ 
-				props.addBowExperience(bowXP, p);
-			}
-
 			EntitySkeleton s = new EntitySkeleton(event.entity.worldObj);
 
 			if(s.getSkeletonType() == 1 || event.entityLiving instanceof EntityWitherSkeleton){
 				props.addHeadExperience(headXP, p);
 			}
-			//props.resetPlayer(p);
+			props.resetPlayer(p);
 			if(Config.canShowDeathMessage)
 				DovakiinAPI.sendMessageToAll(p.getDisplayName() + " Has Slain A " + getEntityName((EntityLiving)event.entityLiving));
-			props.addExperience(expGained, p);
 		}
 	}
 
@@ -159,10 +154,10 @@ public class LevelEvent {
 		EntityPlayer p = event.harvester;
 		Random r = DovakiinAPI.rand;
 		ExtendedPlayer props = ExtendedPlayer.get(p);
-		if(event.harvester != null) {
+		if(event.harvester != null && event.harvester instanceof EntityPlayer) {
 			if(event.harvester.getHeldItem() != null && event.harvester.getHeldItem().getItem() instanceof ItemPickaxe) {
-				if(props.getPickaxeLevel() < 10){
-					if(r.nextInt(20) < 2){
+				if(r.nextInt(props.getPickaxeLevel()) > 40){
+					if(!event.isSilkTouching){
 						ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(event.block, 1, event.blockMetadata));
 						if(stack != null && event.block != Blocks.redstone_ore && event.block != Blocks.lapis_ore) {
 							event.drops.clear();
@@ -170,8 +165,84 @@ public class LevelEvent {
 						}
 					}
 				}
-				props.addPickaxeExperience(pickXP, p);
 			}
+			props.addPickaxeExperience(pickXP, p);
+		}
+	}
+
+	@SubscribeEvent
+	public void hoe(UseHoeEvent event){
+		EntityPlayer p = event.entityPlayer;
+		ExtendedPlayer props = ExtendedPlayer.get(p);
+		World w = event.world;
+		int x, y, z;
+		x = event.x;
+		y = event.y;
+		z = event.z;
+		Block block = Blocks.dirt;
+		if(w.getBlock(x, y, z) == Blocks.grass || w.getBlock(x, y, z) == Blocks.dirt || w.getBlock(x, y, z) == Blocks.farmland){
+			
+			if(props.getHoeLevel() > 10){
+				int size = 1;
+				w.setBlock(x, y, z, Blocks.water);
+				w.setBlock(x + size, y, z, Blocks.farmland);
+				w.setBlock(x - size, y, z, Blocks.farmland);
+				w.setBlock(x, y, z + size, Blocks.farmland);
+				w.setBlock(x, y, z - size, Blocks.farmland);
+				w.setBlock(x + size, y, z + size, Blocks.farmland);
+				w.setBlock(x - size, y, z - size, Blocks.farmland);
+				w.setBlock(x + size, y, z - size, Blocks.farmland);
+				w.setBlock(x - size, y, z + size, Blocks.farmland);
+				event.current.damageItem(9, p);
+			}
+			
+			if(props.getHoeLevel() > 30){
+				int size = 1;
+				w.setBlock(x, y, z, Blocks.water);
+				w.setBlock(x + size, y, z, Blocks.farmland);
+				w.setBlock(x - size, y, z, Blocks.farmland);
+				w.setBlock(x, y, z + size, Blocks.farmland);
+				w.setBlock(x, y, z - size, Blocks.farmland);
+				w.setBlock(x + size, y, z + size, Blocks.farmland);
+				w.setBlock(x - size, y, z - size, Blocks.farmland);
+				w.setBlock(x + size, y, z - size, Blocks.farmland);
+				w.setBlock(x - size, y, z + size, Blocks.farmland);
+				w.setBlock(x - size, y + size, z + size, Blocks.potatoes);
+				w.setBlock(x, y + 1, z - size, Blocks.carrots);
+				event.current.damageItem(15, p);
+			}
+			
+			if(props.getHoeLevel() > 50){
+				int size = 1;
+				w.setBlock(x, y, z, Blocks.water);
+				w.setBlock(x + size, y, z, Blocks.farmland);
+				w.setBlock(x - size, y, z, Blocks.farmland);
+				w.setBlock(x, y, z + size, Blocks.farmland);
+				w.setBlock(x, y, z - size, Blocks.farmland);
+				w.setBlock(x + size, y, z + size, Blocks.farmland);
+				w.setBlock(x - size, y, z - size, Blocks.farmland);
+				w.setBlock(x + size, y, z - size, Blocks.farmland);
+				w.setBlock(x - size, y, z + size, Blocks.farmland);
+				w.setBlock(x - size, y + size, z + size, Blocks.potatoes);
+				w.setBlock(x, y + size, z - size, Blocks.carrots);
+				w.setBlock(x, y - size, z - size, Blocks.wheat);
+				event.current.damageItem(20, p);
+			}
+		}
+		if(w.getBlock(x, y, z) != Blocks.farmland)
+			w.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), block.stepSound.getStepResourcePath(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+		
+		if(event.entityPlayer != null){
+			props.addHoeExperience(hoeXP, p);
+		}
+	}
+
+	@SubscribeEvent
+	public void useBow(ArrowLooseEvent event){
+		EntityPlayer p = event.entityPlayer;
+		ExtendedPlayer props = ExtendedPlayer.get(p);
+		if(event.entityPlayer != null){
+			props.addBowExperience(bowXP, p);
 		}
 	}
 
