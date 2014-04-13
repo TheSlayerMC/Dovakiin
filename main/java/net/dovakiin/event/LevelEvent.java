@@ -24,6 +24,7 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -77,8 +78,9 @@ public class LevelEvent {
 					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Dovakiin.coin)));
 			}
 			if(s.getSkeletonType() == 1 || e instanceof EntityWitherSkeleton){
-				if(r.nextInt(props.getPickaxeLevel()) > 40){
-					event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Items.skull, 1, 1)));
+				if(props.getHeadLevel() > 5){
+					if(r.nextInt(props.getHeadLevel()) > 5)
+						event.drops.add(new EntityItem(e.worldObj, e.posX, e.posY, e.posZ, new ItemStack(Items.skull, 1, 1)));
 				}
 			}
 		}
@@ -143,7 +145,7 @@ public class LevelEvent {
 			if(s.getSkeletonType() == 1 || event.entityLiving instanceof EntityWitherSkeleton){
 				props.addHeadExperience(headXP, p);
 			}
-			props.resetPlayer(p);
+			//props.resetPlayer(p);
 			if(Config.canShowDeathMessage)
 				DovakiinAPI.sendMessageToAll(p.getDisplayName() + " Has Slain A " + getEntityName((EntityLiving)event.entityLiving));
 		}
@@ -181,7 +183,6 @@ public class LevelEvent {
 		z = event.z;
 		Block block = Blocks.dirt;
 		if(w.getBlock(x, y, z) == Blocks.grass || w.getBlock(x, y, z) == Blocks.dirt || w.getBlock(x, y, z) == Blocks.farmland){
-			
 			if(props.getHoeLevel() > 10){
 				int size = 1;
 				w.setBlock(x, y, z, Blocks.water);
@@ -195,7 +196,7 @@ public class LevelEvent {
 				w.setBlock(x - size, y, z + size, Blocks.farmland);
 				event.current.damageItem(9, p);
 			}
-			
+
 			if(props.getHoeLevel() > 30){
 				int size = 1;
 				w.setBlock(x, y, z, Blocks.water);
@@ -211,7 +212,7 @@ public class LevelEvent {
 				w.setBlock(x, y + 1, z - size, Blocks.carrots);
 				event.current.damageItem(15, p);
 			}
-			
+
 			if(props.getHoeLevel() > 50){
 				int size = 1;
 				w.setBlock(x, y, z, Blocks.water);
@@ -231,7 +232,7 @@ public class LevelEvent {
 		}
 		if(w.getBlock(x, y, z) != Blocks.farmland)
 			w.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), block.stepSound.getStepResourcePath(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
-		
+
 		if(event.entityPlayer != null){
 			props.addHoeExperience(hoeXP, p);
 		}
@@ -241,7 +242,20 @@ public class LevelEvent {
 	public void useBow(ArrowLooseEvent event){
 		EntityPlayer p = event.entityPlayer;
 		ExtendedPlayer props = ExtendedPlayer.get(p);
+		EntityArrow e = new EntityArrow(event.entityPlayer.worldObj, event.entityPlayer, event.entityLiving, 1.6F, (float)(14 - event.entityPlayer.worldObj.difficultySetting.getDifficultyId() * 4));
 		if(event.entityPlayer != null){
+			if(props.getBowLevel() > 5)
+				e.setDamage(e.getDamage() + 2);
+			if(props.getBowLevel() > 10)
+				e.setDamage(e.getDamage() + 4);
+			if(props.getBowLevel() > 15)
+				e.setDamage(e.getDamage() + 6);
+			if(props.getBowLevel() > 20)
+				e.setDamage(e.getDamage() + 8);
+			if(props.getBowLevel() > 25)
+				e.setDamage(e.getDamage() + 10);
+			if(props.getBowLevel() < 50)
+				e.setDamage(e.getDamage() + 15);
 			props.addBowExperience(bowXP, p);
 		}
 	}
