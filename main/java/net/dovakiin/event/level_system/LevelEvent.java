@@ -1,4 +1,4 @@
-package net.dovakiin.event;
+package net.dovakiin.event.level_system;
 
 import java.util.Random;
 
@@ -12,6 +12,8 @@ import net.dovakiin.util.Config;
 import net.dovakiin.util.LangRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -52,7 +54,7 @@ public class LevelEvent {
 		EntityLivingBase e = event.entityLiving;
 		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
 		Random r = DovakiinAPI.rand;
-		ExtendedPlayer props = ExtendedPlayer.get(p);
+		ExtendedPlayer props = new ExtendedPlayer();
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
 			EntitySkeleton s = new EntitySkeleton(event.entity.worldObj);
 			if(e instanceof EntityDragon){
@@ -88,11 +90,7 @@ public class LevelEvent {
 
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
-		if (event.entity instanceof EntityPlayer && ExtendedPlayer.get((EntityPlayer)event.entity) == null)
-			ExtendedPlayer.register((EntityPlayer) event.entity);
-
-		if (event.entity instanceof EntityPlayer && event.entity.getExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME) == null)
-			event.entity.registerExtendedProperties(ExtendedPlayer.EXTENDED_PROPERTIES_NAME, new ExtendedPlayer((EntityPlayer)event.entity));
+		
 	}
 
 	@SubscribeEvent
@@ -134,8 +132,7 @@ public class LevelEvent {
 		if(event.source.getSourceOfDamage() instanceof EntityPlayer){
 			EntityPlayer p = (EntityPlayer)event.source.getSourceOfDamage();
 
-			ExtendedPlayer props = ExtendedPlayer.get(p);
-
+			ExtendedPlayer props = new ExtendedPlayer();
 			if(p.getHeldItem() != null && p.getHeldItem().getItem() instanceof ItemSword){ 
 				props.addSwordExperience(swordXP, p);
 			}
@@ -155,27 +152,45 @@ public class LevelEvent {
 	public void onBlockHarvested(HarvestDropsEvent event){
 		EntityPlayer p = event.harvester;
 		Random r = DovakiinAPI.rand;
-		ExtendedPlayer props = ExtendedPlayer.get(p);
-		if(event.harvester != null && event.harvester instanceof EntityPlayer) {
+		ExtendedPlayer props = new ExtendedPlayer();		if(event.harvester != null && event.harvester instanceof EntityPlayer) {
 			if(event.harvester.getHeldItem() != null && event.harvester.getHeldItem().getItem() instanceof ItemPickaxe) {
-				if(r.nextInt(props.getPickaxeLevel()) > 40){
-					if(!event.isSilkTouching){
-						ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(event.block, 1, event.blockMetadata));
-						if(stack != null && event.block != Blocks.redstone_ore && event.block != Blocks.lapis_ore) {
-							event.drops.clear();
-							event.drops.add(stack.copy());
+				if(props.getPickaxeLevel() > 10){
+					if(r.nextInt(props.getPickaxeLevel()) > 40){
+						if(!event.isSilkTouching){
+							ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(event.block, 1, event.blockMetadata));
+							if(stack != null && event.block != Blocks.redstone_ore && event.block != Blocks.lapis_ore) {
+								event.drops.clear();
+								event.drops.add(stack.copy());
+							}
 						}
 					}
 				}
+				props.addPickaxeExperience(pickXP, p);
 			}
-			props.addPickaxeExperience(pickXP, p);
 		}
+
+		ItemStack item = event.harvester.getHeldItem();
+		if(event.harvester != null && event.harvester instanceof EntityPlayer) {
+			//if(getEnch(p) == Dovakiin.hotTouch){
+				if(!event.isSilkTouching){
+					ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(event.block, 1, event.blockMetadata));
+					if(stack != null && event.block != Blocks.redstone_ore && event.block != Blocks.lapis_ore) {
+						event.drops.clear();
+						event.drops.add(stack.copy());
+					//}
+				}
+			}
+		}
+	}
+
+	public static Enchantment getEnch(EntityLivingBase e) {
+		return (Enchantment)EnchantmentHelper.getEnchantments(e.getHeldItem());
 	}
 
 	@SubscribeEvent
 	public void hoe(UseHoeEvent event){
 		EntityPlayer p = event.entityPlayer;
-		ExtendedPlayer props = ExtendedPlayer.get(p);
+		ExtendedPlayer props = new ExtendedPlayer();
 		World w = event.world;
 		int x, y, z;
 		x = event.x;
@@ -241,7 +256,7 @@ public class LevelEvent {
 	@SubscribeEvent
 	public void useBow(ArrowLooseEvent event){
 		EntityPlayer p = event.entityPlayer;
-		ExtendedPlayer props = ExtendedPlayer.get(p);
+		ExtendedPlayer props = new ExtendedPlayer();
 		EntityArrow e = new EntityArrow(event.entityPlayer.worldObj, event.entityPlayer, event.entityLiving, 1.6F, (float)(14 - event.entityPlayer.worldObj.difficultySetting.getDifficultyId() * 4));
 		if(event.entityPlayer != null){
 			if(props.getBowLevel() > 5)

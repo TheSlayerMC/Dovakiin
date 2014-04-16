@@ -10,12 +10,16 @@ import net.dovakiin.api.items.ModInformationBook;
 import net.dovakiin.api.items.ModItem;
 import net.dovakiin.client.DovakiinTabs;
 import net.dovakiin.client.GuiHandler;
+import net.dovakiin.misc.EnchantmentHotTouch;
 import net.dovakiin.network.PacketHandler;
 import net.dovakiin.network.PacketOpenGui;
 import net.dovakiin.network.PacketRequestBuy;
 import net.dovakiin.network.PacketRequestStats;
+import net.dovakiin.util.Config;
 import net.dovakiin.util.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -95,6 +99,8 @@ public class Dovakiin {
 	
 	public static final Item greenDragon 			= new ItemEgg().registerItem("basicEgg");
 	public static final Item coin 					= new ItemCoin().registerItem("coin");
+	
+	public static final Enchantment hotTouch		= new EnchantmentHotTouch(160, 3);
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){

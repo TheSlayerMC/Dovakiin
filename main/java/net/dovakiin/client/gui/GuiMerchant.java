@@ -2,7 +2,7 @@ package net.dovakiin.client.gui;
 
 import net.dovakiin.Dovakiin;
 import net.dovakiin.api.ContainerEmpty;
-import net.dovakiin.network.ExtendedPlayer;
+import net.dovakiin.event.level_system.LevelHelper;
 import net.dovakiin.network.PacketRequestBuy;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
@@ -31,13 +31,12 @@ public class GuiMerchant extends GuiContainer {
 		String s = "Merchant";
 		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 - 20, 6 - 25, 4210752);
 		String credits;
-		ExtendedPlayer props = ExtendedPlayer.get(p);
-		if(props.getCoins(player) == 0)
-			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.RED + props.getCoins(player);
-		else if(props.getCoins(player) < 30)
-			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.YELLOW + props.getCoins(player);
+		if(LevelHelper.getCoins() == 0)
+			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.RED + LevelHelper.getCoins();
+		else if(LevelHelper.getCoins() < 30)
+			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.YELLOW + LevelHelper.getCoins();
 		else
-			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.GREEN + props.getCoins(player);
+			credits = EnumChatFormatting.YELLOW + "Coins: " + EnumChatFormatting.GREEN + LevelHelper.getCoins();
 		s = credits;
 		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 + 50, 6 - 25, 4210752);
 		s = EnumChatFormatting.YELLOW + "Page: " + EnumChatFormatting.WHITE + pageNum + "/" + maxPageNums;

@@ -26,7 +26,7 @@ public class TickHandler {
 
 				if(!keyDown && Keyboard.isKeyDown(Keyboard.KEY_L)) {
 					Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-					//FMLClientHandler.instance().showGuiScreen(new GuiItemStats());				
+					FMLClientHandler.instance().showGuiScreen(new GuiItemStats());				
 				}
 				keyDown = Keyboard.isKeyDown(Keyboard.KEY_L);
 			}

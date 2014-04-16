@@ -6,9 +6,11 @@ import net.dovakiin.network.ExtendedPlayer;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StringUtils;
 
 import org.lwjgl.opengl.GL11;
 
@@ -22,20 +24,12 @@ public class GuiStats extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		ExtendedPlayer props = ExtendedPlayer.get(player);
 		String text = Utils.MOD_NAME + ": " + Utils.MOD_VERSION;
 		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 5, 4210752);
-		text = "Time: " + Minecraft.getMinecraft().theWorld.getWorldTime();
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 15, 4210752);
-		text = "Sword Level: " + props.getSwordLevel();
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 25, 4210752);
-		text = "Coin Total: " + props.getCoins(player);
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 35, 4210752);
 		text = "Enemys around: " + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.monster, true);
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 45, 4210752);
+		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 15, 4210752);
 		text = "Friendly creatures around: " + Minecraft.getMinecraft().theWorld.countEntities(EnumCreatureType.creature, true);
-		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 55, 4210752);
+		Minecraft.getMinecraft().fontRenderer.drawString(DovakiinAPI.AQUA + text, 5, 25, 4210752);
 	}
 	
 	@Override

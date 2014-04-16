@@ -12,15 +12,18 @@ import net.dovakiin.entity.mob.passive.EntityFish;
 import net.dovakiin.event.BonemealEvent;
 import net.dovakiin.event.ClientPlayerEvent;
 import net.dovakiin.event.KeyHandler;
-import net.dovakiin.event.LevelEvent;
 import net.dovakiin.event.RenderEvent;
 import net.dovakiin.event.TickHandler;
+import net.dovakiin.event.level_system.GuiTickHandler;
+import net.dovakiin.event.level_system.LevelEvent;
 import net.dovakiin.generation.BerryWorldGen;
 import net.dovakiin.generation.WorldGenerationBuildings;
 import net.dovakiin.network.PacketHandler;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.LangRegistry;
 import net.dovakiin.util.Utils;
+import net.minecraft.enchantment.EnchantmentArrowDamage;
+import net.minecraft.enchantment.EnchantmentArrowInfinite;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -71,6 +74,7 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event){
 		GameRegistry.registerWorldGenerator(new BerryWorldGen(), 9);
 		GameRegistry.registerWorldGenerator(new WorldGenerationBuildings(), 10);
+		FMLCommonHandler.instance().bus().register(new GuiTickHandler());
 	}
 
 	public void postInit(FMLPostInitializationEvent event){ }

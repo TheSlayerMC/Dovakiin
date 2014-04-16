@@ -7,27 +7,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.dovakiin.api.DovakiinAPI;
-import net.dovakiin.client.gui.GuiBanned;
-import net.dovakiin.client.gui.GuiItemStats;
-import net.dovakiin.client.gui.GuiLevelBar;
 import net.dovakiin.util.Config;
 import net.dovakiin.util.UpdateChecker;
 import net.dovakiin.util.Utils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-
-import org.lwjgl.input.Keyboard;
-
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -38,7 +26,6 @@ public class RenderEvent {
 	@SideOnly(Side.CLIENT)
 	public void onRenderOverlay(RenderGameOverlayEvent event){
 		if(event.isCancelable() || event.type != ElementType.EXPERIENCE) return;
-		GuiLevelBar.draw();
 	}
 	
 	@SubscribeEvent

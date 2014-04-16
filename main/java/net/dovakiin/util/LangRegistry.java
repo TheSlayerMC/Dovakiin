@@ -19,7 +19,6 @@ public class LangRegistry {
 	private static ArrayList<Item>  egg	     = new ArrayList<Item>();
 	private static boolean          canWrite = false;
 	private static BufferedWriter   writer;
-	private static String 			MOB_NAME;
 
 	public static void init() {
 		if(Utils.DEBUG){
@@ -28,14 +27,7 @@ public class LangRegistry {
 				try {
 					f.createNewFile();
 					writer = new BufferedWriter(new FileWriter(f));
-					addToFile("itemGroup.Dovakiin: Items=Dovakiin: Items");
-					addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
-					addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
-					addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
-					addToFile("entity.Giant Skeleton.name=Skeleton Boss");
-					addToFile("entity.Giant Zombie.name=Zombie Boss");
-					addToFile("entity.Creeper Zombie.name=Creeper Boss");
-					addToFile("entity.Wither Skeleton.name=Wither Skeleton");
+					addAll();
 					canWrite = true;
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -46,14 +38,7 @@ public class LangRegistry {
 					try {
 						f.createNewFile();
 						writer = new BufferedWriter(new FileWriter(f));
-						addToFile("itemGroup.Dovakiin: Items=Dovakiin: Items");
-						addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
-						addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
-						addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
-						addToFile("entity.Giant Skeleton.name=Skeleton Boss");
-						addToFile("entity.Giant Zombie.name=Zombie Boss");
-						addToFile("entity.Creeper Zombie.name=Creeper Boss");
-						addToFile("entity.Wither Skeleton.name=Wither Skeleton");
+						addAll();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -61,14 +46,7 @@ public class LangRegistry {
 				} else {
 					try {
 						writer = new BufferedWriter(new FileWriter(f));
-						addToFile("itemGroup.Dovakiin: Items=Dovakiin: Items");
-						addToFile("itemGroup.Dovakiin: Blocks=Dovakiin: Blocks");
-						addToFile("itemGroup.Dovakiin: Misc=Dovakiin: Misc.");
-						addToFile("itemGroup.Dovakiin: Spawner=Dovakiin: Spawner");
-						addToFile("entity.Giant Skeleton.name=Skeleton Boss");
-						addToFile("entity.Giant Zombie.name=Zombie Boss");
-						addToFile("entity.Creeper Zombie.name=Creeper Boss");
-						addToFile("entity.Wither Skeleton.name=Wither Skeleton");
+						addAll();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -76,6 +54,38 @@ public class LangRegistry {
 				}
 			}
 		}
+	}
+	
+	public static void addAll(){
+		addToFile(addCreativeTab("Dovakiin: Items"));
+		addToFile(addCreativeTab("Dovakiin: Blocks"));
+		addToFile(addCreativeTab("Dovakiin: Misc"));
+		addToFile(addCreativeTab("Dovakiin: Spawner"));
+		addToFile(addMob("Giant Skeleton"));
+		addToFile(addMob("Giant Zombie"));
+		addToFile(addMob("Creeper Zombie"));
+		addToFile(addMob("Wither Skeleton"));
+		addToFile(addEnchantment("HotTouch", "Hot Touch"));
+	}
+	
+	private static String addCreativeTab(String name){
+		return "itemGroup." + name + "=" + name;
+	}
+	
+	private static String addEnchantment(String name, String finalName){
+		return "enchantment." + name + "=" + finalName;
+	}
+	
+	private static String addMob(String name){
+		return "entity." + name + ".name=" + name;
+	}
+	
+	private static String addAchievement(String name, String finalName){
+		return "achievement." + name + "=" + finalName;
+	}
+	
+	private static String addAchievementDesc(String name, String desc){
+		return "achievement." + name + ".desc=" + desc;
 	}
 
 	public static String readFile(String path) {

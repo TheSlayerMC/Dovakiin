@@ -14,7 +14,7 @@ public class BlockMerchentSpawner extends ModBlock{
 
 	public BlockMerchentSpawner() {
 		super(Material.rock);
-		setBlockTextureName("plank");
+		setBlockTextureName("planks");
 	}
 	
 	@Override

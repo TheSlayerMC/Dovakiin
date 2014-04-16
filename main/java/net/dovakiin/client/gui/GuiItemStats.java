@@ -34,9 +34,7 @@ public class GuiItemStats extends GuiContainer{
 	}
 
 	public void drawLevels(){
-		EntityPlayer player = mc.thePlayer;
-		ExtendedPlayer props = ExtendedPlayer.get(player);
-
+		ExtendedPlayer props = new ExtendedPlayer();
 		mc.getTextureManager().bindTexture(texture2);
 		int w = (width - xSize) / 2 - 346;
 		int h = (height - ySize) / 2 - 151;
