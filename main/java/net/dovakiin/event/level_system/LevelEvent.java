@@ -90,7 +90,7 @@ public class LevelEvent {
 
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
-		
+
 	}
 
 	@SubscribeEvent
@@ -152,7 +152,9 @@ public class LevelEvent {
 	public void onBlockHarvested(HarvestDropsEvent event){
 		EntityPlayer p = event.harvester;
 		Random r = DovakiinAPI.rand;
-		ExtendedPlayer props = new ExtendedPlayer();		if(event.harvester != null && event.harvester instanceof EntityPlayer) {
+
+		ExtendedPlayer props = new ExtendedPlayer();
+		if(event.harvester != null && event.harvester instanceof EntityPlayer) {
 			if(event.harvester.getHeldItem() != null && event.harvester.getHeldItem().getItem() instanceof ItemPickaxe) {
 				if(props.getPickaxeLevel() > 10){
 					if(r.nextInt(props.getPickaxeLevel()) > 40){
@@ -169,22 +171,29 @@ public class LevelEvent {
 			}
 		}
 
+		boolean isWorking = false;
+		int amount = getEnch(Dovakiin.hotTouch, p);
+
+		if(amount > 0)
+			isWorking = true;
+
 		ItemStack item = event.harvester.getHeldItem();
+
 		if(event.harvester != null && event.harvester instanceof EntityPlayer) {
-			//if(getEnch(p) == Dovakiin.hotTouch){
+			if(isWorking){
 				if(!event.isSilkTouching){
 					ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(event.block, 1, event.blockMetadata));
 					if(stack != null && event.block != Blocks.redstone_ore && event.block != Blocks.lapis_ore) {
 						event.drops.clear();
 						event.drops.add(stack.copy());
-					//}
+					}
 				}
 			}
 		}
 	}
 
-	public static Enchantment getEnch(EntityLivingBase e) {
-		return (Enchantment)EnchantmentHelper.getEnchantments(e.getHeldItem());
+	public static int getEnch(Enchantment en, EntityLivingBase e) {
+		return EnchantmentHelper.getEnchantmentLevel(en.effectId, e.getHeldItem());
 	}
 
 	@SubscribeEvent

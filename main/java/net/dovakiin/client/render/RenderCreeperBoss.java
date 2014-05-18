@@ -71,13 +71,9 @@ public class RenderCreeperBoss extends RenderLiving {
         return creeperTextures;
     }
 
-	public void renderMob(EntityGiantCreeper var1, double var2, double var4, double var6, float var8, float var9) {
-		super.doRender(var1, var2, var4, var6, var8, var9);
-	}
-
 	public void doRender(Entity var1, double var2, double var4, double var6, float var8, float var9) {
-		this.renderMob((EntityGiantCreeper)var1, var2, var4, var6, var8, var9);
-		BossStatus.setBossStatus((EntityGiantCreeper)var1, false);
+		BossStatus.setBossStatus((EntityGiantCreeper)var1, true);
+		super.doRender(var1, var2, var4, var6, var8, var9);
 	}
     
     protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2) {

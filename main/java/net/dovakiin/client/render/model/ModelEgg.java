@@ -1,4 +1,4 @@
-package net.dovakiin.client.model;
+package net.dovakiin.client.render.model;
 
 import org.lwjgl.opengl.GL11;
 

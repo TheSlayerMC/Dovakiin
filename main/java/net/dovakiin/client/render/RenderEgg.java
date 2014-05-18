@@ -2,8 +2,8 @@ package net.dovakiin.client.render;
 
 import org.lwjgl.opengl.GL11;
 
-import net.dovakiin.client.model.ModelDragonEgg;
-import net.dovakiin.client.model.ModelEgg;
+import net.dovakiin.client.render.model.ModelDragonEgg;
+import net.dovakiin.client.render.model.ModelEgg;
 import net.dovakiin.entity.misc.EntityEgg;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.model.ModelBase;

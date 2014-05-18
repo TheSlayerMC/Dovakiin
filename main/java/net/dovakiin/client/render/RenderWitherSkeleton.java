@@ -1,6 +1,6 @@
 package net.dovakiin.client.render;
 
-import net.dovakiin.client.model.ModelWitherSkeleton;
+import net.dovakiin.client.render.model.ModelWitherSkeleton;
 import net.dovakiin.entity.mob.EntityWitherSkeleton;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;

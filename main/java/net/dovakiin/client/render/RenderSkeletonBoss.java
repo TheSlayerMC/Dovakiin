@@ -1,6 +1,6 @@
 package net.dovakiin.client.render;
 
-import net.dovakiin.client.model.ModelGiantSkeleton;
+import net.dovakiin.client.render.model.ModelGiantSkeleton;
 import net.dovakiin.entity.mob.boss.EntityGiantSkeleton;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;

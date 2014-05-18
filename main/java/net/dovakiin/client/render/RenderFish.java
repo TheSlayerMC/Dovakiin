@@ -1,7 +1,7 @@
 package net.dovakiin.client.render;
 
 import net.dovakiin.api.DovakiinAPI;
-import net.dovakiin.client.model.ModelFish;
+import net.dovakiin.client.render.model.ModelFish;
 import net.dovakiin.entity.mob.passive.EntityFish;
 import net.dovakiin.util.Utils;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -20,16 +20,25 @@ public class RenderFish extends RenderLiving {
 	}
 
 	protected ResourceLocation getEntityTexture() {
-		int t = DovakiinAPI.rand.nextInt(10);
-		/*if(t <= 0)
-			return tex;
-		if(t <= 3)
-			return tex1;
-		if(t <= 6)
-			return tex2;
-		if(t <= 8)
-			return tex3;*/
-		return tex2;
+		ResourceLocation texture = null;
+		switch(DovakiinAPI.rand.nextInt(3)){
+		case 0:
+			texture = tex;
+			break;
+		case 1:
+			texture = tex1;
+			break;
+		case 2:
+			texture = tex2;
+			break;
+		case 3:
+			texture = tex3;
+			break;
+		default:
+			texture = tex;
+			break;
+		}
+		return texture;
 	}
 
 	public void renderMob(EntityFish var1, double var2, double var4, double var6, float var8, float var9) {

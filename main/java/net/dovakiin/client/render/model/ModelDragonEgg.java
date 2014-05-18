@@ -1,4 +1,4 @@
-package net.dovakiin.client.model;
+package net.dovakiin.client.render.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

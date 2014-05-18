@@ -63,16 +63,16 @@ public class DovakiinAPI {
 	}
 
 
-	public static ChatComponentTranslation addChatMessage(String colour, String str, Object... args) {
-		ChatComponentTranslation ret = new ChatComponentTranslation(colour + str, args);
+	public static ChatComponentTranslation addChatMessage(String colour, String str) {
+		ChatComponentTranslation ret = new ChatComponentTranslation(colour + str);
 		return ret;
 	}
 
 	public static void addVillagePiece(Class c, String s){
-		try{
+		try {
 			MapGenStructureIO.func_143031_a(c, s);
-		}catch(Exception e){
-			logger.log(Level.WARNING, "[Dovakiin] Failed To Spawn The Extra Village Pieces With The ID: " + s);
+		} catch(Exception e){
+			logger.log(Level.WARNING, "[Dovakiin] Failed To Spawn The Extra Village Piece With The ID: " + s);
 		}
 	}
 	
@@ -82,17 +82,13 @@ public class DovakiinAPI {
 
 	public static void registerCommand(ICommand o){
 		if (MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager) {
-			((CommandHandler) MinecraftServer.getServer().getCommandManager()).registerCommand(o);
+			((CommandHandler)MinecraftServer.getServer().getCommandManager()).registerCommand(o);
 		}
 	}
 
-	public static ChatComponentTranslation addChatMessage(String str, Object... args) {
-		ChatComponentTranslation ret = new ChatComponentTranslation(str, args);
+	public static ChatComponentTranslation addChatMessage(String str) {
+		ChatComponentTranslation ret = new ChatComponentTranslation(str);
 		return ret;
-	}
-	
-	public static void sendChatMessage(EntityPlayer player, String message){
-		player.addChatMessage(addChatMessage(message));
 	}
 
 	public static void openGui(int id){
@@ -102,17 +98,20 @@ public class DovakiinAPI {
 	public static void sendMessageToAll(String message){
 		FMLClientHandler.instance().getClient().ingameGUI.getChatGUI().printChatMessage(addChatMessage(AQUA + "[" + BLUE + "Dovakiin" + AQUA + "] " + AQUA + message));
 	}
-	
-	private static ChatComponentTranslation sendMessageToAll(String m, Object... arg){
-		ChatComponentTranslation ret = new ChatComponentTranslation(m, arg);
-		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(ret);
-		return ret;
-	}
 
-	public static int getWaterDepth(int posX, int posY, int posZ, World worldObj){
+	public static int getWaterDepth(int x, int y, int z, World w){
 		int count = 0;
-		while (worldObj.getBlock(posX, posY, posZ) == Blocks.water){
-			posY++;
+		while(w.getBlock(x, y, z) == Blocks.water){
+			y++;
+			count++;
+		}
+		return count;
+	}
+	
+	public static int getLavaDepth(int x, int y, int z, World w){
+		int count = 0;
+		while(w.getBlock(x, y, z) == Blocks.lava){
+			y++;
 			count++;
 		}
 		return count;

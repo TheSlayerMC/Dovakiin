@@ -1,4 +1,4 @@
-package net.dovakiin.client.model;
+package net.dovakiin.client.render.model;
 
 import net.dovakiin.entity.mob.boss.EntityGiantSkeleton;
 import net.minecraft.client.model.ModelRenderer;

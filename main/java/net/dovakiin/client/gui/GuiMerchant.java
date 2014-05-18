@@ -17,9 +17,10 @@ import org.lwjgl.opengl.GL11;
 public class GuiMerchant extends GuiContainer {
 	
 	private static ResourceLocation texture = new ResourceLocation(Utils.PREFIX + "textures/gui/merchant.png");
-	
+	private static ResourceLocation noteTexture = new ResourceLocation(Utils.PREFIX + "textures/gui/blank.png");
+
 	private EntityPlayer p = Minecraft.getMinecraft().thePlayer;
-	int pageNum, maxPageNums = 2;
+	private int pageNum, maxPageNums = 2;
 
 	public GuiMerchant() {
 		super(new ContainerEmpty());
@@ -27,7 +28,6 @@ public class GuiMerchant extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int arg1, int arg2) {
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		String s = "Merchant";
 		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 - 20, 6 - 25, 4210752);
 		String credits;
@@ -40,7 +40,11 @@ public class GuiMerchant extends GuiContainer {
 		s = credits;
 		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 + 50, 6 - 25, 4210752);
 		s = EnumChatFormatting.YELLOW + "Page: " + EnumChatFormatting.WHITE + pageNum + "/" + maxPageNums;
-		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 - 25, 1 + 147, 4210752);
+		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 1 + 147, 4210752);
+		s = "*NOTE* " + "You will get your items";
+		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 - 205, - 20, 4210752);
+		s = "after closing the GUI!";
+		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2 - 226, - 10, 4210752);
 	}
 
 	@Override
@@ -58,6 +62,11 @@ public class GuiMerchant extends GuiContainer {
 		int k = (this.width - this.xSize) / 2;
 		int l = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+		
+		this.mc.getTextureManager().bindTexture(noteTexture);
+		this.xSize = 176;
+		this.ySize = 39;
+		this.drawTexturedModalRect(k - 176, l, 0, 185, this.xSize, this.ySize);
 	}
 
 	@Override
@@ -79,7 +88,7 @@ public class GuiMerchant extends GuiContainer {
 			buy(true, "golden_apple", 1, 100);
 			return;
 		case 6:
-			buy(true, "golden_apple", 1, 300);
+			buy(true, true, 1, "golden_apple", 1, 300);
 			return;
 		case 7:
 			buy(true, "string", 1, 3);
@@ -159,6 +168,17 @@ public class GuiMerchant extends GuiContainer {
 	private static void buy(boolean item, String name, int amount, int cost) {
 		PacketRequestBuy packet = new PacketRequestBuy();
 		packet.item = item;
+		packet.name = name;
+		packet.amount = amount;
+		packet.cost = cost;
+		Dovakiin.packetHandler.sendToServer(packet);
+	}
+	
+	private static void buy(boolean item, boolean metadata, int meta, String name, int amount, int cost) {
+		PacketRequestBuy packet = new PacketRequestBuy();
+		packet.item = item;
+		packet.metadata = metadata;
+		packet.meta = meta;
 		packet.name = name;
 		packet.amount = amount;
 		packet.cost = cost;

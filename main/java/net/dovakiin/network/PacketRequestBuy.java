@@ -11,25 +11,31 @@ import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.registry.GameData;
 
 public class PacketRequestBuy extends AbstractPacket {
-	
-	public boolean item;
+
+	public boolean item, metadata, metadataBlock;
 	public String name;
-	public int amount, cost;
+	public int amount, cost, meta;
 
 	@Override
 	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
 		buffer.writeBoolean(item);
+		buffer.writeBoolean(metadata);
+		buffer.writeBoolean(metadataBlock);
 		ByteBufUtils.writeUTF8String(buffer, name);
 		buffer.writeInt(amount);
 		buffer.writeInt(cost);
+		buffer.writeInt(meta);
 	}
 
 	@Override
 	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
 		item = buffer.readBoolean();
+		metadata = buffer.readBoolean();
+		metadataBlock = buffer.readBoolean();
 		name = ByteBufUtils.readUTF8String(buffer);
 		amount = buffer.readInt();
 		cost = buffer.readInt();
+		meta = buffer.readInt();
 	}
 
 	@Override
@@ -40,9 +46,13 @@ public class PacketRequestBuy extends AbstractPacket {
 		ItemStack is = null;
 		if(item) {
 			is = new ItemStack(GameData.getItemRegistry().getObject(name));
-		} else {
+		} if(metadata){
+			is = new ItemStack(GameData.getItemRegistry().getObject(name), 1, meta);
+		} if(metadataBlock){	
+			is = new ItemStack(GameData.getBlockRegistry().getObject(name), 1, meta);
+		} if(!item) {
 			is = new ItemStack(GameData.getBlockRegistry().getObject(name));
-		}
+		} 
 		if(player.capabilities.isCreativeMode) {
 			player.inventory.addItemStackToInventory(is);
 		} else if(LevelHelper.getCoins() >= cost) {

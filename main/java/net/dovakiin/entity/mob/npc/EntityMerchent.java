@@ -70,10 +70,10 @@ public class EntityMerchent extends EntityModMob{
 		if(tick == 0)
 			tick = 1000;
 	}
-	
+
 	@Override
 	protected boolean interact(EntityPlayer par1EntityPlayer) {
-		if(!par1EntityPlayer.worldObj.isRemote){
+		if(!par1EntityPlayer.worldObj.isRemote && (!par1EntityPlayer.isSneaking())){
 			switch(rand.nextInt(5)){
 			case 0:
 				par1EntityPlayer.addChatMessage(DovakiinAPI.addChatMessage(DovakiinAPI.AQUA + "Merchent: " + DovakiinAPI.YELLOW + "Welcome!"));

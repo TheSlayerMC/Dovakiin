@@ -14,7 +14,7 @@ public class BlockMerchentSpawner extends ModBlock{
 
 	public BlockMerchentSpawner() {
 		super(Material.rock);
-		setBlockTextureName("planks");
+		setBlockTextureName("sand");
 	}
 	
 	@Override
@@ -27,9 +27,8 @@ public class BlockMerchentSpawner extends ModBlock{
 	@Override
 	public void onBlockAdded(World w, int x, int y, int z) {
 		if(!w.isRemote){
-			float f = DovakiinAPI.rand.nextFloat() * 360.0F;
 			EntityMerchent m = new EntityMerchent(w);
-			m.setLocationAndAngles(x + 0.5F, y + 2, z + 0.5F, f, f);
+			m.setLocationAndAngles(x + 0.5F, y + 2, z + 0.5F, 0.0F, 0.0F);
 			w.spawnEntityInWorld(m);
 			w.setBlock(x, y, z, Blocks.planks);
 		}
