@@ -2,7 +2,6 @@ package net.dovakiin.generation;
 
 import java.util.Random;
 
-import net.dovakiin.generation.buildings.GenIceHouse;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;

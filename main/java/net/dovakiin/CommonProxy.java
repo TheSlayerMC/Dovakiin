@@ -9,6 +9,7 @@ import net.dovakiin.entity.mob.boss.EntityGiantSkeleton;
 import net.dovakiin.entity.mob.boss.EntityGiantZombie;
 import net.dovakiin.entity.mob.npc.EntityMerchent;
 import net.dovakiin.entity.mob.passive.EntityFish;
+import net.dovakiin.event.BannedEvent;
 import net.dovakiin.event.BonemealEvent;
 import net.dovakiin.event.ClientPlayerEvent;
 import net.dovakiin.event.KeyHandler;
@@ -40,13 +41,12 @@ public class CommonProxy {
 	//ClientProxy
 	public void preInit(FMLPreInitializationEvent event){
 		Config.init();
-		NetworkRegistry nr = NetworkRegistry.INSTANCE;
-		nr.newChannel(Utils.MOD_NAME, new PacketHandler());
-		RenderEvent.register();
+		NetworkRegistry.INSTANCE.newChannel(Utils.MOD_NAME, new PacketHandler());
+		//RenderEvent.register();
 		//BannedEvent.register();
 		BonemealEvent.register();
 		LevelEvent.register();
-		ClientPlayerEvent.register();
+		
 		LangRegistry.init();
 		if(Utils.DEBUG){
 			LangRegistry.addBlockNames();
@@ -54,18 +54,19 @@ public class CommonProxy {
 			LangRegistry.addEggNames();
 		}
 		LangRegistry.closeFile();
+		
 		/*DovakiinAPI.addVillagePiece(ComponentMerchent.class, "Merchent");
 		DovakiinAPI.addVillagePiece(Field3.class, "Garden");
 		DovakiinAPI.addVillageCreationHandler(new VillageMerchentHandler());
 		DovakiinAPI.addVillageCreationHandler(new VillageGardenHandler());*/
 
-		DovakiinAPI.registerMob(EntityGiantSkeleton.class, "Giant Skeleton");
-		DovakiinAPI.registerMob(EntityGiantZombie.class, "Giant Zombie");
-		DovakiinAPI.registerMob(EntityGiantCreeper.class, "Giant Creeper");
-		DovakiinAPI.registerMob(EntityWitherSkeleton.class, "Wither Skeleton");
-		DovakiinAPI.registerMob(EntityMerchent.class, "Merchent");
-		DovakiinAPI.registerMob(EntityFish.class, "Fish");
-		DovakiinAPI.registerEggEntity(EntityGreenDragonEgg.class, "Green Dragon");
+		DovakiinAPI.registerEntity(EntityGiantSkeleton.class, "Giant Skeleton", DovakiinAPI.mobID++);
+		DovakiinAPI.registerEntity(EntityGiantZombie.class, "Giant Zombie", DovakiinAPI.mobID++);
+		DovakiinAPI.registerEntity(EntityGiantCreeper.class, "Giant Creeper", DovakiinAPI.mobID++);
+		DovakiinAPI.registerEntity(EntityWitherSkeleton.class, "Wither Skeleton", DovakiinAPI.mobID++);
+		DovakiinAPI.registerEntity(EntityMerchent.class, "Merchent", DovakiinAPI.mobID++);
+		DovakiinAPI.registerEntity(EntityFish.class, "Fish", DovakiinAPI.mobID++);
+		DovakiinAPI.registerEggEntity(EntityGreenDragonEgg.class, "Green Dragon", DovakiinAPI.mobID++);
 
 		FMLCommonHandler.instance().bus().register(new KeyHandler());
 		FMLCommonHandler.instance().bus().register(new TickHandler());
@@ -75,6 +76,7 @@ public class CommonProxy {
 		GameRegistry.registerWorldGenerator(new BerryWorldGen(), 9);
 		GameRegistry.registerWorldGenerator(new WorldGenerationBuildings(), 10);
 		FMLCommonHandler.instance().bus().register(new GuiTickHandler());
+		ClientPlayerEvent.register();
 	}
 
 	public void postInit(FMLPostInitializationEvent event){ }

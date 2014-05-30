@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class EntityEgg extends EntityModMob {
 
 	protected int ticks, guiID;
-	public boolean light = worldObj.getBlockLightValue((int)posX, (int)posY, (int)posZ) >= 4;
+	public int light = worldObj.getBlockLightValue((int)posX, (int)posY, (int)posZ);
 
 	public EntityEgg(World par1World, int tick, int GUI) {
 		super(par1World);
@@ -63,6 +63,11 @@ public class EntityEgg extends EntityModMob {
 	public boolean allowLeashing() {
 		return false;
 	}
+	
+	@Override
+	public boolean canBeCollidedWith() {
+		return false;
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -77,7 +82,7 @@ public class EntityEgg extends EntityModMob {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-		return !(par1DamageSource.getSourceOfDamage() instanceof EntityPlayer);
+		return false;
 	}
 
 	@Override
@@ -91,9 +96,4 @@ public class EntityEgg extends EntityModMob {
 
 	@Override
 	protected void fall(float par1) { }
-
-	@Override
-	public void onDeath(DamageSource par1DamageSource) {
-		super.onDeath(par1DamageSource);
-	}
 }

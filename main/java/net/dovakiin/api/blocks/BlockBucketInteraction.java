@@ -1,21 +1,22 @@
 package net.dovakiin.api.blocks;
 
+import net.dovakiin.api.blocks.tileentity.TileEntityBucket;
 import net.dovakiin.util.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockStaticLiquid;
-import net.minecraft.block.BlockWorkbench;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockBucketInteraction extends ModBlock{
+public class BlockBucketInteraction extends BlockContainer{
 
 	@SideOnly(Side.CLIENT)
 	private IIcon water, lava, empty, milk;
@@ -47,7 +48,6 @@ public class BlockBucketInteraction extends ModBlock{
 		blockIcon = i.registerIcon("stone");
 	}
 
-	@Override
 	public Block registerBlock(String name) {
 		setBlockName(name);
 		GameRegistry.registerBlock(this, name);
@@ -83,5 +83,10 @@ public class BlockBucketInteraction extends ModBlock{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World var1, int var2) {
+		return new TileEntityBucket();
 	}
 }

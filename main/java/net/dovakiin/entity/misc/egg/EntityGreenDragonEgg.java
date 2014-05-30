@@ -19,17 +19,17 @@ public class EntityGreenDragonEgg extends EntityEgg{
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if(!worldObj.isRemote/* && light*/){
+		if(!worldObj.isRemote/* && light >= 4*/){
 			if(ticks == 0){
 				EntityMerchent e = new EntityMerchent(worldObj);
 				e.setLocationAndAngles(posX, posY + 0.1F, posZ, 360.0F, 0.0F);
 				worldObj.spawnEntityInWorld(e);
-				this.setDead();
+				setDead();
 				DovakiinAPI.sendMessageToAll(DovakiinAPI.DARK_AQUA + "A dragon has hatched!");
 			}
-		}
-		if(ticks == 50){
-			//playSound(Sounds.eggHatch);
+			if(ticks == 50){
+				//playSound(Sounds.eggHatch);
+			}
 		}
 		ticks--;
 	}

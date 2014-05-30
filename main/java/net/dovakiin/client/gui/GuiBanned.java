@@ -21,7 +21,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiBanned extends GuiScreen{
+public class GuiBanned extends GuiScreen {
 	
 	private ResourceLocation face = new ResourceLocation(Utils.PREFIX + "textures/gui/banned.png");
 	
@@ -53,7 +53,7 @@ public class GuiBanned extends GuiScreen{
 	
 	@Override
 	public void initGui() {
-		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height - 38, I18n.format("Return back to main menu...")));
+		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height - 38, "Return back to main menu..."));
 	}
 
 	@Override

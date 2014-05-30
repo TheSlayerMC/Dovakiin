@@ -9,6 +9,8 @@ import net.dovakiin.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiIngame;
+import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,11 +41,8 @@ public class GuiTickHandler {
 		onTickRender();
 	}		
 
-
-
-
 	private void onTickRender() {
-		if(Minecraft.getMinecraft().currentScreen == null) {
+		if(Minecraft.getMinecraft().currentScreen == new GuiIngameMenu() || Minecraft.getMinecraft().currentScreen == null) {
 			drawLevelBar();
 		}
 	}
@@ -57,35 +56,47 @@ public class GuiTickHandler {
 		GuiIngame g = mc.ingameGUI;
 		int h1 = h - 490;//Config.levelHeight;
 		int w1 = w - 610;//Config.levelWidth;
-		short short1;
+		short short1 = 256;
+		int width = w / 2 - short1 / 2;
 		FontRenderer f = mc.fontRenderer;
 		mc.mcProfiler.startSection("levelBar");
 		mc.getTextureManager().bindTexture(level);
 		j1 = LevelHelper.xpBarCap();
 
 		if (j1 > 0) {
-			short1 = 256;
 			l1 = (int)(LevelHelper.levelXP * (float)(short1));
-			g.drawTexturedModalRect(w1, h1, 0, 0, short1, 19);
+			g.drawTexturedModalRect(width, 22, 0, 0, short1, 19);
 
 			if (l1 > 0) {
-				g.drawTexturedModalRect(w1 + 5, h1 + 5, 5, 24, l1, 9);
+				g.drawTexturedModalRect(width + 5, 22 + 5, 5, 24, l1, 9);
 			}
 		}
 		if(LevelHelper.getLevel() >= 245)
-			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + LevelHelper.getLevel() + " (Max)", w1 + 100, h1 + 6, 0, false);
+			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + LevelHelper.getLevel() + " (Max)", width + 100, 22 + 6, 0, false);
 		if(LevelHelper.getLevel() == 0)
-			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: 0", w1 + 118, h1 + 6, 0, false);
+			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: 0", width + 118, 22 + 6, 0, false);
 		else 
-			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + LevelHelper.getLevel(), w1 + 118, h1 + 6, 0, false);
+			mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + LevelHelper.getLevel(), width + 118, 22 + 6, 0, false);
 
 		String st = "Coins: " + LevelHelper.getCoins();
 		int k1 = f.getStringWidth(st);
-		mc.fontRenderer.drawString(DovakiinAPI.GOLD + st, w1 - k1 + 120, h1 + 20, 0, false);
-		String st1 = I18n.format("Time: ", new Object[] {StringUtils.ticksToElapsedTime((int)(120500L - mc.theWorld.getTotalWorldTime()))});
-		k1 = f.getStringWidth(st1);
-		mc.fontRenderer.drawString(DovakiinAPI.GOLD + st1, w1 - k1 + 120, h1 + 30, 0, false);
+		mc.fontRenderer.drawString(DovakiinAPI.GOLD + st, width - k1 + 140, 22 + 20, 0, false);
+		st = "Time: " + formatTime(getWorldTime(mc));
+		mc.fontRenderer.drawString(DovakiinAPI.GOLD + st, width + 90, 22 + 30, 0, false);
 	}
+	
+	public static Long getWorldTime(Minecraft mc){	
+		Long time = Long.valueOf(mc.theWorld.provider.getWorldTime());
+		return time;
+	}
+	
+	public static String formatTime(Long time) {
+		int hours24 = (int)(time.longValue() / 1000L + 6L) % 24;
+		int hours = hours24 % 12;
+		int minutes = (int)((float)time.longValue() / 16.666666F % 60.0F);
+		String time1 = String.format("%02d:%02d %s", new Object[] { Integer.valueOf(hours < 1 ? 12 : hours), Integer.valueOf(minutes), hours24 < 12 ? "AM" : "PM" });
+		return time1;
+	}	
 
 	private void onTickEnd() { }
 

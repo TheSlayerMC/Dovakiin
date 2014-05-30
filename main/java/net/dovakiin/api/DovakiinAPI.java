@@ -34,32 +34,28 @@ public class DovakiinAPI {
 	public static Logger logger = Logger.getLogger(Utils.MOD_ID);
 	public static Random rand = new Random();
 	private static EntityPlayer clientPlayer = Minecraft.getMinecraft().thePlayer;
+	public static int mobID = 500;
 	
 	public static EntityPlayer getClientPlayer(){
 		return clientPlayer;
 	}
-	
+
 	public static String getClientPlayerName(){
 		return clientPlayer.getDisplayName();
 	}
-	
+
 	public static void addBucket(Fluid fluid, ItemStack modBucket){
 		FluidContainerRegistry.registerFluidContainer(new FluidContainerData(FluidRegistry.getFluidStack(fluid.getName(), FluidContainerRegistry.BUCKET_VOLUME), modBucket, new ItemStack(Items.bucket)));
 	}
 
-	public static void registerMob(Class entityClass, String entityName) {
+	public static void registerEntity(Class entityClass, String entityName, int ID) {
 		int entityID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityID, 0x152678, 0x1534864);
+		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityID, 0x123123, 0x321321); 
+		EntityRegistry.registerModEntity(entityClass, entityName, ID, Dovakiin.instance, 250, 265, false);
 	}
 
-	public static void registerEntity(Class entityClass, String entityName) {
-		int entityID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityID);
-	}
-	
-	public static void registerEggEntity(Class entityClass, String colour) {
-		int entityID = EntityRegistry.findGlobalUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(entityClass, colour + " Egg", entityID);
+	public static void registerEggEntity(Class entityClass, String colour, int ID) {
+		registerEntity(entityClass, colour + " Egg", ID);
 	}
 
 
@@ -75,7 +71,7 @@ public class DovakiinAPI {
 			logger.log(Level.WARNING, "[Dovakiin] Failed To Spawn The Extra Village Piece With The ID: " + s);
 		}
 	}
-	
+
 	public static void addVillageCreationHandler(IVillageCreationHandler v){
 		VillagerRegistry.instance().registerVillageCreationHandler(v);
 	}
@@ -94,7 +90,7 @@ public class DovakiinAPI {
 	public static void openGui(int id){
 		Dovakiin.packetHandler.sendToServer(new PacketOpenGui().setID(id));
 	}
-	
+
 	public static void sendMessageToAll(String message){
 		FMLClientHandler.instance().getClient().ingameGUI.getChatGUI().printChatMessage(addChatMessage(AQUA + "[" + BLUE + "Dovakiin" + AQUA + "] " + AQUA + message));
 	}
@@ -107,7 +103,7 @@ public class DovakiinAPI {
 		}
 		return count;
 	}
-	
+
 	public static int getLavaDepth(int x, int y, int z, World w){
 		int count = 0;
 		while(w.getBlock(x, y, z) == Blocks.lava){

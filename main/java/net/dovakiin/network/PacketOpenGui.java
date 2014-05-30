@@ -29,6 +29,6 @@ public class PacketOpenGui extends AbstractPacket {
 
 	@Override
 	public void handleServerSide(EntityPlayer player) {
-		player.openGui(Dovakiin.instance, id, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+		player.openGui(Dovakiin.instance, id, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
 	}
 }

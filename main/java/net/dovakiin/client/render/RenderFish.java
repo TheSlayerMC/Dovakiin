@@ -21,7 +21,7 @@ public class RenderFish extends RenderLiving {
 
 	protected ResourceLocation getEntityTexture() {
 		ResourceLocation texture = null;
-		switch(DovakiinAPI.rand.nextInt(3)){
+		switch(DovakiinAPI.rand.nextInt(4)){
 		case 0:
 			texture = tex;
 			break;
@@ -33,9 +33,6 @@ public class RenderFish extends RenderLiving {
 			break;
 		case 3:
 			texture = tex3;
-			break;
-		default:
-			texture = tex;
 			break;
 		}
 		return texture;
