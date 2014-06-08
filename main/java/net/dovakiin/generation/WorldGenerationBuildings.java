@@ -2,6 +2,7 @@ package net.dovakiin.generation;
 
 import java.util.Random;
 
+import net.dovakiin.generation.buildings.WorldGenHut;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -20,14 +21,12 @@ public class WorldGenerationBuildings implements IWorldGenerator{
 
 	private void generateOverworld(World world, Random random, int x, int z) {
 		BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x + 16, z + 16);
-		
+
 		if(random.nextInt(10) == 0) {
 			int xPos = x + random.nextInt(16) + 8;
 			int yPos = random.nextInt(80);
 			int zPos = z + random.nextInt(16) + 8;
-			if(random.nextInt(8) == 0) {
-				//(new GenIceHouse()).generate(world, random, xPos, yPos, zPos);
-			}
+			(new WorldGenHut()).generate(world, random, xPos, yPos, zPos);
 		}
 	}
 

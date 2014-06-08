@@ -3,6 +3,7 @@ package net.dovakiin;
 import net.dovakiin.api.blocks.BlockBerryPlant;
 import net.dovakiin.api.blocks.BlockBucketInteraction;
 import net.dovakiin.api.blocks.BlockMerchentSpawner;
+import net.dovakiin.api.blocks.BlockPhantom;
 import net.dovakiin.api.blocks.BlockSpawner;
 import net.dovakiin.api.items.ItemCoin;
 import net.dovakiin.api.items.ItemEgg;
@@ -20,6 +21,7 @@ import net.dovakiin.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -84,6 +86,8 @@ public class Dovakiin {
 	public static final Block desertBerryBush 		= new BlockBerryPlant(false)		 .registerBlock("desertBerryBush");
 	public static final Block desertBerryBushRipe 	= new BlockBerryPlant(true)			 .registerBlock("desertBerryBushRipe");
 
+	public static final Block phantomPlanks 	    = new BlockPhantom(Blocks.lava, Blocks.planks).registerBlock("phantomPlank");
+	
 	public static final Item greenBerry 			= new ModItem().registerItem("greenBerry");
 	public static final Item desertBerry 			= new ModItem().registerItem("desertBerry");
 	public static final Item waterBerry 			= new ModItem().registerItem("waterBerry");

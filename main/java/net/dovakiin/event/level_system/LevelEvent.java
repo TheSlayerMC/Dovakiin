@@ -177,8 +177,6 @@ public class LevelEvent {
 		if(amount > 0)
 			isWorking = true;
 
-		ItemStack item = event.harvester.getHeldItem();
-
 		if(event.harvester != null && event.harvester instanceof EntityPlayer) {
 			if(isWorking){
 				if(!event.isSilkTouching){
@@ -193,7 +191,8 @@ public class LevelEvent {
 	}
 
 	public static int getEnch(Enchantment en, EntityLivingBase e) {
-		return EnchantmentHelper.getEnchantmentLevel(en.effectId, e.getHeldItem());
+		if(en != null && e != null) return EnchantmentHelper.getEnchantmentLevel(en.effectId, e.getHeldItem());
+		else return 0;
 	}
 
 	@SubscribeEvent
